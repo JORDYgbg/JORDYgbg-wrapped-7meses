@@ -66,8 +66,10 @@ body {
     box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
     display: flex;
     flex-direction: column;
-    justify-content: space-around;
-    min-height: 600px; /* Altura mínima para que se vea bien */
+    /* justify-content: space-around; es mejor para el centrado vertical */
+    justify-content: space-between; 
+    /* ELIMINA: min-height: 600px; */
+    height: 100%; /* La tarjeta ahora toma toda la altura del contenedor padre */
 }
 
 .sub-title {
