@@ -1,202 +1,494 @@
-:root {
-    /* Colores estilo dark mode */
-    --background-color: #121212;
-    --card-color: #1a1a1a;
-    --text-color: #ffffff;
-    --sub-text-color: #b3b3b3;
-    /* Color vibrante para resaltar, tipo Spotify Green */
-    --highlight-color: #1DB954; 
-    /* O un morado tipo Discord: --highlight-color: #7289DA; */
-}
-
 * {
-    box-sizing: border-box;
     margin: 0;
     padding: 0;
-    font-family: 'Poppins', sans-serif; /* Aplica la fuente moderna */
+    box-sizing: border-box;
 }
 
 body {
-    background-color: var(--background-color);
-    color: var(--text-color);
-    display: flex;
-    justify-content: center;
-    align-items: center;
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+    overflow: hidden;
+    background: radial-gradient(ellipse at bottom, #1B2735 0%, #090a0f 100%);
+    color: white;
     min-height: 100vh;
-    padding: 20px;
-    overflow: hidden; /* Evita barras de desplazamiento innecesarias */
 }
 
-.wrapped-container {
+/* Animación de estrellas */
+.stars, .stars2, .stars3 {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+}
+
+.stars {
+    background: transparent url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMiIgaGVpZ2h0PSIyIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciPjxjaXJjbGUgY3g9IjEiIGN5PSIxIiByPSIxIiBmaWxsPSJ3aGl0ZSIvPjwvc3ZnPg==') repeat;
+    animation: animateStars 50s linear infinite;
+}
+
+.stars2 {
+    background: transparent url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMyIgaGVpZ2h0PSIzIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciPjxjaXJjbGUgY3g9IjEuNSIgY3k9IjEuNSIgcj0iMS41IiBmaWxsPSIjYzI5ZGZmIi8+PC9zdmc+') repeat;
+    animation: animateStars 100s linear infinite;
+}
+
+.stars3 {
+    background: transparent url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNCIgaGVpZ2h0PSI0IiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciPjxjaXJjbGUgY3g9IjIiIGN5PSIyIiByPSIyIiBmaWxsPSIjZjBhYmZjIi8+PC9zdmc+') repeat;
+    animation: animateStars 150s linear infinite;
+}
+
+@keyframes animateStars {
+    from { transform: translateY(0px); }
+    to { transform: translateY(-2000px); }
+}
+
+/* Contenedor principal */
+#app {
     position: relative;
     width: 100%;
-    max-width: 450px; /* Ancho ideal para una tarjeta Wrapped */
-    height: 90vh;
-    max-height: 800px;
-    overflow: hidden;
-    background: linear-gradient(135deg, var(--card-color), #0a0a0a);
-    border-radius: 20px;
-    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
-}
-
-/* --- Slides (Diapositivas) --- */
-#slides-wrapper {
+    height: 100vh;
     display: flex;
-    transition: transform 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94); /* Animación de transición suave */
-    height: 100%;
-}
-
-.slide {
-    min-width: 100%;
-    height: 100%;
-    display: flex;
-    justify-content: center;
     align-items: center;
-    padding: 30px;
-    flex-shrink: 0;
+    justify-content: center;
 }
 
-/* --- Estilo General de Tarjeta --- */
-.card {
-    background: var(--card-color);
-    border-radius: 15px;
-    padding: 30px;
-    text-align: center;
+/* Pantallas */
+.screen {
+    position: absolute;
     width: 100%;
-    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
-    display: flex;
-    flex-direction: column;
-    /* justify-content: space-around; es mejor para el centrado vertical */
-    justify-content: space-between; 
-    /* ELIMINA: min-height: 600px; */
-    height: 100%; /* La tarjeta ahora toma toda la altura del contenedor padre */
+    height: 100%;
+    display: none;
+    align-items: center;
+    justify-content: center;
+    padding: 2rem;
+    opacity: 0;
+    transition: opacity 0.7s ease-in-out;
 }
 
-.sub-title {
-    color: var(--highlight-color);
-    font-size: 1.2rem;
-    font-weight: 600;
-    margin-bottom: 10px;
+.screen.active {
+    display: flex;
+    opacity: 1;
+}
+
+.content-center {
+    max-width: 900px;
+    width: 100%;
+    text-align: center;
+}
+
+/* Pantalla de inicio */
+.sparkle {
+    font-size: 5rem;
+    animation: bounce 2s infinite;
+    margin-bottom: 1rem;
+}
+
+@keyframes bounce {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-20px); }
 }
 
 .main-title {
-    font-size: 3rem;
-    font-weight: 800;
-    line-height: 1.1;
-    margin-bottom: 20px;
+    font-size: 5rem;
+    font-weight: 900;
+    margin-bottom: 1rem;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 50%, #f093fb 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    letter-spacing: -2px;
 }
 
-.summary-text {
-    color: var(--sub-text-color);
-    font-size: 1rem;
-    margin-top: 20px;
+.subtitle {
+    font-size: 2rem;
+    margin-bottom: 0.5rem;
+    opacity: 0.9;
 }
 
-/* --- Botón Next --- */
-.next-button {
-    background-color: var(--highlight-color);
-    color: var(--background-color);
+.for-text {
+    font-size: 1.5rem;
+    margin-bottom: 2rem;
+    opacity: 0.8;
+}
+
+.start-btn {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
     border: none;
-    padding: 12px 30px;
+    padding: 1.5rem 3rem;
+    font-size: 1.5rem;
+    font-weight: 700;
     border-radius: 50px;
-    font-weight: 600;
-    font-size: 1.1rem;
     cursor: pointer;
-    transition: background-color 0.3s, transform 0.1s;
-    margin-top: 30px;
+    transition: all 0.3s ease;
+    box-shadow: 0 10px 40px rgba(102, 126, 234, 0.4);
 }
 
-.next-button:hover {
-    background-color: #26e66b; /* Un poco más claro al pasar el mouse */
+.start-btn:hover {
+    transform: scale(1.05);
+    box-shadow: 0 15px 50px rgba(102, 126, 234, 0.6);
 }
 
-.next-button.small {
-    font-size: 0.9rem;
-    padding: 10px 20px;
+/* Títulos de slides */
+.slide-title {
+    font-size: 3.5rem;
+    font-weight: 900;
+    margin-bottom: 3rem;
+    background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
 }
 
-/* --- Estilo Específico: SLIDE 2 (Estadística Clave) --- */
+/* Estadísticas */
+.stats-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 1.5rem;
+    margin-top: 2rem;
+}
+
+.stat-card {
+    background: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    border-radius: 25px;
+    padding: 2rem;
+    transition: all 0.3s ease;
+}
+
+.stat-card:hover {
+    transform: translateY(-10px);
+    background: rgba(255, 255, 255, 0.15);
+    box-shadow: 0 20px 40px rgba(240, 171, 252, 0.3);
+}
+
+.stat-icon {
+    font-size: 3rem;
+    margin-bottom: 1rem;
+}
+
 .stat-number {
-    font-size: 8rem; /* Número gigante */
-    color: var(--highlight-color);
-    font-weight: 800;
-    line-height: 1;
-    margin-top: 40px;
+    font-size: 3.5rem;
+    font-weight: 900;
+    margin-bottom: 0.5rem;
 }
 
-.stat-unit {
-    font-size: 1.8rem;
+.stat-label {
+    font-size: 1.2rem;
+    opacity: 0.8;
+}
+
+/* Momentos */
+.moments-list {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    margin-top: 2rem;
+}
+
+.moment-item {
+    background: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    border-radius: 20px;
+    padding: 1.5rem;
+    display: flex;
+    align-items: center;
+    gap: 1.5rem;
+    transition: all 0.3s ease;
+}
+
+.moment-item:hover {
+    background: rgba(255, 255, 255, 0.15);
+    transform: translateX(10px);
+}
+
+.moment-rank {
+    font-size: 2rem;
+    font-weight: 900;
+    opacity: 0.5;
+    min-width: 3rem;
+}
+
+.moment-emoji {
+    font-size: 2.5rem;
+}
+
+.moment-text {
+    font-size: 1.3rem;
     font-weight: 600;
-    color: var(--text-color);
-    margin-bottom: 20px;
-}
-
-/* --- Estilo Específico: SLIDE 3 (Género/Actividad) --- */
-.genre-item {
-    background-color: rgba(255, 255, 255, 0.05);
-    border-left: 5px solid var(--highlight-color);
-    padding: 20px;
-    border-radius: 10px;
+    flex: 1;
     text-align: left;
-    margin-top: 40px;
 }
 
-.genre-rank {
-    color: var(--sub-text-color);
-    font-weight: 300;
-    font-size: 0.9rem;
+/* Género */
+.genre-card {
+    background: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    border-radius: 30px;
+    padding: 3rem;
+    margin: 2rem auto;
+    max-width: 600px;
+}
+
+.genre-icon {
+    font-size: 5rem;
+    margin-bottom: 1rem;
 }
 
 .genre-name {
-    font-size: 1.8rem;
-    font-weight: 600;
-    color: var(--text-color);
-    margin: 5px 0;
-}
-
-.genre-detail {
-    color: var(--sub-text-color);
-}
-
-/* --- Estilo Específico: SLIDE 4 (Final) --- */
-.final-message {
-    font-size: 2.2rem;
-    font-weight: 800;
-    color: var(--text-color);
-    margin-top: 20px;
-}
-
-.logo {
     font-size: 4rem;
-    margin-top: 20px;
+    font-weight: 900;
+    margin-bottom: 1rem;
 }
 
-/* --- Paginación --- */
-.pagination {
-    position: absolute;
-    bottom: 20px;
-    left: 50%;
-    transform: translateX(-50%);
-    font-size: 0.9rem;
-    color: var(--sub-text-color);
-    z-index: 10;
+.genre-subtitle {
+    font-size: 1.5rem;
+    opacity: 0.8;
 }
 
-/* --- Media Queries (Para celulares más pequeños) --- */
-@media (max-width: 480px) {
-    .wrapped-container {
-        height: 100vh;
-        max-height: none;
-        border-radius: 0;
-    }
-    .card {
-        min-height: 80vh;
-        padding: 20px;
-    }
+.genre-description {
+    font-size: 1.3rem;
+    opacity: 0.9;
+    line-height: 1.6;
+    max-width: 600px;
+    margin: 0 auto;
+}
+
+/* Artista */
+.artist-circle {
+    width: 200px;
+    height: 200px;
+    background: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 2rem auto;
+    animation: pulse 2s infinite;
+}
+
+@keyframes pulse {
+    0%, 100% { transform: scale(1); }
+    50% { transform: scale(1.05); }
+}
+
+.heart-icon {
+    font-size: 6rem;
+}
+
+.artist-name {
+    font-size: 4rem;
+    font-weight: 900;
+    margin-bottom: 1rem;
+}
+
+.artist-subtitle {
+    font-size: 1.5rem;
+    opacity: 0.9;
+    margin-bottom: 2rem;
+}
+
+.song-card {
+    background: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    border-radius: 20px;
+    padding: 1.5rem;
+    max-width: 600px;
+    margin: 0 auto;
+}
+
+.song-label {
+    font-size: 1.1rem;
+    opacity: 0.8;
+    margin-bottom: 0.5rem;
+}
+
+.song-name {
+    font-size: 1.5rem;
+    font-weight: 700;
+}
+
+/* Vibe */
+.vibe-list {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+    max-width: 700px;
+    margin: 0 auto;
+}
+
+.vibe-item {
+    background: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    border-radius: 20px;
+    padding: 1.5rem;
+}
+
+.vibe-label {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 0.75rem;
+    font-size: 1.3rem;
+    font-weight: 600;
+}
+
+.vibe-bar {
+    width: 100%;
+    height: 12px;
+    background: rgba(255, 255, 255, 0.2);
+    border-radius: 10px;
+    overflow: hidden;
+}
+
+.vibe-fill {
+    height: 100%;
+    border-radius: 10px;
+    transition: width 1s ease;
+}
+
+/* Final */
+.final-heart {
+    font-size: 6rem;
+    animation: pulse 2s infinite;
+    margin-bottom: 1rem;
+}
+
+.final-text {
+    font-size: 1.5rem;
+    line-height: 1.8;
+    margin-bottom: 2rem;
+    opacity: 0.95;
+    max-width: 700px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.final-card {
+    background: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    border-radius: 30px;
+    padding: 2.5rem;
+    max-width: 600px;
+    margin: 2rem auto;
+}
+
+.final-love {
+    font-size: 2.5rem;
+    font-weight: 900;
+    margin-bottom: 1rem;
+}
+
+.final-forever {
+    font-size: 1.3rem;
+    opacity: 0.9;
+}
+
+.final-date {
+    font-size: 1.2rem;
+    opacity: 0.8;
+    margin-top: 2rem;
+}
+
+/* Navegación */
+#navigation {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    padding: 2rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    z-index: 100;
+}
+
+.nav-btn {
+    background: rgba(255, 255, 255, 0.2);
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    color: white;
+    padding: 1rem 2rem;
+    border-radius: 50px;
+    font-size: 1rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.nav-btn:hover:not(:disabled) {
+    background: rgba(255, 255, 255, 0.3);
+    transform: scale(1.05);
+}
+
+.nav-btn:disabled {
+    opacity: 0;
+    cursor: not-allowed;
+}
+
+.dots {
+    display: flex;
+    gap: 0.5rem;
+}
+
+.dot {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.4);
+    transition: all 0.3s ease;
+}
+
+.dot.active {
+    width: 30px;
+    border-radius: 5px;
+    background: white;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
     .main-title {
+        font-size: 3rem;
+    }
+
+    .slide-title {
+        font-size: 2.5rem;
+        margin-bottom: 2rem;
+    }
+
+    .stat-number {
         font-size: 2.5rem;
     }
-    .stat-number {
-        font-size: 6rem;
+
+    .genre-name, .artist-name {
+        font-size: 2.5rem;
+    }
+
+    .stats-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    .moment-text {
+        font-size: 1rem;
+    }
+
+    .final-text {
+        font-size: 1.2rem;
+    }
+
+    #navigation {
+        padding: 1rem;
+    }
+
+    .nav-btn {
+        padding: 0.75rem 1.5rem;
+        font-size: 0.9rem;
     }
 }
