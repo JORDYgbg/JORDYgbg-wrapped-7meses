@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Wrapped de 7 Meses ✨</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;600;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <div class="wrapped-container">
+        <div id="slides-wrapper">
+
+            <section class="slide active" data-slide="1">
+                <div class="card intro-card">
+                    <span class="sub-title">Tu Resumen de Amor</span>
+                    <h1 class="main-title">7 Meses Wrapped</h1>
+                    <p class="summary-text">Un viaje increíble de 214 días, resumido en estas diapositivas solo para ti.</p>
+                    <button class="next-button" onclick="nextSlide()">Comenzar</button>
+                    <div class="logo">💖</div>
+                </div>
+            </section>
+
+            <section class="slide" data-slide="2">
+                <div class="card stat-card">
+                    <span class="sub-title">Tu Canción Favorita</span>
+                    <h2 class="stat-number">214</h2>
+                    <p class="stat-unit">Días Juntos</p>
+                    <p class="summary-text">Es el tiempo que has sido la melodía principal en mi vida.</p>
+                    <button class="next-button small" onclick="nextSlide()">Siguiente</button>
+                </div>
+            </section>
+
+            <section class="slide" data-slide="3">
+                <div class="card genre-card">
+                    <span class="sub-title">Actividad Más Recurrente</span>
+                    <div class="genre-item">
+                        <span class="genre-rank">#1</span>
+                        <h2 class="genre-name">Noches de Películas 🍿</h2>
+                        <p class="genre-detail">Vistas: Más de 30</p>
+                    </div>
+                    <p class="summary-text">Tú siempre eligiendo la más larga para tener más tiempo acurrucados.</p>
+                    <button class="next-button small" onclick="nextSlide()">Siguiente</button>
+                </div>
+            </section>
+
+            <section class="slide" data-slide="4">
+                <div class="card final-card">
+                    <span class="sub-title">Gracias por estos 7 meses</span>
+                    <h2 class="final-message">Eres la mejor actualización que mi vida pudo recibir.</h2>
+                    <p class="summary-text final-note">¡Feliz mesversario, mi amor! Por muchos más resúmenes juntos.</p>
+                    <button class="next-button" onclick="window.location.reload()">Ver de Nuevo</button>
+                </div>
+            </section>
+
+        </div>
+        
+        <div class="pagination">
+            <span id="page-indicator">1/4</span>
+        </div>
+
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
