@@ -1,278 +1,873 @@
-// Variables globales
-let currentSlide = 0;
-const totalSlides = 9; // 9 slides después de la pantalla de inicio
-let starsInitialized = false;
-
-// Inicializar canvas de estrellas cuando cargue la página
-window.addEventListener('load', () => {
-    initStars();
-});
-
-// Función para crear estrellas animadas
-function initStars() {
-    const canvas = document.getElementById('stars-canvas');
-    const ctx = canvas.getContext('2d');
-    
-    // Ajustar tamaño del canvas
-    canvas.width = window.innerWidth;
-    canvas.height = window.innerHeight;
-    
-    // Array de estrellas
-    const stars = [];
-    const starCount = 200;
-    
-    // Crear estrellas
-    for (let i = 0; i < starCount; i++) {
-        stars.push({
-            x: Math.random() * canvas.width,
-            y: Math.random() * canvas.height,
-            radius: Math.random() * 2,
-            vx: Math.random() * 0.5 - 0.25,
-            vy: Math.random() * 0.5 - 0.25,
-            opacity: Math.random(),
-            twinkleSpeed: Math.random() * 0.02 + 0.01
-        });
-    }
-    
-    // Colores de estrellas (tonos lilas y rosas)
-    const colors = [
-        'rgba(167, 139, 250, ',  // Lila
-        'rgba(240, 171, 252, ',  // Rosa claro
-        'rgba(236, 72, 153, ',   // Rosa fuerte
-        'rgba(255, 255, 255, '   // Blanco
-    ];
-    
-    // Animar estrellas
-    function animate() {
-        // Fondo con gradiente
-        const gradient = ctx.createRadialGradient(
-            canvas.width / 2, canvas.height / 2, 0,
-            canvas.width / 2, canvas.height / 2, canvas.width
-        );
-        gradient.addColorStop(0, '#1a0b2e');
-        gradient.addColorStop(0.5, '#16051a');
-        gradient.addColorStop(1, '#0a0118');
-        
-        ctx.fillStyle = gradient;
-        ctx.fillRect(0, 0, canvas.width, canvas.height);
-        
-        // Dibujar y animar estrellas
-        stars.forEach(star => {
-            // Actualizar opacidad (efecto de parpadeo)
-            star.opacity += star.twinkleSpeed;
-            if (star.opacity > 1 || star.opacity < 0) {
-                star.twinkleSpeed = -star.twinkleSpeed;
-            }
-            
-            // Mover estrella
-            star.x += star.vx;
-            star.y += star.vy;
-            
-            // Reaparecer en el otro lado
-            if (star.x < 0) star.x = canvas.width;
-            if (star.x > canvas.width) star.x = 0;
-            if (star.y < 0) star.y = canvas.height;
-            if (star.y > canvas.height) star.y = 0;
-            
-            // Dibujar estrella
-            ctx.beginPath();
-            ctx.arc(star.x, star.y, star.radius, 0, Math.PI * 2);
-            const colorIndex = Math.floor(Math.random() * colors.length);
-            ctx.fillStyle = colors[colorIndex] + Math.max(0.3, star.opacity) + ')';
-            ctx.fill();
-            
-            // Añadir brillo
-            if (star.opacity > 0.7) {
-                ctx.beginPath();
-                ctx.arc(star.x, star.y, star.radius * 2, 0, Math.PI * 2);
-                ctx.fillStyle = colors[colorIndex] + (star.opacity * 0.3) + ')';
-                ctx.fill();
-            }
-        });
-        
-        requestAnimationFrame(animate);
-    }
-    
-    animate();
-    starsInitialized = true;
-    
-    // Redimensionar canvas
-    window.addEventListener('resize', () => {
-        canvas.width = window.innerWidth;
-        canvas.height = window.innerHeight;
-    });
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
 }
 
-// Función para iniciar el wrapped
-function startWrapped() {
-    // Ocultar pantalla de inicio
-    document.getElementById('start-screen').classList.remove('active');
-    
-    // Mostrar navegación
-    document.getElementById('navigation').style.display = 'flex';
-    
-    // Mostrar reproductor de música
-    document.getElementById('music-player').style.display = 'block';
-    
-    // Reproducir música
-    const music = document.getElementById('background-music');
-    music.volume = 0.2; // Volumen al 20%
-    
-    // Intentar reproducir
-    music.play().then(() => {
-        console.log('Música reproduciéndose');
-        document.getElementById('play-icon').textContent = '⏸️';
-    }).catch(e => {
-        console.log('No se pudo reproducir automáticamente, se requiere interacción del usuario');
-        document.getElementById('play-icon').textContent = '▶️';
-    });
-    
-    // Mostrar primer slide
-    showSlide(1);
-    
-    // Crear dots de navegación
-    createDots();
+body {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+    overflow: hidden;
+    background: #0a0118;
+    color: white;
+    min-height: 100vh;
+    position: relative;
 }
 
-// Función para pausar/reproducir música
-function togglePlay() {
-    const music = document.getElementById('background-music');
-    const playIcon = document.getElementById('play-icon');
-    
-    if (music.paused) {
-        music.play();
-        playIcon.textContent = '⏸️';
-    } else {
-        music.pause();
-        playIcon.textContent = '▶️';
-    }
+/* Canvas de estrellas */
+#stars-canvas {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    z-index: 0;
 }
 
-// Función para cambiar volumen
-function changeVolume(value) {
-    const music = document.getElementById('background-music');
-    const volumeText = document.getElementById('volume-text');
-    
-    music.volume = value / 100;
-    volumeText.textContent = value + '%';
+/* Reproductor de música */
+#music-player {
+    position: fixed;
+    top: 20px;
+    left: 20px;
+    background: rgba(167, 139, 250, 0.15);
+    backdrop-filter: blur(20px);
+    border: 2px solid rgba(167, 139, 250, 0.3);
+    border-radius: 20px;
+    padding: 1rem 1.5rem;
+    z-index: 200;
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3);
+    min-width: 300px;
+    transition: all 0.3s ease;
 }
 
-// Crear puntos de navegación
-function createDots() {
-    const dotsContainer = document.getElementById('dots-container');
-    dotsContainer.innerHTML = '';
-    
-    for (let i = 0; i < totalSlides; i++) {
-        const dot = document.createElement('div');
-        dot.className = 'dot';
-        if (i === 0) dot.classList.add('active');
-        dotsContainer.appendChild(dot);
-    }
+#music-player:hover {
+    background: rgba(167, 139, 250, 0.2);
+    border-color: rgba(240, 171, 252, 0.5);
+    box-shadow: 0 15px 50px rgba(240, 171, 252, 0.3);
 }
 
-// Mostrar slide específico
-function showSlide(slideNumber) {
-    // Ocultar todos los slides
-    const allSlides = document.querySelectorAll('.screen');
-    allSlides.forEach(slide => {
-        slide.classList.remove('active');
-    });
-    
-    // Mostrar el slide actual
-    const currentSlideElement = document.getElementById(`slide-${slideNumber}`);
-    if (currentSlideElement) {
-        setTimeout(() => {
-            currentSlideElement.classList.add('active');
-        }, 50);
-    }
-    
-    // Actualizar dots
-    updateDots(slideNumber - 1);
-    
-    // Actualizar botones
-    updateButtons(slideNumber);
-    
-    currentSlide = slideNumber;
+.player-content {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
 }
 
-// Actualizar indicadores de navegación
-function updateDots(index) {
-    const dots = document.querySelectorAll('.dot');
-    dots.forEach((dot, i) => {
-        if (i === index) {
-            dot.classList.add('active');
-        } else {
-            dot.classList.remove('active');
-        }
-    });
+.player-info {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
 }
 
-// Actualizar estado de botones
-function updateButtons(slideNumber) {
-    const prevBtn = document.getElementById('prev-btn');
-    const nextBtn = document.getElementById('next-btn');
-    
-    // Deshabilitar botón anterior en el primer slide
-    if (slideNumber === 1) {
-        prevBtn.disabled = true;
-    } else {
-        prevBtn.disabled = false;
-    }
-    
-    // Deshabilitar botón siguiente en el último slide
-    if (slideNumber === totalSlides) {
-        nextBtn.disabled = true;
-    } else {
-        nextBtn.disabled = false;
-    }
+.album-art {
+    width: 50px;
+    height: 50px;
+    background: rgba(240, 171, 252, 0.2);
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.5rem;
 }
 
-// Siguiente slide
-function nextSlide() {
-    if (currentSlide < totalSlides) {
-        showSlide(currentSlide + 1);
-    }
+.song-info {
+    flex: 1;
 }
 
-// Slide anterior
-function prevSlide() {
-    if (currentSlide > 1) {
-        showSlide(currentSlide - 1);
-    }
+.song-title {
+    font-size: 0.95rem;
+    font-weight: 700;
+    color: white;
+    margin-bottom: 0.2rem;
 }
 
-// Navegación con teclado
-document.addEventListener('keydown', (e) => {
-    if (e.key === 'ArrowRight') {
-        nextSlide();
-    } else if (e.key === 'ArrowLeft') {
-        prevSlide();
+.song-artist {
+    font-size: 0.8rem;
+    color: rgba(255, 255, 255, 0.7);
+}
+
+.player-controls {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+}
+
+.control-btn {
+    background: rgba(240, 171, 252, 0.2);
+    border: 2px solid rgba(240, 171, 252, 0.3);
+    color: white;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    cursor: pointer;
+    font-size: 1.2rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.3s ease;
+}
+
+.control-btn:hover {
+    background: rgba(240, 171, 252, 0.3);
+    border-color: rgba(240, 171, 252, 0.5);
+    transform: scale(1.1);
+}
+
+.volume-control {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    flex: 1;
+}
+
+.volume-icon {
+    font-size: 1.2rem;
+}
+
+#volume-slider {
+    flex: 1;
+    height: 6px;
+    border-radius: 5px;
+    background: rgba(255, 255, 255, 0.2);
+    outline: none;
+    -webkit-appearance: none;
+}
+
+#volume-slider::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 16px;
+    height: 16px;
+    border-radius: 50%;
+    background: #f0abfc;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+#volume-slider::-webkit-slider-thumb:hover {
+    background: #ec4899;
+    transform: scale(1.2);
+}
+
+#volume-slider::-moz-range-thumb {
+    width: 16px;
+    height: 16px;
+    border-radius: 50%;
+    background: #f0abfc;
+    cursor: pointer;
+    border: none;
+}
+
+#volume-text {
+    font-size: 0.85rem;
+    color: rgba(255, 255, 255, 0.8);
+    min-width: 35px;
+    font-weight: 600;
+}
+
+/* Contenedor principal */
+#app {
+    position: relative;
+    width: 100%;
+    height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 1;
+}
+
+/* Pantallas */
+.screen {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    display: none;
+    align-items: center;
+    justify-content: center;
+    padding: 2rem;
+    opacity: 0;
+    transition: opacity 0.7s ease-in-out;
+}
+
+.screen.active {
+    display: flex;
+    opacity: 1;
+}
+
+.content-center {
+    max-width: 900px;
+    width: 100%;
+    text-align: center;
+}
+
+/* Pantalla de inicio */
+.sparkle {
+    font-size: 5rem;
+    animation: bounce 2s infinite;
+    margin-bottom: 1rem;
+}
+
+@keyframes bounce {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-20px); }
+}
+
+.main-title {
+    font-size: 5rem;
+    font-weight: 900;
+    margin-bottom: 1rem;
+    background: linear-gradient(135deg, #a78bfa 0%, #ec4899 50%, #f472b6 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    letter-spacing: -2px;
+}
+
+.subtitle {
+    font-size: 2rem;
+    margin-bottom: 0.5rem;
+    opacity: 0.9;
+}
+
+.for-text {
+    font-size: 1.5rem;
+    margin-bottom: 2rem;
+    opacity: 0.8;
+}
+
+.start-btn {
+    background: linear-gradient(135deg, #a78bfa 0%, #ec4899 100%);
+    color: white;
+    border: none;
+    padding: 1.5rem 3rem;
+    font-size: 1.5rem;
+    font-weight: 700;
+    border-radius: 50px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 10px 40px rgba(167, 139, 250, 0.4);
+}
+
+.start-btn:hover {
+    transform: scale(1.05);
+    box-shadow: 0 15px 50px rgba(167, 139, 250, 0.6);
+}
+
+/* Títulos de slides */
+.slide-title {
+    font-size: 3.5rem;
+    font-weight: 900;
+    margin-bottom: 3rem;
+    background: linear-gradient(135deg, #f0abfc 0%, #ec4899 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+
+/* Contador de días grande */
+.big-stat {
+    margin: 3rem 0;
+}
+
+.big-number {
+    font-size: 8rem;
+    font-weight: 900;
+    background: linear-gradient(135deg, #a78bfa 0%, #ec4899 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    line-height: 1;
+    margin-bottom: 1rem;
+}
+
+.big-label {
+    font-size: 2rem;
+    opacity: 0.9;
+    font-weight: 600;
+}
+
+.date-info {
+    margin-top: 2rem;
+}
+
+.date-info p {
+    font-size: 1.3rem;
+    margin: 0.5rem 0;
+    opacity: 0.8;
+}
+
+.small-text {
+    font-size: 1.1rem !important;
+    opacity: 0.7 !important;
+}
+
+/* Estadísticas de mensajes */
+.message-stats {
+    display: flex;
+    justify-content: center;
+}
+
+.big-stat-card {
+    background: rgba(167, 139, 250, 0.1);
+    backdrop-filter: blur(20px);
+    border: 2px solid rgba(167, 139, 250, 0.3);
+    border-radius: 30px;
+    padding: 3rem;
+    max-width: 600px;
+    box-shadow: 0 20px 60px rgba(167, 139, 250, 0.2);
+}
+
+.stat-icon-large {
+    font-size: 5rem;
+    margin-bottom: 1rem;
+}
+
+.stat-number-huge {
+    font-size: 5rem;
+    font-weight: 900;
+    margin-bottom: 1rem;
+    color: #f0abfc;
+}
+
+.stat-label-big {
+    font-size: 2rem;
+    margin-bottom: 2rem;
+    opacity: 0.9;
+}
+
+.stat-breakdown {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    margin-top: 2rem;
+}
+
+.breakdown-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1rem;
+    background: rgba(255, 255, 255, 0.05);
+    border-radius: 15px;
+    font-size: 1.1rem;
+}
+
+.breakdown-value {
+    font-weight: 700;
+    color: #f0abfc;
+}
+
+/* Estadísticas */
+.stats-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 1.5rem;
+    margin-top: 2rem;
+}
+
+.stat-card {
+    background: rgba(167, 139, 250, 0.1);
+    backdrop-filter: blur(20px);
+    border: 2px solid rgba(167, 139, 250, 0.2);
+    border-radius: 25px;
+    padding: 2rem;
+    transition: all 0.3s ease;
+    cursor: pointer;
+}
+
+.stat-card:hover {
+    transform: translateY(-10px);
+    background: rgba(167, 139, 250, 0.2);
+    border-color: rgba(240, 171, 252, 0.5);
+    box-shadow: 0 20px 40px rgba(240, 171, 252, 0.3);
+}
+
+.stat-icon {
+    font-size: 3rem;
+    margin-bottom: 1rem;
+}
+
+.stat-number {
+    font-size: 3.5rem;
+    font-weight: 900;
+    margin-bottom: 0.5rem;
+}
+
+.stat-label {
+    font-size: 1.2rem;
+    opacity: 0.8;
+}
+
+/* Lista de juegos */
+.games-list {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    margin-top: 2rem;
+    max-width: 700px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.game-item {
+    background: rgba(167, 139, 250, 0.1);
+    backdrop-filter: blur(20px);
+    border: 2px solid rgba(167, 139, 250, 0.2);
+    border-radius: 20px;
+    padding: 1.5rem;
+    display: flex;
+    align-items: center;
+    gap: 1.5rem;
+    transition: all 0.3s ease;
+    cursor: pointer;
+}
+
+.game-item:hover {
+    background: rgba(167, 139, 250, 0.2);
+    border-color: rgba(240, 171, 252, 0.5);
+    transform: translateX(10px);
+    box-shadow: 0 10px 30px rgba(240, 171, 252, 0.3);
+}
+
+.game-rank {
+    font-size: 2rem;
+    font-weight: 900;
+    opacity: 0.5;
+    min-width: 3rem;
+}
+
+.game-icon {
+    font-size: 2.5rem;
+}
+
+.game-info {
+    flex: 1;
+    text-align: left;
+}
+
+.game-name {
+    font-size: 1.4rem;
+    font-weight: 700;
+    margin-bottom: 0.3rem;
+}
+
+.game-hours {
+    font-size: 1rem;
+    opacity: 0.7;
+}
+
+/* Momentos */
+.moments-list {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    margin-top: 2rem;
+    max-width: 700px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.moment-item {
+    background: rgba(167, 139, 250, 0.1);
+    backdrop-filter: blur(20px);
+    border: 2px solid rgba(167, 139, 250, 0.2);
+    border-radius: 20px;
+    padding: 1.5rem;
+    display: flex;
+    align-items: center;
+    gap: 1.5rem;
+    transition: all 0.3s ease;
+    cursor: pointer;
+}
+
+.moment-item:hover {
+    background: rgba(167, 139, 250, 0.2);
+    border-color: rgba(240, 171, 252, 0.5);
+    transform: translateX(10px);
+    box-shadow: 0 10px 30px rgba(240, 171, 252, 0.3);
+}
+
+.moment-rank {
+    font-size: 2rem;
+    font-weight: 900;
+    opacity: 0.5;
+    min-width: 3rem;
+}
+
+.moment-emoji {
+    font-size: 2.5rem;
+}
+
+.moment-text {
+    font-size: 1.3rem;
+    font-weight: 600;
+    flex: 1;
+    text-align: left;
+}
+
+/* Género */
+.genre-card {
+    background: rgba(167, 139, 250, 0.1);
+    backdrop-filter: blur(20px);
+    border: 2px solid rgba(167, 139, 250, 0.3);
+    border-radius: 30px;
+    padding: 3rem;
+    margin: 2rem auto;
+    max-width: 600px;
+    box-shadow: 0 20px 60px rgba(167, 139, 250, 0.2);
+    transition: all 0.3s ease;
+    cursor: pointer;
+}
+
+.genre-card:hover {
+    transform: scale(1.05);
+    background: rgba(167, 139, 250, 0.15);
+    border-color: rgba(240, 171, 252, 0.5);
+    box-shadow: 0 30px 80px rgba(240, 171, 252, 0.4);
+}
+
+.genre-icon {
+    font-size: 5rem;
+    margin-bottom: 1rem;
+}
+
+.genre-name {
+    font-size: 4rem;
+    font-weight: 900;
+    margin-bottom: 1rem;
+}
+
+.genre-subtitle {
+    font-size: 1.5rem;
+    opacity: 0.8;
+}
+
+.genre-description {
+    font-size: 1.3rem;
+    opacity: 0.9;
+    line-height: 1.6;
+    max-width: 600px;
+    margin: 2rem auto 0;
+}
+
+/* Artista */
+.artist-circle {
+    width: 200px;
+    height: 200px;
+    background: rgba(167, 139, 250, 0.1);
+    backdrop-filter: blur(20px);
+    border: 2px solid rgba(167, 139, 250, 0.3);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 2rem auto;
+    animation: pulse 2s infinite;
+    transition: all 0.3s ease;
+    cursor: pointer;
+}
+
+.artist-circle:hover {
+    background: rgba(167, 139, 250, 0.2);
+    border-color: rgba(240, 171, 252, 0.5);
+    box-shadow: 0 20px 50px rgba(240, 171, 252, 0.4);
+}
+
+@keyframes pulse {
+    0%, 100% { transform: scale(1); }
+    50% { transform: scale(1.05); }
+}
+
+.heart-icon {
+    font-size: 6rem;
+}
+
+.artist-name {
+    font-size: 4rem;
+    font-weight: 900;
+    margin-bottom: 1rem;
+}
+
+.artist-subtitle {
+    font-size: 1.5rem;
+    opacity: 0.9;
+    margin-bottom: 2rem;
+}
+
+.song-card {
+    background: rgba(167, 139, 250, 0.1);
+    backdrop-filter: blur(20px);
+    border: 2px solid rgba(167, 139, 250, 0.2);
+    border-radius: 20px;
+    padding: 1.5rem;
+    max-width: 600px;
+    margin: 0 auto;
+    transition: all 0.3s ease;
+    cursor: pointer;
+}
+
+.song-card:hover {
+    background: rgba(167, 139, 250, 0.2);
+    border-color: rgba(240, 171, 252, 0.5);
+    transform: translateY(-5px);
+    box-shadow: 0 15px 40px rgba(240, 171, 252, 0.3);
+}
+
+.song-label {
+    font-size: 1.1rem;
+    opacity: 0.8;
+    margin-bottom: 0.5rem;
+}
+
+.song-name {
+    font-size: 1.5rem;
+    font-weight: 700;
+}
+
+/* Vibe */
+.vibe-list {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+    max-width: 700px;
+    margin: 0 auto;
+}
+
+.vibe-item {
+    background: rgba(167, 139, 250, 0.1);
+    backdrop-filter: blur(20px);
+    border: 2px solid rgba(167, 139, 250, 0.2);
+    border-radius: 20px;
+    padding: 1.5rem;
+    transition: all 0.3s ease;
+    cursor: pointer;
+}
+
+.vibe-item:hover {
+    background: rgba(167, 139, 250, 0.2);
+    border-color: rgba(240, 171, 252, 0.5);
+    transform: translateX(10px);
+    box-shadow: 0 10px 30px rgba(240, 171, 252, 0.3);
+}
+
+.vibe-label {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 0.75rem;
+    font-size: 1.3rem;
+    font-weight: 600;
+}
+
+.vibe-bar {
+    width: 100%;
+    height: 12px;
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 10px;
+    overflow: hidden;
+}
+
+.vibe-fill {
+    height: 100%;
+    border-radius: 10px;
+    transition: width 1s ease;
+}
+
+/* Final */
+.final-heart {
+    font-size: 6rem;
+    animation: pulse 2s infinite;
+    margin-bottom: 1rem;
+}
+
+.final-text {
+    font-size: 1.5rem;
+    line-height: 1.8;
+    margin-bottom: 2rem;
+    opacity: 0.95;
+    max-width: 700px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.final-card {
+    background: rgba(167, 139, 250, 0.1);
+    backdrop-filter: blur(20px);
+    border: 2px solid rgba(167, 139, 250, 0.3);
+    border-radius: 30px;
+    padding: 2.5rem;
+    max-width: 600px;
+    margin: 2rem auto;
+    box-shadow: 0 20px 60px rgba(167, 139, 250, 0.2);
+    transition: all 0.3s ease;
+    cursor: pointer;
+}
+
+.final-card:hover {
+    transform: scale(1.05);
+    background: rgba(167, 139, 250, 0.15);
+    border-color: rgba(240, 171, 252, 0.5);
+    box-shadow: 0 30px 80px rgba(240, 171, 252, 0.4);
+}
+
+.final-love {
+    font-size: 2.5rem;
+    font-weight: 900;
+    margin-bottom: 1rem;
+}
+
+.final-forever {
+    font-size: 1.3rem;
+    opacity: 0.9;
+}
+
+.final-date {
+    font-size: 1.2rem;
+    opacity: 0.8;
+    margin-top: 2rem;
+}
+
+/* Navegación */
+#navigation {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    padding: 2rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    z-index: 100;
+}
+
+.nav-btn {
+    background: rgba(167, 139, 250, 0.2);
+    backdrop-filter: blur(10px);
+    border: 2px solid rgba(167, 139, 250, 0.3);
+    color: white;
+    padding: 1rem 2rem;
+    border-radius: 50px;
+    font-size: 1rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.nav-btn:hover:not(:disabled) {
+    background: rgba(167, 139, 250, 0.3);
+    border-color: rgba(240, 171, 252, 0.5);
+    transform: scale(1.05);
+}
+
+.nav-btn:disabled {
+    opacity: 0;
+    cursor: not-allowed;
+}
+
+.dots {
+    display: flex;
+    gap: 0.5rem;
+}
+
+.dot {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.3);
+    transition: all 0.3s ease;
+}
+
+.dot.active {
+    width: 30px;
+    border-radius: 5px;
+    background: #f0abfc;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .main-title {
+        font-size: 3rem;
     }
-});
 
-// Navegación con swipe en móvil
-let touchStartX = 0;
-let touchEndX = 0;
-
-document.addEventListener('touchstart', (e) => {
-    touchStartX = e.changedTouches[0].screenX;
-});
-
-document.addEventListener('touchend', (e) => {
-    touchEndX = e.changedTouches[0].screenX;
-    handleSwipe();
-});
-
-function handleSwipe() {
-    const swipeThreshold = 50;
-    
-    if (touchEndX < touchStartX - swipeThreshold) {
-        // Swipe izquierda - siguiente
-        nextSlide();
+    .slide-title {
+        font-size: 2.5rem;
+        margin-bottom: 2rem;
     }
-    
-    if (touchEndX > touchStartX + swipeThreshold) {
-        // Swipe derecha - anterior
-        prevSlide();
+
+    .big-number {
+        font-size: 5rem;
+    }
+
+    .stat-number-huge {
+        font-size: 3.5rem;
+    }
+
+    .stat-number {
+        font-size: 2.5rem;
+    }
+
+    .genre-name, .artist-name {
+        font-size: 2.5rem;
+    }
+
+    .stats-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    .moment-text, .game-name {
+        font-size: 1.1rem;
+    }
+
+    .final-text {
+        font-size: 1.2rem;
+    }
+
+    #navigation {
+        padding: 1rem;
+    }
+
+    .nav-btn {
+        padding: 0.75rem 1.5rem;
+        font-size: 0.9rem;
+    }
+
+    .big-stat-card {
+        padding: 2rem;
+    }
+
+    /* Reproductor móvil */
+    #music-player {
+        top: 10px;
+        left: 10px;
+        right: 10px;
+        min-width: auto;
+        padding: 0.75rem 1rem;
+    }
+
+    .song-title {
+        font-size: 0.85rem;
+    }
+
+    .song-artist {
+        font-size: 0.75rem;
+    }
+
+    .album-art {
+        width: 40px;
+        height: 40px;
+        font-size: 1.2rem;
+    }
+
+    .control-btn {
+        width: 35px;
+        height: 35px;
+        font-size: 1rem;
+    }
+
+    .volume-control {
+        gap: 0.3rem;
+    }
+
+    #volume-text {
+        font-size: 0.75rem;
+        min-width: 30px;
     }
 }
