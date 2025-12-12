@@ -41,28 +41,31 @@
     <div id="app">
         <!-- Pantalla de inicio -->
         <div id="start-screen" class="screen active">
-            <div class="content-center">
-                <div class="envelope-container">
-                    <div class="envelope" id="envelope">
-                        <div class="envelope-flap"></div>
-                        <div class="envelope-body">
-                            <div class="letter" id="letter">
-                                <div class="letter-content">
-                                    <p class="letter-text">Mi amor,</p>
-                                    <p class="letter-text">En estos 7 meses hemos vivido tantas cosas increíbles juntos... risas, aventuras, momentos únicos.</p>
-                                    <p class="letter-text">Todo el mundo tiene su Wrapped, así que también hice uno para nosotros 💕</p>
-                                    <p class="letter-text-bold">¿Lista para ver nuestro Wrapped?</p>
-                                </div>
-                            </div>
+            <div class="content-center-full">
+                <!-- Carta en el suelo -->
+                <div class="letter-on-floor" id="letter-floor" onclick="pickUpLetter()">
+                    <div class="letter-envelope">
+                        <div class="envelope-stamp">💕</div>
+                        <div class="envelope-text">Para ti, mi amor</div>
+                    </div>
+                    <div class="click-hint">Click para abrir 👆</div>
+                </div>
+
+                <!-- Carta abierta con contenido -->
+                <div class="opened-letter" id="opened-letter" style="display: none;">
+                    <div class="letter-paper">
+                        <div class="letter-header">Mi amor 💕</div>
+                        <div class="letter-body">
+                            <p>En estos 7 meses hemos vivido tantas cosas increíbles juntos...</p>
+                            <p>Risas, aventuras, momentos únicos.</p>
+                            <p>Todo el mundo tiene su Wrapped, así que también hice uno para nosotros 💝</p>
+                            <p class="letter-question">¿Lista para ver nuestro Wrapped?</p>
                         </div>
+                        <button class="start-btn-letter" onclick="startWrapped()">
+                            ¡Sí, vamos! ✨
+                        </button>
                     </div>
                 </div>
-                <button class="start-btn" id="open-btn" onclick="openEnvelope()">
-                    Abrir carta 💌
-                </button>
-                <button class="start-btn" id="start-btn" style="display: none;" onclick="startWrapped()">
-                    ¡Ver nuestro Wrapped! ✨
-                </button>
             </div>
         </div>
 
@@ -86,7 +89,7 @@
             <div class="content-center">
                 <h2 class="slide-title">Hemos compartido...</h2>
                 <div class="message-stats">
-                    <div class="big-stat-card">
+                    <div class="big-stat-card small-card">
                         <div class="stat-icon-large">💬</div>
                         <div class="stat-number-huge">~21,400</div>
                         <div class="stat-label-big">Mensajes</div>
