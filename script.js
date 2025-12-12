@@ -1,49 +1,49 @@
 document.addEventListener('DOMContentLoaded', async () => {
-    const response = await fetch('datos.json');
-    const data = await response.json();
+  const res = await fetch('datos.json');
+  const data = await res.json();
 
-    // Calcular días juntos
-    const startDate = new Date(data.fecha_inicio);
-    const currentDate = new Date('2025-12-12'); // Fecha actual
-    const daysTogether = Math.floor((currentDate - startDate) / (1000 * 60 * 60 * 24));
-    document.getElementById('dias-juntos').textContent = `Días juntos: ${daysTogether} (¡y contando en el mundo virtual!)`;
+  // Días juntos
+  const inicio = new Date(data.fecha_inicio);
+  const hoy = new Date('2025-12-12');
+  const dias = Math.floor((hoy - inicio) / (1000*60*60*24));
+  document.getElementById('dias-juntos').textContent = `${dias} días de amor a distancia y contando ♡`;
 
-    // Canción principal
-    document.getElementById('cancion-principal').textContent = data.cancion_principal;
+  // Canción principal
+  document.getElementById('cancion-principal').textContent = data.cancion_principal;
 
-    // Renderizar meses
-    const mesesSection = document.getElementById('meses-section');
-    data.meses.forEach(mes => {
-        const card = document.createElement('div');
-        card.className = 'col-md-4 mes-card';
-        card.innerHTML = `
-            <img src="${mes.foto}" alt="Foto Mes ${mes.mes}" class="img-portada">
-            <h3>Mes ${mes.mes}: ${mes.titulo}</h3>
-            <p>Canción dedicada: ${mes.cancion_dedicada}</p>
-            <ul>${mes.momentos.map(m => `<li>${m}</li>`).join('')}</ul>
-        `;
-        mesesSection.appendChild(card);
-    });
+  // Slider meses
+  const slider = document.getElementById('meses-slider');
+  data.meses.forEach((mes, i) => {
+    const active = i === 0 ? 'active' : '';
+    slider.innerHTML += `
+      <div class="carousel-item ${active}">
+        <div class="mes-card">
+          <h3>Mes ${mes.mes}</h3>
+          <h4>${mes.titulo}</h4>
+          <p><strong>Canción dedicada:</strong> ${mes.cancion_dedicada}</p>
+          <ul class="text-start mt-3">
+            ${mes.momentos.map(m => `<li>${m}</li>`).join('')}
+          </ul>
+        </div>
+      </div>`;
+  });
 
-    // Renderizar juegos
-    const juegosSection = document.getElementById('juegos-section');
-    data.juegos_top.forEach(juego => {
-        const card = document.createElement('div');
-        card.className = 'col-md-4 juego-card';
-        card.innerHTML = `
-            <img src="${juego.portada}" alt="${juego.nombre}" class="img-portada">
-            <h4>${juego.nombre}</h4>
-            <p>${juego.stats}</p>
-        `;
-        juegosSection.appendChild(card);
-    });
+  // Juegos
+  const juegosSec = document.getElementById('juegos-section');
+  data.juegos_top.forEach(juego => {
+    juegosSec.innerHTML += `
+      <div class="col-lg-4 col-md-6">
+        <div class="juego-card" data-aos="zoom-in">
+          <img src="${juego.portada}" alt="${juego.nombre}">
+          <h4>${juego.nombre}</h4>
+          <p>${juego.stats}</p>
+        </div>
+      </div>`;
+  });
 
-    // Renderizar top momentos
-    const topMomentos = document.getElementById('top-momentos');
-    data.top_momentos.forEach(momento => {
-        const li = document.createElement('li');
-        li.className = 'list-group-item';
-        li.textContent = momento;
-        topMomentos.appendChild(li);
-    });
+  // Top momentos
+  const topSec = document.getElementById('top-momentos');
+  data.top_momentos.forEach((m, i) => {
+    topSec.innerHTML += `<div class="momento" data-aos="fade-up" data-aos-delay="${i*100}">#${i+1} ${m}</div>`;
+  });
 });
