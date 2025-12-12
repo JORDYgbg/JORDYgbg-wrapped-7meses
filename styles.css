@@ -392,28 +392,6 @@ body {
     box-shadow: 0 20px 60px rgba(167, 139, 250, 0.2);
 }
 
-.big-stat-card.small-card {
-    max-width: 500px;
-    padding: 2rem;
-}
-
-.big-stat-card.small-card .stat-number-huge {
-    font-size: 4rem;
-}
-
-.big-stat-card.small-card .stat-label-big {
-    font-size: 1.5rem;
-}
-
-.big-stat-card.small-card .stat-breakdown {
-    margin-top: 1.5rem;
-}
-
-.big-stat-card.small-card .breakdown-item {
-    padding: 0.75rem;
-    font-size: 1rem;
-}
-
 .stat-icon-large {
     font-size: 5rem;
     margin-bottom: 1rem;
@@ -931,10 +909,6 @@ body {
         padding: 2rem;
     }
 
-    .big-stat-card.small-card {
-        padding: 1.5rem;
-    }
-
     /* Reproductor móvil */
     #music-player {
         top: 10px;
@@ -971,31 +945,5 @@ body {
     #volume-text {
         font-size: 0.75rem;
         min-width: 30px;
-    }
-
-    /* Carta móvil */
-    .envelope {
-        width: 250px;
-        height: 170px;
-    }
-
-    .envelope-flap {
-        border-left: 125px solid transparent;
-        border-right: 125px solid transparent;
-        border-bottom: 85px solid #a78bfa;
-    }
-
-    .letter {
-        width: 220px;
-        height: 280px;
-        padding: 1rem;
-    }
-
-    .letter-content {
-        font-size: 0.8rem;
-    }
-
-    .envelope.open .letter {
-        transform: translateY(-120px);
     }
 }
