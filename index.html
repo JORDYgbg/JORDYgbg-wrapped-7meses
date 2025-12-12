@@ -3,69 +3,77 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>JORDY & Tú • 7 Meses 2025</title>
-  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700;800;900&display=swap" rel="stylesheet">
+  <title>JORDY & Tú • Checkpoint 7 Meses 2025</title>
   <link rel="stylesheet" href="style.css">
   <script src="https://cdn.jsdelivr.net/npm/particles.js@2.0.0/particles.min.js"></script>
 </head>
 <body>
 
   <div id="particles-js"></div>
-  <div class="overlay"></div>
 
   <!-- Flechas navegación -->
-  <div class="nav-arrows">
-    <button class="nav-btn" id="prev-btn" onclick="prev()">←</button>
-    <button class="nav-btn" id="next-btn" onclick="next()">→</button>
+  <div class="nav">
+    <button class="nav-btn" id="prev">←</button>
+    <button class="nav-btn" id="next">→</button>
   </div>
 
   <!-- Portada -->
-  <section id="s0" class="section active">
-    <div class="content text-center">
+  <section id="cover" class="page active">
+    <div class="card">
       <h1 class="title">CHECKPOINT 2025</h1>
       <h2 class="subtitle">7 meses juntos</h2>
-      <p class="fs-1" id="dias-juntos">cargando…</p>
-      <p class="fs-3 mt-4">Novios virtuales que se quieren en 8K ❤️</p>
-      <button class="nav-btn mt-5" style="width:auto;padding:1rem 3rem;font-size:1.8rem;" onclick="next()">Empezar</button>
+      <p class="big-text" id="dias-juntos">cargando…</p>
+      <p class="big-text">Novios virtuales que se quieren en 8K ❤️</p>
+      <button class="start-btn" onclick="nextPage()">Empezar</button>
     </div>
   </section>
 
-  <!-- Contenedor meses -->
+  <!-- Meses dinámicos -->
   <div id="meses-container"></div>
 
   <!-- Juegos -->
-  <section id="juegos" class="section">
-    <div class="content text-center">
+  <section id="juegos" class="page">
+    <div class="card">
       <h1 class="title">Top 5 juegos donde fuimos leyenda</h1>
-      <div class="game-grid" id="juegos-grid"></div>
+      <div id="juegos-grid"></div>
     </div>
   </section>
 
   <!-- Final -->
-  <section id="final" class="section">
-    <div class="content text-center">
+  <section id="final" class="page">
+    <div class="card">
       <h1 class="title">Canción que más me sonó a ti</h1>
-      <p class="fs-2 mb-5" id="cancion-principal"></p>
-
-      <h1 class="title">Momentos que nunca olvidaremos</h1>
+      <p class="song" id="cancion-principal"></p>
+      <h1 class="title mt-5">Momentos que nunca olvidaremos</h1>
       <div id="momentos-grid"></div>
     </div>
   </section>
 
-  <div class="progress" id="progress"></div>
-
   <script>
     let current = 0;
-    const sections = [];
+    const pages = [];
 
+    function nextPage() {
+      if (current >= pages.length - 1) return;
+      pages[current].classList.remove('active');
+      current++;
+      pages[current].classList.add('active');
+      updateNav();
+    }
+    function prevPage() {
+      if (current <= 0) return;
+      pages[current].classList.remove('active');
+      current--;
+      pages[current].classList.add('active');
+      updateNav();
+    }
     function updateNav() {
-      document.getElementById('prev-btn').disabled = current === 0;
-      document.getElementById('next-btn').disabled = current === sections.length - 1;
-      document.getElementById('progress').style.width = (current / (sections.length - 1) * 100) + '%';
+      document.getElementById('prev').disabled = current === 0;
+      document.getElementById('next').disabled = current === pages.length - 1;
     }
 
-    function next() { if (current < sections.length - 1) { sections[current].classList.add('prev'); current++; sections[current].classList.add('active'); updateNav(); window.scrollTo(0,0); } }
-    function prev() { if (current > 0) { sections[current].classList.remove('active'); current--; sections[current].classList.remove('prev'); sections[current].classList.add('active'); updateNav(); window.scrollTo(0,0); } }
+    document.getElementById('next').onclick = nextPage;
+    document.getElementById('prev').onclick = prevPage;
 
     fetch('datos.json')
       .then(r => r.json())
@@ -73,66 +81,67 @@
         const inicio = new Date(data.fecha_inicio);
         const hoy = new Date();
         const dias = Math.floor((hoy - inicio) / 86400000);
-        document.getElementById('dias-juntos').innerHTML = `<strong>${dias}</strong> días juntos y contando… ❤️`;
+        document.getElementById('dias-juntos').innerText = `${dias} días juntos y contando… ❤️`;
 
-        document.getElementById('cancion-principal').textContent = data.cancion_principal;
+        document.getElementById('cancion-principal').innerText = data.cancion_principal;
 
         // Portada
-        sections.push(document.getElementById('s0'));
+        pages.push(document.getElementById('cover'));
 
-        // Cada mes con scroll
+        // Cada mes = una página completa
         const container = document.getElementById('meses-container');
         data.meses.forEach((mes, i) => {
-          const sec = document.createElement('section');
-          sec.className = 'section';
-          sec.innerHTML = `
-            <div class="content">
+          const page = document.createElement('section');
+          page.className = 'page';
+          page.innerHTML = `
+            <div class="card">
               <h1 class="title">Mes ${mes.mes}</h1>
               <h2 class="subtitle">${mes.titulo}</h2>
-              <h3>Canción dedicada:</h3>
-              <p class="fs-3 mb-4">${mes.cancion_dedicada}</p>
-              ${mes.momentos.map(m => `<p class="fs-4">• ${m}</p>`).join('')}
+              <div class="text-block">
+                <h3>Canción dedicada:</h3>
+                <p class="song-name">${mes.cancion_dedicada}</p>
+                ${mes.momentos.map(m => `<p class="moment">• ${m}</p>`).join('')}
+              </div>
             </div>
           `;
-          container.appendChild(sec);
-          sections.push(sec);
+          container.appendChild(page);
+          pages.push(page);
         });
 
-        // Juegos (solo imágenes redondas)
+        // Juegos
         const juegosGrid = document.getElementById('juegos-grid');
         data.juegos_top.forEach(j => {
           juegosGrid.innerHTML += `
-            <div class="game-card text-center">
-              <img src="${j.portada}">
-              <h4>${j.nombre}</h4>
+            <div class="game-card">
+              <img src="${j.portada}" alt="${j.nombre}">
+              <h3>${j.nombre}</h3>
               <p>${j.stats}</p>
             </div>
           `;
         });
-        sections.push(document.getElementById('juegos'));
+        pages.push(document.getElementById('juegos'));
 
-        // Momentos finales
+        // Final
         const momentosGrid = document.getElementById('momentos-grid');
         data.top_momentos.forEach((m, i) => {
-          momentosGrid.innerHTML += `<p class="fs-3 mb-4">#${i+1} → ${m}</p>`;
+          momentosGrid.innerHTML += `<p class="moment big">#${i+1} ${m}</p>`;
         });
-        sections.push(document.getElementById('final'));
+        pages.push(document.getElementById('final'));
 
         updateNav();
       });
 
-    // Partículas estilo Discord (cuadraditos pixelados)
+    // Partículas estilo Discord Checkpoint (cuadraditos pixel)
     particlesJS('particles-js', {
       particles: {
-        number: { value: 50, density: { enable: true, value_area: 800 } },
-        color: { value: ['#c792ea', '#8be9fd', '#ff79c6'] },
-        shape: { type: 'polygon', polygon: { nb_sides: 4 } },
+        number: { value: 60 },
+        color: { value: ['#9580ff', '#8be9fd', '#ff79c6'] },
+        shape: { type: 'square' },
         opacity: { value: 0.6, random: true },
-        size: { value: 6, random: true },
-        line_linked: { enable: false },
-        move: { enable: true, speed: 2, direction: 'none', random: true, out_mode: 'out' }
+        size: { value: 5, random: true },
+        move: { enable: true, speed: 1.5, direction: 'none', random: true }
       },
-      interactivity: { detect_on: 'canvas', events: { onhover: { enable: true, mode: 'grab' } } },
+      interactivity: { events: { onhover: { enable: true, mode: 'repulse' } } },
       retina_detect: true
     });
   </script>
