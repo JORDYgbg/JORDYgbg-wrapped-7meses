@@ -1,117 +1,144 @@
-/* -- Variables para estilo Recap -- */
-:root {
-    --color-dark-bg: #12121e; /* Fondo principal oscuro */
-    --color-accent-1: #4CAF50; /* Verde vibrante (similar a Spotify) */
-    --color-accent-2: #FF7043; /* Naranja/Coral de contraste */
-    --color-text-light: #f0f0f0;
-    --color-card-bg: #212133;
-}
+/* style.css */
+/* Estilo profesional como Discord/Spotify: Fondo oscuro con gradiente verde, fonts modernas, animaciones suaves.
+   Big numbers con pulse, cards con shadows, responsive para móvil. Colores: Verde #1DB954, fondo #121212. */
 
-/* Estilos de Contenedor General */
 body {
-    background-color: var(--color-dark-bg);
-    color: var(--color-text-light);
-    font-family: 'Arial', sans-serif;
+    background: linear-gradient(to bottom, #121212, #282828);
+    color: #fff;
+    font-family: 'Helvetica Neue', sans-serif;
     margin: 0;
+    padding: 20px;
     display: flex;
     justify-content: center;
-    align-items: center;
     min-height: 100vh;
 }
 
 #wrapped-container {
+    max-width: 700px;
     width: 100%;
-    max-width: 450px; /* Tamaño de un Story de celular */
-    box-shadow: 0 0 40px rgba(0, 0, 0, 0.7);
-    border-radius: 20px;
-    overflow: hidden;
-    background-color: var(--color-dark-bg);
-}
-
-/* Estilo de las Diapositivas */
-.slide {
-    min-height: 700px;
-    padding: 40px 20px;
-    display: flex;
-    flex-direction: column;
-    justify-content: space-around;
-    align-items: center;
     text-align: center;
-    /* Animación de entrada para cada diapositiva */
-    animation: fadeInSlide 1.5s ease-out;
 }
 
-/* Colores de Fondo de cada Diapositiva */
-.intro-slide { background-color: #1a1b38; } /* Azul oscuro */
-.games-slide { background-color: #0f4c5c; } /* Turquesa oscuro */
-.songs-slide { background-color: #5d2a6b; } /* Púrpura oscuro */
-.moment-slide { 
-    background-color: var(--color-accent-2); 
-    color: var(--color-dark-bg); /* Texto oscuro sobre fondo claro */
-} 
+.slide {
+    background: rgba(30, 215, 96, 0.1); /* Verde sutil */
+    border-radius: 20px;
+    padding: 30px;
+    margin: 30px 0;
+    opacity: 0;
+    transition: opacity 0.8s ease;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4);
+}
 
-/* Tipografía y Métricas */
+.slide.visible {
+    opacity: 1;
+}
+
 .slide-title {
-    font-size: 1.8em;
-    font-weight: 700;
-    color: var(--color-accent-1);
-    margin-bottom: 25px;
-}
-
-.main-number {
-    font-size: 8em; /* El número gigante */
-    font-weight: 900;
-    color: var(--color-accent-1);
-    line-height: 1;
-    margin: 10px 0;
-    animation: popIn 0.8s ease-out;
-}
-
-.large-text {
-    font-size: 2.5em;
-    font-weight: 800;
-    text-transform: uppercase;
-    color: var(--color-accent-2);
+    font-size: 2.2em;
+    color: #1DB954;
+    margin-bottom: 15px;
 }
 
 .small-text {
     font-size: 1em;
-    opacity: 0.8;
+    opacity: 0.7;
 }
 
-/* Componentes Específicos */
+.main-number {
+    font-size: 5em;
+    color: #1DB954;
+    animation: pulse 1.2s infinite;
+}
+
+.large-text {
+    font-size: 1.8em;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
 .game-cover {
-    width: 80%;
-    max-width: 300px;
-    border-radius: 15px;
-    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
-    margin: 20px 0;
-}
-
-.song-card {
-    background: rgba(255, 255, 255, 0.08);
-    padding: 25px;
+    max-width: 180px;
     border-radius: 12px;
-    margin-top: 30px;
-    width: 90%;
+    margin: 15px 0;
 }
 
-.moment-quote {
-    font-size: 1.5em;
+.game-stats, .stat-item {
+    font-size: 1.1em;
+    margin: 8px 0;
+}
+
+.highlight {
+    color: #1DB954;
+    font-weight: 600;
+}
+
+.songs-list, .moments-list {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.song-item, .moment-item {
+    background: rgba(255, 255, 255, 0.08);
+    padding: 12px;
+    border-radius: 10px;
+}
+
+.mes, .fecha {
+    font-size: 0.85em;
+    opacity: 0.6;
+}
+
+.quote, blockquote {
     font-style: italic;
-    margin-top: 20px;
-    padding: 20px;
-    border-left: 5px solid var(--color-dark-bg);
+    margin: 15px 0;
+    opacity: 0.9;
 }
 
-/* Animaciones para el efecto "Recap" */
-@keyframes fadeInSlide {
-    0% { opacity: 0; transform: translateY(20px); }
-    100% { opacity: 1; transform: translateY(0); }
+.play-btn {
+    background: #1DB954;
+    border: none;
+    color: #fff;
+    padding: 8px 20px;
+    border-radius: 30px;
+    cursor: pointer;
+    transition: transform 0.2s;
 }
 
-@keyframes popIn {
-    0% { transform: scale(0.7); opacity: 0; }
-    80% { transform: scale(1.05); }
-    100% { transform: scale(1); opacity: 1; }
+.play-btn:hover {
+    transform: scale(1.05);
+}
+
+.emoji {
+    font-size: 1.4em;
+    margin: 0 4px;
+}
+
+.loading-animation {
+    font-size: 1.4em;
+    animation: fade 1.5s infinite;
+}
+
+@keyframes pulse {
+    0%, 100% { transform: scale(1); }
+    50% { transform: scale(1.03); }
+}
+
+@keyframes fade {
+    0%, 100% { opacity: 0.6; }
+    50% { opacity: 1; }
+}
+
+.fade-in {
+    animation: fadeIn 0.8s forwards;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(15px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+@media (max-width: 500px) {
+    .slide { padding: 20px; }
+    .main-number { font-size: 4em; }
 }
