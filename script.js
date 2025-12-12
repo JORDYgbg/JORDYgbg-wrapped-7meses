@@ -111,11 +111,20 @@ function startWrapped() {
     // Mostrar navegación
     document.getElementById('navigation').style.display = 'flex';
     
+    // Mostrar reproductor de música
+    document.getElementById('music-player').style.display = 'block';
+    
     // Reproducir música
     const music = document.getElementById('background-music');
-    music.volume = 0.3; // Volumen al 30%
-    music.play().catch(e => {
-        console.log('No se pudo reproducir la música automáticamente');
+    music.volume = 0.2; // Volumen al 20%
+    
+    // Intentar reproducir
+    music.play().then(() => {
+        console.log('Música reproduciéndose');
+        document.getElementById('play-icon').textContent = '⏸️';
+    }).catch(e => {
+        console.log('No se pudo reproducir automáticamente, haz click en play');
+        document.getElementById('play-icon').textContent = '▶️';
     });
     
     // Mostrar primer slide
@@ -123,6 +132,29 @@ function startWrapped() {
     
     // Crear dots de navegación
     createDots();
+}
+
+// Función para pausar/reproducir música
+function togglePlay() {
+    const music = document.getElementById('background-music');
+    const playIcon = document.getElementById('play-icon');
+    
+    if (music.paused) {
+        music.play();
+        playIcon.textContent = '⏸️';
+    } else {
+        music.pause();
+        playIcon.textContent = '▶️';
+    }
+}
+
+// Función para cambiar volumen
+function changeVolume(value) {
+    const music = document.getElementById('background-music');
+    const volumeText = document.getElementById('volume-text');
+    
+    music.volume = value / 100;
+    volumeText.textContent = value + '%';
 }
 
 // Crear puntos de navegación
