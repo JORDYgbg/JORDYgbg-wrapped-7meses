@@ -15,28 +15,11 @@
         <source src="on-melancholy-hill.mp3" type="audio/mpeg">
     </audio>
     
-    <!-- Reproductor de música -->
-    <div id="music-player" style="display: none;">
-        <div class="player-content">
-            <div class="player-info">
-                <div class="album-art">🎵</div>
-                <div class="song-info">
-                    <div class="song-title">On Melancholy Hill</div>
-                    <div class="song-artist">Gorillaz</div>
-                </div>
-            </div>
-            <div class="player-controls">
-                <button id="play-pause-btn" class="control-btn" onclick="togglePlay()">
-                    <span id="play-icon">⏸️</span>
-                </button>
-                <div class="volume-control">
-                    <span class="volume-icon">🔊</span>
-                    <input type="range" id="volume-slider" min="0" max="100" value="20" oninput="changeVolume(this.value)">
-                    <span id="volume-text">20%</span>
-                </div>
-            </div>
-        </div>
-    </div>
+<!-- Audio de fondo (se reproducirá automáticamente después del primer clic) -->
+<audio id="background-music" loop preload="auto">
+    <source src="on-melancholy-hill.mp3" type="audio/mpeg">
+    Tu navegador no soporta audio :(
+</audio>
     
     <div id="app">
         <!-- Pantalla de inicio -->
