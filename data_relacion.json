@@ -1,0 +1,53 @@
+{
+    "metadata_wrapped": {
+        "titulo": "Nuestro Wrapped Digital 2024",
+        "descripcion": "Un resumen de nuestros 7 meses de amor virtual.",
+        "fecha_inicio_relacion": "2024-05-15" 
+    },
+    
+    "estadisticas_generales": {
+        "dias_juntos": 0, // Esto lo calcula el script.js
+        "promesa_cumplida": {
+            "descripcion": "Canciones Dedicadas",
+            "valor": 7,
+            "unidad": "Canciones"
+        }
+    },
+    
+    "canciones_dedicadas": [
+        // Rellena aquí tus 7 canciones
+        {
+            "mes": "Mayo",
+            "titulo": "Canción de Inicio",
+            "artista": "Artista A",
+            "contexto": "La primera que me dedicaste."
+        }
+    ],
+    
+    "cancion_mas_representativa": {
+        "titulo": "Título de la Canción que te Recuerda a Ella",
+        "artista": "Nombre del Artista",
+        "razon": "Esta canción me recuerda a ti por la melodía..."
+    },
+    
+    "top_juegos": [
+        // Asegúrate de que las rutas de portada (ej. 'valorant.jpg') existan en tu carpeta 'img/'
+        {
+            "nombre": "Valorant",
+            "sesiones": 52,
+            "horas_estimadas": 150,
+            "rol_favorito": "El 'Support' que nunca muere",
+            "ruta_portada": "img/valorant.jpg"
+        },
+        // ... el resto de tus juegos
+    ],
+    
+    "top_momentos": [
+        {
+            "fecha": "2024-09-01",
+            "titulo": "Nuestro Primer Aniversario Mensual",
+            "descripcion": "La noche que me quedé dormido en llamada contigo..."
+        }
+        // ... el resto de tus momentos
+    ]
+}
