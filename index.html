@@ -7,9 +7,13 @@
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-    <div class="stars"></div>
-    <div class="stars2"></div>
-    <div class="stars3"></div>
+    <!-- Canvas para estrellas -->
+    <canvas id="stars-canvas"></canvas>
+    
+    <!-- Audio de fondo (On Melancholy Hill) -->
+    <audio id="background-music" loop>
+        <source src="https://cdn.pixabay.com/audio/2022/03/10/audio_2c9ea63c0e.mp3" type="audio/mpeg">
+    </audio>
     
     <div id="app">
         <!-- Pantalla de inicio -->
@@ -25,21 +29,54 @@
             </div>
         </div>
 
-        <!-- Slide 1: Estadísticas -->
+        <!-- Slide 1: Días juntos -->
         <div id="slide-1" class="screen">
             <div class="content-center">
-                <h2 class="slide-title">En estos 7 meses...</h2>
+                <h2 class="slide-title">Llevamos juntos...</h2>
+                <div class="big-stat">
+                    <div class="big-number" id="days-counter">214</div>
+                    <div class="big-label">Días de amor</div>
+                </div>
+                <div class="date-info">
+                    <p>Desde el 11 de Mayo de 2024</p>
+                    <p class="small-text">Cada día cuenta una historia 💕</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 2: Mensajes -->
+        <div id="slide-2" class="screen">
+            <div class="content-center">
+                <h2 class="slide-title">Hemos compartido...</h2>
+                <div class="message-stats">
+                    <div class="big-stat-card">
+                        <div class="stat-icon-large">💬</div>
+                        <div class="stat-number-huge">~21,400</div>
+                        <div class="stat-label-big">Mensajes</div>
+                        <div class="stat-breakdown">
+                            <div class="breakdown-item">
+                                <span>📅 Promedio diario:</span>
+                                <span class="breakdown-value">100 mensajes</span>
+                            </div>
+                            <div class="breakdown-item">
+                                <span>🔥 Días épicos:</span>
+                                <span class="breakdown-value">300-400 mensajes</span>
+                            </div>
+                            <div class="breakdown-item">
+                                <span>💕 "Te amo":</span>
+                                <span class="breakdown-value">∞ veces</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 3: Estadísticas -->
+        <div id="slide-3" class="screen">
+            <div class="content-center">
+                <h2 class="slide-title">Nuestros números</h2>
                 <div class="stats-grid">
-                    <div class="stat-card">
-                        <div class="stat-icon">📅</div>
-                        <div class="stat-number">214</div>
-                        <div class="stat-label">Días juntos</div>
-                    </div>
-                    <div class="stat-card">
-                        <div class="stat-icon">💬</div>
-                        <div class="stat-number">∞</div>
-                        <div class="stat-label">Te amo's</div>
-                    </div>
                     <div class="stat-card">
                         <div class="stat-icon">💋</div>
                         <div class="stat-number">1,000+</div>
@@ -50,12 +87,71 @@
                         <div class="stat-number">500+</div>
                         <div class="stat-label">Fotos juntos</div>
                     </div>
+                    <div class="stat-card">
+                        <div class="stat-icon">🎬</div>
+                        <div class="stat-number">50+</div>
+                        <div class="stat-label">Películas/Series</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-icon">🍕</div>
+                        <div class="stat-number">100+</div>
+                        <div class="stat-label">Comidas juntos</div>
+                    </div>
                 </div>
             </div>
         </div>
 
-        <!-- Slide 2: Top Momentos -->
-        <div id="slide-2" class="screen">
+        <!-- Slide 4: Juegos -->
+        <div id="slide-4" class="screen">
+            <div class="content-center">
+                <h2 class="slide-title">Top Juegos</h2>
+                <div class="games-list">
+                    <div class="game-item">
+                        <span class="game-rank">1</span>
+                        <span class="game-icon">🎮</span>
+                        <div class="game-info">
+                            <div class="game-name">Minecraft</div>
+                            <div class="game-hours">50+ horas juntos</div>
+                        </div>
+                    </div>
+                    <div class="game-item">
+                        <span class="game-rank">2</span>
+                        <span class="game-icon">🎯</span>
+                        <div class="game-info">
+                            <div class="game-name">Valorant</div>
+                            <div class="game-hours">30+ horas de diversión</div>
+                        </div>
+                    </div>
+                    <div class="game-item">
+                        <span class="game-rank">3</span>
+                        <span class="game-icon">🎲</span>
+                        <div class="game-info">
+                            <div class="game-name">Among Us</div>
+                            <div class="game-hours">Risas infinitas</div>
+                        </div>
+                    </div>
+                    <div class="game-item">
+                        <span class="game-rank">4</span>
+                        <span class="game-icon">🏃</span>
+                        <div class="game-info">
+                            <div class="game-name">Roblox</div>
+                            <div class="game-hours">Aventuras épicas</div>
+                        </div>
+                    </div>
+                    <div class="game-item">
+                        <span class="game-rank">5</span>
+                        <span class="game-icon">👾</span>
+                        <div class="game-info">
+                            <div class="game-name">Cualquier juego contigo</div>
+                            <div class="game-hours">Siempre es especial 💕</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 5: Top Momentos -->
+        <div id="slide-5" class="screen">
             <div class="content-center">
                 <h2 class="slide-title">Top Momentos</h2>
                 <div class="moments-list">
@@ -88,8 +184,8 @@
             </div>
         </div>
 
-        <!-- Slide 3: Género Favorito -->
-        <div id="slide-3" class="screen">
+        <!-- Slide 6: Género Favorito -->
+        <div id="slide-6" class="screen">
             <div class="content-center">
                 <h2 class="slide-title">Tu género favorito</h2>
                 <div class="genre-card">
@@ -103,8 +199,8 @@
             </div>
         </div>
 
-        <!-- Slide 4: Artista #1 -->
-        <div id="slide-4" class="screen">
+        <!-- Slide 7: Artista #1 -->
+        <div id="slide-7" class="screen">
             <div class="content-center">
                 <h2 class="slide-title">Tu artista #1</h2>
                 <div class="artist-circle">
@@ -119,8 +215,8 @@
             </div>
         </div>
 
-        <!-- Slide 5: Tu Vibe -->
-        <div id="slide-5" class="screen">
+        <!-- Slide 8: Tu Vibe -->
+        <div id="slide-8" class="screen">
             <div class="content-center">
                 <h2 class="slide-title">Tu Vibe en esta relación</h2>
                 <div class="vibe-list">
@@ -164,8 +260,8 @@
             </div>
         </div>
 
-        <!-- Slide 6: Final -->
-        <div id="slide-6" class="screen">
+        <!-- Slide 9: Final -->
+        <div id="slide-9" class="screen">
             <div class="content-center">
                 <div class="final-heart">💕</div>
                 <h2 class="slide-title">Gracias por estos 7 meses</h2>
