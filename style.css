@@ -1,144 +1,57 @@
-/* style.css */
-/* Estilo profesional como Discord/Spotify: Fondo oscuro con gradiente verde, fonts modernas, animaciones suaves.
-   Big numbers con pulse, cards con shadows, responsive para móvil. Colores: Verde #1DB954, fondo #121212. */
-
 body {
-    background: linear-gradient(to bottom, #121212, #282828);
+    background: linear-gradient(to bottom, #ff69b4, #ba55d3, #4b0082); /* Gradiente virtual-romántico */
+    font-family: 'Arial', sans-serif;
     color: #fff;
-    font-family: 'Helvetica Neue', sans-serif;
-    margin: 0;
     padding: 20px;
-    display: flex;
-    justify-content: center;
-    min-height: 100vh;
 }
 
-#wrapped-container {
-    max-width: 700px;
-    width: 100%;
-    text-align: center;
-}
-
-.slide {
-    background: rgba(30, 215, 96, 0.1); /* Verde sutil */
+.container {
+    max-width: 900px;
+    background: rgba(255, 255, 255, 0.1);
     border-radius: 20px;
-    padding: 30px;
-    margin: 30px 0;
-    opacity: 0;
-    transition: opacity 0.8s ease;
-    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4);
+    padding: 20px;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.3);
 }
 
-.slide.visible {
-    opacity: 1;
+.header h1 {
+    color: #ffd700; /* Dorado para highlight */
+    animation: fadeIn 2s;
 }
 
-.slide-title {
-    font-size: 2.2em;
-    color: #1DB954;
-    margin-bottom: 15px;
+.mes-card, .juego-card {
+    background: rgba(255, 255, 255, 0.9);
+    border-radius: 15px;
+    padding: 15px;
+    margin-bottom: 20px;
+    color: #333;
+    transition: transform 0.3s, box-shadow 0.3s;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
 }
 
-.small-text {
-    font-size: 1em;
-    opacity: 0.7;
+.mes-card:hover, .juego-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
 }
 
-.main-number {
-    font-size: 5em;
-    color: #1DB954;
-    animation: pulse 1.2s infinite;
-}
-
-.large-text {
-    font-size: 1.8em;
-    text-transform: uppercase;
-    letter-spacing: 1px;
-}
-
-.game-cover {
-    max-width: 180px;
-    border-radius: 12px;
-    margin: 15px 0;
-}
-
-.game-stats, .stat-item {
-    font-size: 1.1em;
-    margin: 8px 0;
-}
-
-.highlight {
-    color: #1DB954;
-    font-weight: 600;
-}
-
-.songs-list, .moments-list {
-    display: flex;
-    flex-direction: column;
-    gap: 12px;
-}
-
-.song-item, .moment-item {
-    background: rgba(255, 255, 255, 0.08);
-    padding: 12px;
+.img-portada {
+    max-width: 100%;
     border-radius: 10px;
+    margin-bottom: 10px;
 }
 
-.mes, .fecha {
-    font-size: 0.85em;
-    opacity: 0.6;
-}
-
-.quote, blockquote {
-    font-style: italic;
-    margin: 15px 0;
-    opacity: 0.9;
-}
-
-.play-btn {
-    background: #1DB954;
+.list-group-item {
+    background: #ffebee;
     border: none;
-    color: #fff;
-    padding: 8px 20px;
-    border-radius: 30px;
-    cursor: pointer;
-    transition: transform 0.2s;
-}
-
-.play-btn:hover {
-    transform: scale(1.05);
-}
-
-.emoji {
-    font-size: 1.4em;
-    margin: 0 4px;
-}
-
-.loading-animation {
-    font-size: 1.4em;
-    animation: fade 1.5s infinite;
-}
-
-@keyframes pulse {
-    0%, 100% { transform: scale(1); }
-    50% { transform: scale(1.03); }
-}
-
-@keyframes fade {
-    0%, 100% { opacity: 0.6; }
-    50% { opacity: 1; }
-}
-
-.fade-in {
-    animation: fadeIn 0.8s forwards;
+    margin-bottom: 5px;
+    border-radius: 5px;
 }
 
 @keyframes fadeIn {
-    from { opacity: 0; transform: translateY(15px); }
+    from { opacity: 0; transform: translateY(-20px); }
     to { opacity: 1; transform: translateY(0); }
 }
 
-@media (max-width: 500px) {
-    .slide { padding: 20px; }
-    .main-number { font-size: 4em; }
+@media (max-width: 768px) {
+    .container { padding: 10px; }
+    h1 { font-size: 1.8rem; }
 }
