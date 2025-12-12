@@ -1,14 +1,14 @@
 {
   "fecha_inicio": "2025-05-12",
-  "cancion_principal": "Virtual Insanity – Jamiroquai (pero en versión lo-fi que siempre ponías)",
+  "cancion_principal": "Virtual Love - Artist XYZ (nuestro himno de noches online)",
   "meses": [
-    {"mes":1,"titulo":"El primer \"hola\" que cambió todo","cancion_dedicada":"Song 1 – Artist","momentos":["Primer DM eterno","Descubrir que los dos éramos nocturnos"]},
-    {"mes":2,"titulo":"Llamadas hasta el amanecer","cancion_dedicada":"Song 2 – Artist","momentos":["5 horas hablando sin parar","Primera vez que dijiste \"te extraño\""]},
-    {"mes":3,"titulo":"Dúos legendarios","cancion_dedicada":"Song 3 – Artist","momentos":["Nuestra primera win en Valorant","Construimos una casa con corazón en Minecraft"]},
-    {"mes":4,"titulo":"Secretos y risas 24/7","cancion_dedicada":"Song 4 – Artist","momentos":["Memes solo nuestros","Compartir playlists a las 3 a.m."]},
-    {"mes":5,"titulo":"Caos y amor en Roblox","cancion_dedicada":"Song 5 – Artist","momentos":["Adopt Me hasta las 5 am","Avatares a juego"]},
-    {"mes":6,"titulo":"Sobreviviendo monstruos y sentimientos","cancion_dedicada":"Song 6 – Artist","momentos":["The Forest y gritos de miedo","Apoyo mutuo en días difíciles"]},
-    {"mes":7,"titulo":"7 meses y un amor que no necesita distancia","cancion_dedicada":"Song 7 – Artist","momentos":["Planeando el primer meet real","Te quiero en todos los idiomas y píxeles"]}
+    {"mes":1,"titulo":"El primer \"hola\" que cambió todo","cancion_dedicada":"Song 1 – Artist","momentos":["Primer DM eterno","Descubrir que los dos éramos nocturnos"],"foto":"img/minecraft.jpg"},
+    {"mes":2,"titulo":"Llamadas hasta el amanecer","cancion_dedicada":"Song 2 – Artist","momentos":["5 horas hablando sin parar","Primera vez que dijiste \"te extraño\""],"foto":"img/valorant.jpg"},
+    {"mes":3,"titulo":"Dúos legendarios","cancion_dedicada":"Song 3 – Artist","momentos":["Nuestra primera win en Valorant","Construimos una casa con corazón en Minecraft"],"foto":"img/forest.jpg"},
+    {"mes":4,"titulo":"Secretos y risas 24/7","cancion_dedicada":"Song 4 – Artist","momentos":["Memes solo nuestros","Compartir playlists a las 3 a.m."],"foto":"img/party.jpg"},
+    {"mes":5,"titulo":"Caos y amor en Roblox","cancion_dedicada":"Song 5 – Artist","momentos":["Adopt Me hasta las 5 am","Avatares a juego"],"foto":"img/roblox.jpg"},
+    {"mes":6,"titulo":"Sobreviviendo monstruos y sentimientos","cancion_dedicada":"Song 6 – Artist","momentos":["The Forest y gritos de miedo","Apoyo mutuo en días difíciles"],"foto":"img/minecraft.jpg"},
+    {"mes":7,"titulo":"7 meses y un amor sin distancia","cancion_dedicada":"Song 7 – Artist","momentos":["Planeando el primer meet real","Te quiero en todos los píxeles"],"foto":"img/valorant.jpg"}
   ],
   "juegos_top": [
     {"nombre":"Minecraft","portada":"img/minecraft.jpg","stats":"3 mundos, 1 corazón gigante y muchas granjas automáticas"},
