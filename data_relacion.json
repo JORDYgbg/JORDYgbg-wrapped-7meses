@@ -3,11 +3,10 @@
         "titulo": "Nuestro Wrapped: 7 Meses de Amor Digital",
         "descripcion": "Un resumen de nuestros primeros meses, contados por nuestros datos.",
         "fecha_inicio_relacion": "2024-05-16"
-        // Fecha de inicio: 16 de mayo de 2024. ¡Perfecto!
     },
     
     "estadisticas_generales": {
-        "dias_juntos": 0, // Lo calculará script.js
+        "dias_juntos": 0,
         "canciones_dedicadas_total": {
             "descripcion": "Canciones únicas dedicadas",
             "valor": 7,
@@ -16,7 +15,6 @@
     },
     
     "canciones_dedicadas": [
-        // Rellena aquí tus 7 canciones reales
         {
             "mes": "Mayo",
             "titulo": "Título de la Canción 1",
@@ -28,6 +26,30 @@
             "titulo": "Título de la Canción 2",
             "artista": "Artista B",
             "contexto": "Nuestra primera canción oficial de videollamadas."
+        },
+        {
+            "mes": "Julio",
+            "titulo": "Título de la Canción 3",
+            "artista": "Artista C",
+            "contexto": "La que descubrimos juntos a las 3 a.m."
+        },
+        {
+            "mes": "Agosto",
+            "titulo": "Título de la Canción 4",
+            "artista": "Artista D",
+            "contexto": "La que suena en el fondo cuando hablamos."
+        },
+        {
+            "mes": "Septiembre",
+            "titulo": "Título de la Canción 5",
+            "artista": "Artista E",
+            "contexto": "El himno de nuestra primera mini-pelea."
+        },
+        {
+            "mes": "Octubre",
+            "titulo": "Título de la Canción 6",
+            "artista": "Artista F",
+            "contexto": "La que elegimos para el fondo de nuestro chat."
         },
         {
             "mes": "Noviembre",
@@ -44,7 +66,6 @@
     },
     
     "top_juegos": [
-        // Las rutas de las imágenes usan tu carpeta 'img/' y las extensiones que proporcionaste
         {
             "nombre": "Valorant",
             "sesiones": 52,
@@ -83,7 +104,6 @@
     ],
     
     "top_momentos": [
-        // El primer momento en la lista será el 'Hito del Año'
         {
             "fecha": "2024-10-05",
             "titulo": "Nuestro Primer Viaje 'Virtual'",
@@ -94,6 +114,5 @@
             "titulo": "Maratón de Películas de Terror",
             "descripcion": "La noche que no pudimos dormir después de ver la tercera película y hablamos hasta el amanecer."
         }
-        // Agrega más momentos si lo deseas
     ]
 }
