@@ -3,40 +3,44 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>JORDY & [NOMBRE] • 7 Meses Virtuales</title>
+  <title>JORDY & Tu Novia • Checkpoint Virtual 2025</title>
   
-  <!-- Fonts como Spotify/Discord -->
+  <!-- Fonts como Discord/Spotify -->
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
   
-  <!-- Bootstrap + AOS (animaciones al scroll) -->
+  <!-- Bootstrap + AOS -->
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
   <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+  
+  <!-- Font Awesome para icons -->
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css" rel="stylesheet">
   
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
-  <div class="background"></div>
+  <div id="particles-js" class="background"></div>
 
   <div class="container py-5">
     <header class="text-center mb-5" data-aos="zoom-in">
-      <h1 class="title">7 MESES JUNTOS</h1>
+      <h1 class="title"><i class="fa-solid fa-flag-checkered glow-icon"></i> 7 MESES JUNTOS</h1>
       <p class="subtitle" id="dias-juntos"></p>
-      <p class="text-light fs-4">Novios virtuales que se quieren en 4K ❤️</p>
+      <p class="text-light fs-4">Novios virtuales que conquistan mundos en 4K <i class="fa-solid fa-heart glow-icon"></i></p>
     </header>
 
-    <!-- Canción que más sonó a ella -->
+    <!-- Canción principal -->
     <div class="main-song text-center mb-5" data-aos="fade-up">
-      <h3>Canción que más me sonó a ti este año</h3>
+      <h3><i class="fa-solid fa-music glow-icon"></i> Canción que más me sonó a ti</h3>
       <div class="song-card">
         <span id="cancion-principal"></span>
       </div>
     </div>
 
-    <!-- Slider de meses tipo Spotify Stories -->
+    <!-- Slider meses -->
     <section class="mb-5">
-      <h2 class="text-center mb-4" data-aos="fade">Nuestra historia mes a mes</h2>
-      <div id="meses-carousel" class="carousel slide" data-bs-ride="carousel">
+      <h2 class="text-center mb-4" data-aos="fade"><i class="fa-solid fa-calendar-days glow-icon"></i> Nuestra historia mes a mes</h2>
+      <div id="meses-carousel" class="carousel slide carousel-fade" data-bs-ride="carousel" data-bs-interval="5000">
+        <div class="carousel-indicators" id="meses-indicators"></div>
         <div class="carousel-inner" id="meses-slider"></div>
         <button class="carousel-control-prev" type="button" data-bs-target="#meses-carousel" data-bs-slide="prev">
           <span class="carousel-control-prev-icon"></span>
@@ -47,28 +51,43 @@
       </div>
     </section>
 
-    <!-- Top 5 juegos -->
+    <!-- Juegos -->
     <section class="my-5">
-      <h2 class="text-center" data-aos="fade">Top 5 juegos donde fuimos imparables</h2>
+      <h2 class="text-center" data-aos="fade"><i class="fa-solid fa-gamepad glow-icon"></i> Top 5 juegos imparables</h2>
       <div class="row g-4 justify-content-center" id="juegos-section"></div>
     </section>
 
     <!-- Top momentos -->
     <section class="my-5">
-      <h2 class="text-center" data-aos="fade">Momentos que nunca olvidaremos</h2>
+      <h2 class="text-center" data-aos="fade"><i class="fa-solid fa-star glow-icon"></i> Momentos inolvidables</h2>
       <div class="top-momentos" id="top-momentos"></div>
     </section>
 
+    <div class="text-center mt-5">
+      <button class="btn-share" onclick="shareLink()"><i class="fa-solid fa-share-nodes"></i> Compartir Checkpoint</button>
+    </div>
+
     <footer class="text-center mt-5 text-light">
-      Hecho con muchísimo amor virtual para ti ♡<br>
-      Diciembre 2025
+      Hecho con amor virtual ♡ | Diciembre 2025
+      <div class="badge-exclusive">Tu Badge: Gamer Romántico <i class="fa-solid fa-trophy glow-icon"></i></div>
     </footer>
   </div>
 
+  <!-- Scripts -->
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
   <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/particles.js@2.0.0/particles.min.js"></script>
   <script>
-    AOS.init({ once: true, duration: 1000 });
+    AOS.init({ once: true, duration: 1200 });
+    particlesJS('particles-js', {
+      particles: { number: { value: 50 }, color: { value: '#00ff00' }, shape: { type: 'circle' }, opacity: { value: 0.5 }, size: { value: 3 }, line_linked: { enable: true, color: '#ffffff' }, move: { speed: 2 } },
+      interactivity: { events: { onhover: { enable: true, mode: 'repulse' } } },
+      retina_detect: true
+    });
+    function shareLink() {
+      navigator.clipboard.writeText(window.location.href);
+      alert('¡Link copiado! Compártelo en Discord o donde quieras ♡');
+    }
   </script>
   <script src="script.js"></script>
 </body>
