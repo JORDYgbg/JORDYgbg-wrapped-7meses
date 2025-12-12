@@ -1,0 +1,117 @@
+/* -- Variables para estilo Recap -- */
+:root {
+    --color-dark-bg: #12121e; /* Fondo principal oscuro */
+    --color-accent-1: #4CAF50; /* Verde vibrante (similar a Spotify) */
+    --color-accent-2: #FF7043; /* Naranja/Coral de contraste */
+    --color-text-light: #f0f0f0;
+    --color-card-bg: #212133;
+}
+
+/* Estilos de Contenedor General */
+body {
+    background-color: var(--color-dark-bg);
+    color: var(--color-text-light);
+    font-family: 'Arial', sans-serif;
+    margin: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+}
+
+#wrapped-container {
+    width: 100%;
+    max-width: 450px; /* Tamaño de un Story de celular */
+    box-shadow: 0 0 40px rgba(0, 0, 0, 0.7);
+    border-radius: 20px;
+    overflow: hidden;
+    background-color: var(--color-dark-bg);
+}
+
+/* Estilo de las Diapositivas */
+.slide {
+    min-height: 700px;
+    padding: 40px 20px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    align-items: center;
+    text-align: center;
+    /* Animación de entrada para cada diapositiva */
+    animation: fadeInSlide 1.5s ease-out;
+}
+
+/* Colores de Fondo de cada Diapositiva */
+.intro-slide { background-color: #1a1b38; } /* Azul oscuro */
+.games-slide { background-color: #0f4c5c; } /* Turquesa oscuro */
+.songs-slide { background-color: #5d2a6b; } /* Púrpura oscuro */
+.moment-slide { 
+    background-color: var(--color-accent-2); 
+    color: var(--color-dark-bg); /* Texto oscuro sobre fondo claro */
+} 
+
+/* Tipografía y Métricas */
+.slide-title {
+    font-size: 1.8em;
+    font-weight: 700;
+    color: var(--color-accent-1);
+    margin-bottom: 25px;
+}
+
+.main-number {
+    font-size: 8em; /* El número gigante */
+    font-weight: 900;
+    color: var(--color-accent-1);
+    line-height: 1;
+    margin: 10px 0;
+    animation: popIn 0.8s ease-out;
+}
+
+.large-text {
+    font-size: 2.5em;
+    font-weight: 800;
+    text-transform: uppercase;
+    color: var(--color-accent-2);
+}
+
+.small-text {
+    font-size: 1em;
+    opacity: 0.8;
+}
+
+/* Componentes Específicos */
+.game-cover {
+    width: 80%;
+    max-width: 300px;
+    border-radius: 15px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+    margin: 20px 0;
+}
+
+.song-card {
+    background: rgba(255, 255, 255, 0.08);
+    padding: 25px;
+    border-radius: 12px;
+    margin-top: 30px;
+    width: 90%;
+}
+
+.moment-quote {
+    font-size: 1.5em;
+    font-style: italic;
+    margin-top: 20px;
+    padding: 20px;
+    border-left: 5px solid var(--color-dark-bg);
+}
+
+/* Animaciones para el efecto "Recap" */
+@keyframes fadeInSlide {
+    0% { opacity: 0; transform: translateY(20px); }
+    100% { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes popIn {
+    0% { transform: scale(0.7); opacity: 0; }
+    80% { transform: scale(1.05); }
+    100% { transform: scale(1); opacity: 1; }
+}
