@@ -1,0 +1,85 @@
+/* Estilos Generales para el Look Oscuro */
+body {
+    background-color: #0c0d12; /* Fondo muy oscuro */
+    color: #f0f0f0; /* Texto claro */
+    font-family: 'Arial', sans-serif;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+}
+
+#wrapped-container {
+    width: 100%;
+    max-width: 400px; /* Tamaño de un 'story' o pantalla de celular */
+    box-shadow: 0 0 30px rgba(0, 0, 0, 0.5);
+    border-radius: 15px;
+    overflow: hidden; /* Para contener las diapositivas */
+}
+
+/* Estilo Básico de las Diapositivas */
+.slide {
+    min-height: 650px; /* Altura de la diapositiva */
+    padding: 30px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    align-items: center;
+    text-align: center;
+    transition: background-color 0.5s ease;
+}
+
+/* Colores Específicos para un Look Dinámico */
+.intro { background-color: #1a1b2d; }
+.songs-slide { background-color: #3b1f5e; } /* Púrpura */
+.games-slide { background-color: #2c5f53; } /* Verde/Teal */
+.moment-slide { background-color: #e56d49; color: #0c0d12; } /* Naranja vivo */
+
+/* Tipografía y Números Grandes */
+h2 {
+    font-size: 1.5em;
+    font-weight: 300;
+    margin-bottom: 20px;
+}
+
+.main-number {
+    font-size: 6em; /* El número gigante de los Wrapped */
+    font-weight: 900;
+    color: #4CAF50; /* Color de contraste vibrante (verde) */
+    animation: bounceIn 1s ease-out; /* Una animación simple */
+}
+
+.large-text {
+    font-size: 2em;
+    font-weight: bold;
+    color: #f9c74f; /* Amarillo de contraste */
+}
+
+.small-text {
+    font-size: 0.9em;
+    opacity: 0.7;
+}
+
+/* Estilo para las portadas de los juegos */
+.game-cover {
+    width: 250px;
+    height: auto;
+    border-radius: 10px;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+    margin: 20px 0;
+}
+
+.song-card {
+    background: rgba(255, 255, 255, 0.1);
+    padding: 20px;
+    border-radius: 10px;
+    margin-top: 15px;
+}
+
+/* Animación (para darle vida) */
+@keyframes bounceIn {
+    0% { transform: scale(0.5); opacity: 0; }
+    100% { transform: scale(1); opacity: 1; }
+}
