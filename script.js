@@ -103,19 +103,21 @@ function initStars() {
     });
 }
 
-// Función para abrir el sobre
-function openEnvelope() {
-    const envelope = document.getElementById('envelope');
-    const openBtn = document.getElementById('open-btn');
-    const startBtn = document.getElementById('start-btn');
+// Función para recoger la carta del suelo
+function pickUpLetter() {
+    const letterFloor = document.getElementById('letter-floor');
+    const openedLetter = document.getElementById('opened-letter');
     
-    envelope.classList.add('open');
-    openBtn.style.display = 'none';
+    // Ocultar carta en el suelo
+    letterFloor.style.transition = 'all 0.6s ease';
+    letterFloor.style.transform = 'scale(0.5) translateY(-100px)';
+    letterFloor.style.opacity = '0';
     
+    // Mostrar carta abierta después de la animación
     setTimeout(() => {
-        startBtn.style.display = 'inline-block';
-        startBtn.style.animation = 'bounce 1s infinite';
-    }, 1500);
+        letterFloor.style.display = 'none';
+        openedLetter.style.display = 'block';
+    }, 600);
 }
 
 // Función para iniciar el wrapped
@@ -129,34 +131,15 @@ function startWrapped() {
     // Mostrar reproductor de música
     document.getElementById('music-player').style.display = 'block';
     
-    // Reproducir música
-    const music = document.getElementById('background-music');
-    music.volume = 0.2; // Volumen al 20%
-    
-    // Intentar reproducir con interacción del usuario
-    const playPromise = music.play();
-    
-    if (playPromise !== undefined) {
-        playPromise.then(() => {
-            console.log('Música reproduciéndose');
-            document.getElementById('play-icon').textContent = '⏸️';
-        }).catch(error => {
-            console.log('Autoplay bloqueado, usa el botón play');
-            document.getElementById('play-icon').textContent = '▶️';
-            // Mostrar alerta sutil
-            setTimeout(() => {
-                if (music.paused) {
-                    alert('🎵 Haz click en el botón ▶️ arriba para escuchar la música 😊');
-                }
-            }, 1000);
-        });
-    }
-    
     // Mostrar primer slide
     showSlide(1);
     
     // Crear dots de navegación
     createDots();
+    
+    // NO intentar reproducir automáticamente
+    // El usuario DEBE hacer click en el botón play
+    document.getElementById('play-icon').textContent = '▶️';
 }
 
 // Función para pausar/reproducir música
