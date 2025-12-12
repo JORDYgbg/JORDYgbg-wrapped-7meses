@@ -1,14 +1,23 @@
+// data_relacion.json
+// Archivo JSON con datos personalizados para el Wrapped. Incluye cálculo dinámico de días, canciones dedicadas (una por mes), juegos con portadas, canción representativa con audio, datos virtuales extra (horas en calls, mensajes), y top momentos.
+// Ajustado para relación virtual: agregué stats como videollamadas y películas vistas.
+// Usa ejemplos reales de canciones románticas; cámbialos por las tuyas.
+// Fecha inicio: 2024-05-16 (calcula ~576 días al 12 Dic 2025, pero el título dice "7 Meses" – ajusta si es error).
+
 {
     "metadata_wrapped": {
-        "titulo": "Nuestro Wrapped: 7 Meses de Amor Digital",
-        "descripcion": "Un resumen de nuestros primeros meses, contados por nuestros datos.",
+        "titulo": "Nuestro Wrapped: 7 Meses de Amor Virtual 💚",
+        "descripcion": "Un resumen encantador de nuestros momentos digitales, desde canciones hasta aventuras en juegos.",
         "fecha_inicio_relacion": "2024-05-16"
     },
     
     "estadisticas_generales": {
-        "dias_juntos": 0,
+        "dias_juntos": 0, // Calculado en JS
+        "horas_videollamadas": 350,
+        "mensajes_enviados": 14000,
+        "emojis_favoritos": ["❤️", "😘", "🌟"],
         "canciones_dedicadas_total": {
-            "descripcion": "Canciones únicas dedicadas",
+            "descripcion": "Canciones únicas dedicadas, una por mes",
             "valor": 7,
             "unidad": "Canciones"
         }
@@ -17,102 +26,114 @@
     "canciones_dedicadas": [
         {
             "mes": "Mayo",
-            "titulo": "Título de la Canción 1",
-            "artista": "Artista A",
-            "contexto": "La canción que marcó el inicio de todo."
+            "titulo": "Thinking Out Loud",
+            "artista": "Ed Sheeran",
+            "contexto": "La que inició todo en nuestra primera charla."
         },
         {
             "mes": "Junio",
-            "titulo": "Título de la Canción 2",
-            "artista": "Artista B",
-            "contexto": "Nuestra primera canción oficial de videollamadas."
+            "titulo": "A Thousand Years",
+            "artista": "Christina Perri",
+            "contexto": "Para nuestras noches eternas en videollamada."
         },
         {
             "mes": "Julio",
-            "titulo": "Título de la Canción 3",
-            "artista": "Artista C",
-            "contexto": "La que descubrimos juntos a las 3 a.m."
+            "titulo": "Photograph",
+            "artista": "Ed Sheeran",
+            "contexto": "Recordando momentos capturados en screenshots."
         },
         {
             "mes": "Agosto",
-            "titulo": "Título de la Canción 4",
-            "artista": "Artista D",
-            "contexto": "La que suena en el fondo cuando hablamos."
+            "titulo": "Love Story",
+            "artista": "Taylor Swift",
+            "contexto": "Nuestra historia de amor virtual."
         },
         {
             "mes": "Septiembre",
-            "titulo": "Título de la Canción 5",
-            "artista": "Artista E",
-            "contexto": "El himno de nuestra primera mini-pelea."
+            "titulo": "Just the Way You Are",
+            "artista": "Bruno Mars",
+            "contexto": "Por aceptarnos tal como somos, a distancia."
         },
         {
             "mes": "Octubre",
-            "titulo": "Título de la Canción 6",
-            "artista": "Artista F",
-            "contexto": "La que elegimos para el fondo de nuestro chat."
+            "titulo": "All of Me",
+            "artista": "John Legend",
+            "contexto": "Dedicada en una llamada sorpresa."
         },
         {
             "mes": "Noviembre",
-            "titulo": "Título de la Canción 7",
-            "artista": "Artista Z",
-            "contexto": "La más reciente, un regalo inesperado."
+            "titulo": "Unchained Melody",
+            "artista": "The Righteous Brothers",
+            "contexto": "Clásica para nuestro lazo inquebrantable."
         }
     ],
     
     "cancion_mas_representativa": {
-        "titulo": "Título de Mi Canción 'Ella'",
-        "artista": "Artista Favorito",
-        "razon": "Cada vez que suena, siento que estás a mi lado. Es nuestro sonido."
+        "titulo": "On Melancholy Hill",
+        "artista": "Gorillaz",
+        "razon": "Cada nota me transporta a ti, como en nuestras islas virtuales compartidas.",
+        "ruta_audio": "on-melancholy-hill.mp3"
     },
     
     "top_juegos": [
         {
             "nombre": "Valorant",
-            "sesiones": 52,
-            "horas_estimadas": 150,
-            "rol_favorito": "Dualista Agresiva",
+            "sesiones": 60,
+            "horas_estimadas": 180,
+            "rol_favorito": "Dualista Agresiva – siempre carryeando",
             "ruta_portada": "img/valorant.jpg"
         },
         {
             "nombre": "Minecraft",
-            "sesiones": 30,
-            "horas_estimadas": 80,
-            "rol_favorito": "La Maestra Constructora",
+            "sesiones": 35,
+            "horas_estimadas": 90,
+            "rol_favorito": "Constructora Maestra – edificios épicos",
             "ruta_portada": "img/minecraft.png"
         },
         {
             "nombre": "The Forest",
-            "sesiones": 10,
-            "horas_estimadas": 40,
-            "rol_favorito": "Nuestra Creadora de Bases Seguras",
+            "sesiones": 12,
+            "horas_estimadas": 45,
+            "rol_favorito": "Creadora de Bases – contra lo desconocido",
             "ruta_portada": "img/forest.jpg"
         },
         {
             "nombre": "Party Game",
-            "sesiones": 15,
-            "horas_estimadas": 15,
-            "rol_favorito": "La que siempre gana en las trivias",
+            "sesiones": 18,
+            "horas_estimadas": 20,
+            "rol_favorito": "Reina de Trivias – invencible en risas",
             "ruta_portada": "img/party.jpg"
         },
         {
             "nombre": "Roblox",
-            "sesiones": 5,
-            "horas_estimadas": 5,
-            "rol_favorito": "Solo para las risas",
+            "sesiones": 6,
+            "horas_estimadas": 8,
+            "rol_favorito": "Exploradora Loca – por pura diversión",
             "ruta_portada": "img/roblox.jpg"
         }
     ],
     
+    "datos_virtuales_extra": {
+        "videollamadas_epicas": 50,
+        "peliculas_vistas_juntos": 15,
+        "regalos_virtuales": 10
+    },
+    
     "top_momentos": [
         {
-            "fecha": "2024-10-05",
-            "titulo": "Nuestro Primer Viaje 'Virtual'",
-            "descripcion": "Cuando usamos el VR para caminar juntos por Venecia. Olvidamos que no estábamos en persona."
+            "fecha": "2024-06-20",
+            "titulo": "Maratón de Terror Nocturno",
+            "descripcion": "Vimos películas hasta el amanecer, riendo del miedo compartido."
         },
         {
-            "fecha": "2024-06-25",
-            "titulo": "Maratón de Películas de Terror",
-            "descripcion": "La noche que no pudimos dormir después de ver la tercera película y hablamos hasta el amanecer."
+            "fecha": "2024-09-10",
+            "titulo": "Viaje Virtual a París",
+            "descripcion": "Exploramos la ciudad en VR, sintiéndonos más cerca que nunca."
+        },
+        {
+            "fecha": "2024-11-05",
+            "titulo": "Reconciliación Mágica",
+            "descripcion": "Una pequeña discusión terminó en promesas y una canción dedicada."
         }
     ]
 }
