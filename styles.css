@@ -200,6 +200,82 @@ body {
 }
 
 /* Pantalla de inicio */
+.envelope-container {
+    perspective: 1000px;
+    margin-bottom: 3rem;
+}
+
+.envelope {
+    width: 300px;
+    height: 200px;
+    margin: 0 auto;
+    position: relative;
+    transition: all 0.5s ease;
+}
+
+.envelope-body {
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(135deg, #a78bfa 0%, #ec4899 100%);
+    border-radius: 10px;
+    position: relative;
+    box-shadow: 0 10px 40px rgba(167, 139, 250, 0.4);
+}
+
+.envelope-flap {
+    width: 0;
+    height: 0;
+    border-left: 150px solid transparent;
+    border-right: 150px solid transparent;
+    border-bottom: 100px solid #a78bfa;
+    position: absolute;
+    top: 0;
+    left: 0;
+    transform-origin: top;
+    transition: transform 0.8s ease;
+    z-index: 10;
+}
+
+.envelope.open .envelope-flap {
+    transform: rotateX(-180deg);
+}
+
+.letter {
+    width: 260px;
+    height: 320px;
+    background: white;
+    position: absolute;
+    top: 20px;
+    left: 20px;
+    border-radius: 8px;
+    padding: 1.5rem;
+    box-shadow: 0 5px 20px rgba(0, 0, 0, 0.2);
+    transform: translateY(0);
+    transition: transform 1s ease;
+    z-index: 5;
+}
+
+.envelope.open .letter {
+    transform: translateY(-150px);
+}
+
+.letter-content {
+    color: #1a0b2e;
+    font-size: 0.9rem;
+    line-height: 1.6;
+}
+
+.letter-text {
+    margin-bottom: 1rem;
+}
+
+.letter-text-bold {
+    font-weight: 700;
+    font-size: 1.1rem;
+    color: #a78bfa;
+    margin-top: 1.5rem;
+}
+
 .sparkle {
     font-size: 5rem;
     animation: bounce 2s infinite;
@@ -314,6 +390,28 @@ body {
     padding: 3rem;
     max-width: 600px;
     box-shadow: 0 20px 60px rgba(167, 139, 250, 0.2);
+}
+
+.big-stat-card.small-card {
+    max-width: 500px;
+    padding: 2rem;
+}
+
+.big-stat-card.small-card .stat-number-huge {
+    font-size: 4rem;
+}
+
+.big-stat-card.small-card .stat-label-big {
+    font-size: 1.5rem;
+}
+
+.big-stat-card.small-card .stat-breakdown {
+    margin-top: 1.5rem;
+}
+
+.big-stat-card.small-card .breakdown-item {
+    padding: 0.75rem;
+    font-size: 1rem;
 }
 
 .stat-icon-large {
@@ -833,6 +931,10 @@ body {
         padding: 2rem;
     }
 
+    .big-stat-card.small-card {
+        padding: 1.5rem;
+    }
+
     /* Reproductor móvil */
     #music-player {
         top: 10px;
@@ -869,5 +971,31 @@ body {
     #volume-text {
         font-size: 0.75rem;
         min-width: 30px;
+    }
+
+    /* Carta móvil */
+    .envelope {
+        width: 250px;
+        height: 170px;
+    }
+
+    .envelope-flap {
+        border-left: 125px solid transparent;
+        border-right: 125px solid transparent;
+        border-bottom: 85px solid #a78bfa;
+    }
+
+    .letter {
+        width: 220px;
+        height: 280px;
+        padding: 1rem;
+    }
+
+    .letter-content {
+        font-size: 0.8rem;
+    }
+
+    .envelope.open .letter {
+        transform: translateY(-120px);
     }
 }
