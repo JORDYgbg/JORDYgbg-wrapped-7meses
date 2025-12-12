@@ -1,29 +1,29 @@
 {
   "fecha_inicio": "2025-05-12",
-  "cancion_principal": "Virtual Insanity – Jamiroquai (pero la versión lo-fi que siempre me ponías a las 4 a.m.) ♡",
+  "cancion_principal": "Virtual Insanity – Jamiroquai (la versión lo-fi que siempre me ponías a las 4 a.m.)",
   "meses": [
-    {"mes":1,"titulo":"El primer \"hola\" que lo cambió todo","cancion_dedicada":"Canción 1 – Artista","momentos":["Primer DM que duró 4 horas seguidas","Darnos cuenta de que los dos éramos nocturnos"],"foto":"img/minecraft.png"},
+    {"mes":1,"titulo":"El primer \"hola\" que lo cambió todo","cancion_dedicada":"Canción 1 – Artista","momentos":["Primer DM que duró 4 horas","Darnos cuenta de que éramos nocturnos"],"foto":"img/minecraft.png"},
     {"mes":2,"titulo":"Llamadas hasta que salía el sol","cancion_dedicada":"Canción 2 – Artista","momentos":["5 horas hablando sin parar","Primera vez que me dijiste \"te extraño\""],"foto":"img/valorant.jpg"},
-    {"mes":3,"titulo":"Dúos legendarios","cancion_dedicada":"Canción 3 – Artista","momentos":["Nuestra primera win en Valorant","Construimos un corazón gigante en Minecraft"],"foto":"img/forest.jpg"},
-    {"mes":4,"titulo":"Memes y secretos 24/7","cancion_dedicada":"Canción 4 – Artista","momentos":["Memes personalizados solo para nosotros","Compartir playlists a las 3 a.m."],"foto":"img/party.jpg"},
+    {"mes":3,"titulo":"Dúos legendarios","cancion_dedicada":"Canción 3 – Artista","momentos":["Primera win en Valorant","Corazón gigante en Minecraft"],"foto":"img/forest.jpg"},
+    {"mes":4,"titulo":"Memes y secretos 24/7","cancion_dedicada":"Canción 4 – Artista","momentos":["Memes personalizados","Playlists a las 3 a.m."],"foto":"img/party.jpg"},
     {"mes":5,"titulo":"Caos y amor en Roblox","cancion_dedicada":"Canción 5 – Artista","momentos":["Adopt Me hasta las 5 a.m.","Avatares a juego"],"foto":"img/roblox.jpg"},
-    {"mes":6,"titulo":"Sobreviviendo monstruos y sentimientos","cancion_dedicada":"Canción 6 – Artista","momentos":["Gritos en The Forest","Apoyo mutuo en días difíciles"],"foto":"img/forest.jpg"},
-    {"mes":7,"titulo":"7 meses y un amor que no entiende de distancia","cancion_dedicada":"Canción 7 – Artista","momentos":["Planeando el primer meet real","Te quiero en todos los píxeles del mundo"],"foto":"img/valorant.jpg"}
+    {"mes":6,"titulo":"Sobreviviendo monstruos","cancion_dedicada":"Canción 6 – Artista","momentos":["Gritos en The Forest","Apoyo en días difíciles"],"foto":"img/forest.jpg"},
+    {"mes":7,"titulo":"7 meses sin distancia","cancion_dedicada":"Canción 7 – Artista","momentos":["Planeando meet real","Te quiero en todos los píxeles"],"foto":"img/valorant.jpg"}
   ],
   "juegos_top": [
-    {"nombre":"Minecraft","portada":"img/minecraft.png","stats":"3 mundos, 1 corazón gigante y granjas automáticas"},
-    {"nombre":"Valorant","portada":"img/valorant.jpg","stats":"+40 wins juntos y 1 clutch histórico"},
-    {"nombre":"The Forest","portada":"img/forest.jpg","stats":"10 noches sobrevividas y muchos screams"},
-    {"nombre":"Party Games","portada":"img/party.jpg","stats":"Risas hasta llorar garantizadas"},
-    {"nombre":"Roblox","portada":"img/roblox.jpg","stats":"20 mundos visitados, 1 solo nuestro"}
+    {"nombre":"Minecraft","portada":"img/minecraft.png","stats":"3 mundos + 1 corazón gigante"},
+    {"nombre":"Valorant","portada":"img/valorant.jpg","stats":"+40 wins y 1 clutch histórico"},
+    {"nombre":"The Forest","portada":"img/forest.jpg","stats":"10 noches sobrevividas"},
+    {"nombre":"Party Games","portada":"img/party.jpg","stats":"Risas hasta llorar"},
+    {"nombre":"Roblox","portada":"img/roblox.jpg","stats":"20 mundos, 1 solo nuestro"}
   ],
   "top_momentos": [
-    "Construir un corazón gigante de obsidiana en Minecraft",
-    "Clutch 1v4 en Valorant y gritarnos de emoción",
-    "Sobrevivir monstruos en The Forest abrazados por voz",
+    "Corazón gigante de obsidiana en Minecraft",
+    "Clutch 1v4 en Valorant",
+    "Sobrevivir monstruos abrazados por voz",
     "Reír hasta llorar en party games",
-    "Foto de perfil a juego por primera vez",
-    "Cuando me dedicaste la canción 7 y lloré como bobo",
-    "Todas las noches diciendo \"una última partida\"... y eran 5 más"
+    "Foto de perfil a juego",
+    "Cuando me dedicaste la canción 7",
+    "Todas las noches diciendo \"una última partida\"..."
   ]
 }
