@@ -42,12 +42,26 @@
         <!-- Pantalla de inicio -->
         <div id="start-screen" class="screen active">
             <div class="content-center">
-                <div class="sparkle">✨</div>
-                <h1 class="main-title">Nuestros 7 Meses</h1>
-                <p class="subtitle">Wrapped 2024</p>
-                <p class="for-text">Para: Mi Amor ❤️</p>
-                <button class="start-btn" onclick="startWrapped()">
-                    Abrir mi regalo 💝
+                <div class="envelope-container">
+                    <div class="envelope" id="envelope">
+                        <div class="envelope-flap"></div>
+                        <div class="envelope-body">
+                            <div class="letter" id="letter">
+                                <div class="letter-content">
+                                    <p class="letter-text">Mi amor,</p>
+                                    <p class="letter-text">En estos 7 meses hemos vivido tantas cosas increíbles juntos... risas, aventuras, momentos únicos.</p>
+                                    <p class="letter-text">Todo el mundo tiene su Wrapped, así que también hice uno para nosotros 💕</p>
+                                    <p class="letter-text-bold">¿Lista para ver nuestro Wrapped?</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <button class="start-btn" id="open-btn" onclick="openEnvelope()">
+                    Abrir carta 💌
+                </button>
+                <button class="start-btn" id="start-btn" style="display: none;" onclick="startWrapped()">
+                    ¡Ver nuestro Wrapped! ✨
                 </button>
             </div>
         </div>
@@ -72,7 +86,7 @@
             <div class="content-center">
                 <h2 class="slide-title">Hemos compartido...</h2>
                 <div class="message-stats">
-                    <div class="big-stat-card">
+                    <div class="big-stat-card small-card">
                         <div class="stat-icon-large">💬</div>
                         <div class="stat-number-huge">~21,400</div>
                         <div class="stat-label-big">Mensajes</div>
