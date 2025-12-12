@@ -103,6 +103,21 @@ function initStars() {
     });
 }
 
+// Función para abrir el sobre
+function openEnvelope() {
+    const envelope = document.getElementById('envelope');
+    const openBtn = document.getElementById('open-btn');
+    const startBtn = document.getElementById('start-btn');
+    
+    envelope.classList.add('open');
+    openBtn.style.display = 'none';
+    
+    setTimeout(() => {
+        startBtn.style.display = 'inline-block';
+        startBtn.style.animation = 'bounce 1s infinite';
+    }, 1500);
+}
+
 // Función para iniciar el wrapped
 function startWrapped() {
     // Ocultar pantalla de inicio
@@ -118,14 +133,24 @@ function startWrapped() {
     const music = document.getElementById('background-music');
     music.volume = 0.2; // Volumen al 20%
     
-    // Intentar reproducir
-    music.play().then(() => {
-        console.log('Música reproduciéndose');
-        document.getElementById('play-icon').textContent = '⏸️';
-    }).catch(e => {
-        console.log('No se pudo reproducir automáticamente, haz click en play');
-        document.getElementById('play-icon').textContent = '▶️';
-    });
+    // Intentar reproducir con interacción del usuario
+    const playPromise = music.play();
+    
+    if (playPromise !== undefined) {
+        playPromise.then(() => {
+            console.log('Música reproduciéndose');
+            document.getElementById('play-icon').textContent = '⏸️';
+        }).catch(error => {
+            console.log('Autoplay bloqueado, usa el botón play');
+            document.getElementById('play-icon').textContent = '▶️';
+            // Mostrar alerta sutil
+            setTimeout(() => {
+                if (music.paused) {
+                    alert('🎵 Haz click en el botón ▶️ arriba para escuchar la música 😊');
+                }
+            }, 1000);
+        });
+    }
     
     // Mostrar primer slide
     showSlide(1);
