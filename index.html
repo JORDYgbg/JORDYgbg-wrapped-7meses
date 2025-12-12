@@ -5,176 +5,175 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>JORDY & Tú • Checkpoint 7 Meses 2025</title>
 
-  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <!-- Poppins + Discord vibes -->
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700;800;900&display=swap" rel="stylesheet">
   
   <style>
-    * { margin: 0; padding: 0; box-sizing: border-box; }
-    html, body { height: 100%; overflow: hidden; font-family: 'Poppins', sans-serif; }
+    * { margin:0; padding:0; box-sizing:border-box; }
+    body, html { height:100%; overflow:hidden; font-family:'Poppins',sans-serif; background:#0a0215; color:#fff; }
 
-    /* Fondo universo que se mueve muy suave */
-    .bg {
-      position: fixed;
-      top: -20%; left: -20%;
-      width: 140%; height: 140%;
-      background: url('https://images.unsplash.com/photo-1538370965046-79c0d6907d47?ixlib=rb-4.0.3&auto=format&fit=crop&q=90') center/cover no-repeat;
-      animation: slowmove 180s linear infinite;
-      z-index: -2;
+    /* Fondo épico como tu versión favorita */
+    body {
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 30%, #f093fb 70%, #f5576c 100%);
+      position: relative;
     }
-    @keyframes slowmove {
-      0%   { transform: translate(0, 0); }
-      100% { transform: translate(-15%, -15%); }
-    }
-
-    .overlay {
-      position: fixed;
+    body::before {
+      content: '';
+      position: absolute;
       inset: 0;
-      background: rgba(10, 5, 40, 0.88);
-      backdrop-filter: blur(6px);
-      z-index: -1;
+      background: url('https://assets.codepen.io/383755/noise.png') repeat;
+      opacity: 0.08;
+      pointer-events: none;
     }
 
     .section {
       position: absolute;
       inset: 0;
-      padding: 5vh 5vw;
-      display: none;
+      padding: 5vh 8vw;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      text-align: center;
       opacity: 0;
-      transition: opacity 0.9s ease, transform 0.9s cubic-bezier(0.68, -0.55, 0.265, 1.55);
-      overflow-y: auto;
+      transform: translateX(100%);
+      transition: all 0.6s cubic-bezier(0.77, 0, 0.18, 1);
     }
     .section.active {
-      display: block;
       opacity: 1;
       transform: translateX(0);
     }
-    .section.prev { transform: translateX(-120%); }
-    .section.next { transform: translateX(120%); }
+    .section.prev {
+      transform: translateX(-100%);
+    }
 
-    .glow-title {
-      font-weight: 900;
+    .title {
       font-size: 5.5rem;
+      font-weight: 900;
       background: linear-gradient(90deg, #c792ea, #8be9fd, #ff79c6);
       -webkit-background-clip: text;
       -webkit-text-fill-color: transparent;
-      text-shadow: 0 0 60px rgba(199, 146, 234, 0.7);
+      text-shadow: 0 0 40px rgba(135, 92, 255, 0.6);
+      margin-bottom: 1rem;
     }
 
-    .btn-start {
+    .subtitle {
+      font-size: 2.2rem;
+      font-weight: 700;
+      margin-bottom: 1rem;
+    }
+
+    .text-block {
+      background: rgba(20, 15, 60, 0.75);
+      backdrop-filter: blur(16px);
+      border: 1px solid rgba(140, 100, 255, 0.4);
+      border-radius: 24px;
+      padding: 2rem 2.5rem;
+      max-width: 800px;
+      box-shadow: 0 20px 50px rgba(0,0,0,0.5);
+      margin: 1.5rem 0;
+    }
+
+    .btn {
       background: linear-gradient(135deg, #7289da, #5865f2);
-      border: none;
       color: white;
+      border: none;
       padding: 18px 50px;
       border-radius: 50px;
-      font-size: 1.6rem;
-      font-weight: 600;
-      box-shadow: 0 12px 35px rgba(88, 101, 242, 0.6);
-      cursor: pointer;
-      transition: all 0.4s;
-    }
-    .btn-start:hover {
-      transform: scale(1.1);
-      box-shadow: 0 20px 50px rgba(88, 101, 242, 0.8);
-    }
-
-    .btn-next {
-      background: linear-gradient(135deg, #43d9ad, #00ff7f);
-      color: #000;
-      padding: 16px 40px;
-      border-radius: 50px;
+      font-size: 1.5rem;
       font-weight: 700;
-      box-shadow: 0 10px 30px rgba(0, 255, 0.5);
+      cursor: pointer;
+      box-shadow: 0 15px 35px rgba(88, 101, 242, 0.6);
+      transition: all 0.3s;
+      margin-top: 3rem;
+    }
+    .btn:hover {
+      transform: translateY(-8px);
+      box-shadow: 0 25px 50px rgba(88, 101, 242, 0.8);
     }
 
-    .card {
-      background: rgba(30, 20, 80, 0.65);
-      backdrop-filter: blur(16px);
-      border-radius: 24px;
-      border: 1px solid rgba(140, 100, 255, 0.3);
-      overflow: hidden;
+    .game-img {
+      width: 180px;
+      height: 180px;
+      object-fit: cover;
+      border-radius: 50%;
+      border: 6px solid #8be9fd;
+      box-shadow: 0 0 30px rgba(139, 233, 253, 0.6);
     }
 
     .progress {
       position: fixed;
       bottom: 0; left: 0;
-      height: 8px;
-      background: linear-gradient(90deg, #7289da, #8be9fd);
+      height: 6px;
+      background: linear-gradient(90deg, #8be9fd, #ff79c6);
       width: 0%;
-      transition: width 0.7s ease;
+      transition: width 0.6s ease;
+      z-index: 10;
     }
   </style>
 </head>
 <body>
 
-  <div class="bg"></div>
-  <div class="overlay"></div>
-
-  <!-- 1. Bienvenida -->
-  <section id="welcome" class="section active text-center d-flex flex-column justify-content-center align-items-center">
-    <h1 class="glow-title mb-4">CHECKPOINT 2025</h1>
-    <h2 class="display-3 mb-4" style="color:#fff">7 meses juntos</h2>
-    <p class="fs-1 mb-5" id="dias-juntos">cargando…</p>
-    <button class="btn-start" id="start-btn">Empezar el recorrido</button>
+  <!-- Portada -->
+  <section id="welcome" class="section active">
+    <h1 class="title">CHECKPOINT 2025</h1>
+    <h2 class="subtitle">7 meses juntos</h2>
+    <div class="text-block">
+      <p class="fs-1" id="dias-juntos">cargando...</p>
+      <p class="fs-3">Novios virtuales que se quieren en 8K ❤️</p>
+    </div>
+    <button class="btn" onclick="next()">Empezar el recorrido</button>
   </section>
 
-  <!-- 2. Meses -->
-  <section id="meses" class="section text-center">
-    <h1 class="glow-title mb-5">Nuestra historia mes a mes</h1>
-    <div class="row row-cols-1 row-cols-md-2 g-5" id="meses-container"></div>
-    <div class="text-center mt-5">
-      <button class="btn-next" onclick="goTo('juegos')">Siguiente → Top Juegos</button>
-    </div>
+  <!-- Meses (uno por pantalla) -->
+  <div id="meses-sections"></div>
+
+  <!-- Juegos -->
+  <section id="juegos" class="section">
+    <h1 class="title">Top 5 juegos donde fuimos leyenda</h1>
+    <div id="juegos-grid" class="d-flex flex-wrap justify-content-center gap-5"></div>
+    <button class="btn" onclick="next()">Siguiente</button>
   </section>
 
-  <!-- 3. Juegos -->
-  <section id="juegos" class="section text-center">
-    <h1 class="glow-title mb-5">Top 5 juegos donde fuimos leyenda</h1>
-    <div class="row row-cols-2 row-cols-md-5 g-4 justify-content-center" id="juegos-container"></div>
-    <div class="text-center mt-5">
-      <button class="btn-next" onclick="goTo('final')">Siguiente → Momentos finales</button>
-    </div>
-  </section>
-
-  <!-- 4. Final -->
-  <section id="final" class="section text-center">
-    <h1 class="glow-title mb-4">Canción que más me sonó a ti</h1>
-    <div class="card mx-auto mb-5 p-5 fs-2" style="max-width:700px;" id="cancion-principal"></div>
-
-    <h1 class="glow-title mb-5">Momentos que nunca olvidaremos</h1>
-    <div class="row g-4 justify-content-center" id="momentos-container"></div>
-
-    <div class="text-center mt-5">
-      <button class="btn-next" onclick="goTo('welcome')">Volver al inicio</button>
-    </div>
+  <!-- Final -->
+  <section id="final" class="section">
+    <h1 class="title">Canción que más me sonó a ti</h1>
+    <div class="text-block fs-2 mb-5" id="cancion-principal"></div>
+    
+    <h1 class="title">Momentos que nunca olvidaremos</h1>
+    <div id="momentos-grid" class="d-flex flex-wrap justify-content-center gap-4"></div>
+    
+    <button class="btn" onclick="goTo(0)">Volver al inicio</button>
   </section>
 
   <div class="progress" id="progress"></div>
 
   <script>
-    const sections = ['welcome', 'meses', 'juegos', 'final'];
     let current = 0;
+    const sections = [];
 
-    function goTo(id) {
-      const actual = document.querySelector('.section.active');
-      const siguiente = document.getElementById(id);
-
+    function next() {
+      const actual = sections[current];
+      current++;
+      if (current >= sections.length) current = sections.length - 1;
       actual.classList.add('prev');
-      siguiente.classList.add('next');
-
-      setTimeout(() => {
-        actual.classList.remove('active');
-        siguiente.classList.add('active');
-        siguiente.classList.remove('next');
-        actual.classList.remove('prev');
-
-        current = sections.indexOf(id);
-        document.getElementById('progress').style.width = (current / (sections.length-1) * 100) + '%';
-      }, 100);
+      sections[current].classList.add('active');
+      updateProgress();
     }
 
-    // EL BOTÓN DE INICIO AHORA SÍ FUNCIONA
-    document.getElementById('start-btn').addEventListener('click', () => goTo('meses'));
+    function goTo(idx) {
+      sections[current].classList.remove('active');
+      sections[current].classList.add('prev');
+      current = idx;
+      sections[current].classList.add('active');
+      updateProgress();
+    }
 
-    // Carga de datos
+    function updateProgress() {
+      document.getElementById('progress').style.width = (current / (sections.length - 1) * 100) + '%';
+    }
+
+    // Carga datos
     fetch('datos.json')
       .then(r => r.json())
       .then(data => {
@@ -185,46 +184,54 @@
 
         document.getElementById('cancion-principal').textContent = data.cancion_principal;
 
-        // Meses
-        const mesesDiv = document.getElementById('meses-container');
-        data.meses.forEach(m => {
-          mesesDiv.innerHTML += `
-            <div class="col">
-              <div class="card h-100">
-                <img src="${m.foto}" class="card-img-top" style="height:300px;object-fit:cover;">
-                <div class="card-body text-white">
-                  <h3>Mes ${m.mes}</h3>
-                  <h5 class="text-info">${m.titulo}</h5>
-                  <p><strong>Canción:</strong> ${m.cancion_dedicada}</p>
-                  <ul class="text-start">${m.momentos.map(t => `<li>${t}</li>`).join('')}</ul>
-                </div>
-              </div>
-            </div>`;
+        // Crear una pantalla por mes
+        const mesesContainer = document.getElementById('meses-sections');
+        data.meses.forEach((mes, i) => {
+          const sec = document.createElement('section');
+          sec.className = 'section';
+          sec.innerHTML = `
+            <h1 class="title">Mes ${mes.mes}</h1>
+            <h2 class="subtitle">${mes.titulo}</h2>
+            <img src="${mes.foto}" style="width:320px;height:320px;object-fit:cover;border-radius:20px;box-shadow:0 0 40px rgba(0,0,0,0.6);margin:2rem 0;">
+            <div class="text-block">
+              <p class="fs-3"><strong>Canción dedicada:</strong><br>${mes.cancion_dedicada}</p>
+            </div>
+            <div class="text-block">
+              ${mes.momentos.map(m => `<p class="fs-4">• ${m}</p>`).join('')}
+            </div>
+            <button class="btn" onclick="next()">${i < 6 ? 'Siguiente mes' : 'Ver juegos'}</button>
+          `;
+          mesesContainer.appendChild(sec);
+          sections.push(sec);
         });
 
         // Juegos
-        const juegosDiv = document.getElementById('juegos-container');
+        const juegosGrid = document.getElementById('juegos-grid');
         data.juegos_top.forEach(j => {
-          juegosDiv.innerHTML += `
-            <div class="col">
-              <div class="card text-center p-4 bg-transparent border-0">
-                <img src="${j.portada}" class="rounded-circle mx-auto mb-3" style="width:140px;height:140px;object-fit:cover;border:5px solid #8be9fd;">
-                <h5 class="mt-3">${j.nombre}</h5>
-                <small>${j.stats}</small>
-              </div>
-            </div>`;
+          juegosGrid.innerHTML += `
+            <div>
+              <img src="${j.portada}" class="game-img">
+              <h3 class="mt-3">${j.nombre}</h3>
+              <p>${j.stats}</p>
+            </div>
+          `;
         });
 
         // Momentos finales
-        const momentosDiv = document.getElementById('momentos-container');
+        const momentosGrid = document.getElementById('momentos-grid');
         data.top_momentos.forEach((m, i) => {
-          momentosDiv.innerHTML += `
-            <div class="col-md-6 col-lg-4">
-              <div class="card p-4 text-start">
-                <h4>#${i+1} ${m}</h4>
-              </div>
-            </div>`;
+          momentosGrid.innerHTML += `
+            <div class="text-block" style="width:380px;">
+              <h3>#${i+1}</h3>
+              <p class="fs-4">${m}</p>
+            </div>
+          `;
         });
+
+        // Agregar secciones al array
+        sections.unshift(document.getElementById('welcome'));
+        sections.push(document.getElementById('juegos'));
+        sections.push(document.getElementById('final'));
       });
   </script>
 </body>
