@@ -1,8 +1,4 @@
-// data_relacion.json
-// Archivo JSON con datos personalizados para el Wrapped. Incluye cálculo dinámico de días, canciones dedicadas (una por mes), juegos con portadas, canción representativa con audio, datos virtuales extra (horas en calls, mensajes), y top momentos.
-// Ajustado para relación virtual: agregué stats como videollamadas y películas vistas.
-// Usa ejemplos reales de canciones románticas; cámbialos por las tuyas.
-// Fecha inicio: 2024-05-16 (calcula ~576 días al 12 Dic 2025, pero el título dice "7 Meses" – ajusta si es error).
+
 
 {
     "metadata_wrapped": {
@@ -12,7 +8,7 @@
     },
     
     "estadisticas_generales": {
-        "dias_juntos": 0, // Calculado en JS
+        "dias_juntos": 0, 
         "horas_videollamadas": 350,
         "mensajes_enviados": 14000,
         "emojis_favoritos": ["❤️", "😘", "🌟"],
