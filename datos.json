@@ -1,71 +1,29 @@
 {
   "fecha_inicio": "2025-05-12",
-  "cancion_principal": "Virtual Love - Artist XYZ (la que más me sonó a ti, como un himno de nuestras noches online)",
+  "cancion_principal": "Virtual Insanity – Jamiroquai (pero en versión lo-fi que siempre ponías)",
   "meses": [
-    {
-      "mes": 1,
-      "titulo": "El Encuentro Virtual",
-      "cancion_dedicada": "Song1 - Artist1",
-      "momentos": ["Nuestra primera DM que duró horas", "Descubriendo que ambos amamos los memes locos"],
-      "foto": "img/placeholder-mes1.jpg"
-    },
-    {
-      "mes": 2,
-      "titulo": "Llamadas Eternas",
-      "cancion_dedicada": "Song2 - Artist2",
-      "momentos": ["Esa llamada de 5 horas riendo sin parar", "Compartiendo playlists en Spotify"],
-      "foto": "img/placeholder-mes2.jpg"
-    },
-    {
-      "mes": 3,
-      "titulo": "Aventuras en Juegos",
-      "cancion_dedicada": "Song3 - Artist3",
-      "momentos": ["Nuestro primer dúo en Valorant", "Construyendo un mundo en Minecraft"],
-      "foto": "img/placeholder-mes3.jpg"
-    },
-    {
-      "mes": 4,
-      "titulo": "Secretos Compartidos",
-      "cancion_dedicada": "Song4 - Artist4",
-      "momentos": ["Contándonos sueños futuros", "Maratón de series virtual"],
-      "foto": "img/placeholder-mes4.jpg"
-    },
-    {
-      "mes": 5,
-      "titulo": "Risas Infinitas",
-      "cancion_dedicada": "Song5 - Artist5",
-      "momentos": ["Partidas caóticas en Roblox", "Memes personalizados solo para nosotros"],
-      "foto": "img/placeholder-mes5.jpg"
-    },
-    {
-      "mes": 6,
-      "titulo": "Sobreviviendo Juntos",
-      "cancion_dedicada": "Song6 - Artist6",
-      "momentos": ["Explorando The Forest y gritando de miedo", "Apoyándonos en días duros online"],
-      "foto": "img/placeholder-mes6.jpg"
-    },
-    {
-      "mes": 7,
-      "titulo": "Amor Digital Eterno",
-      "cancion_dedicada": "Song7 - Artist7",
-      "momentos": ["Planeando un meetup virtual épico", "Diciéndonos 'te quiero' en código binario"],
-      "foto": "img/placeholder-mes7.jpg"
-    }
+    {"mes":1,"titulo":"El primer \"hola\" que cambió todo","cancion_dedicada":"Song 1 – Artist","momentos":["Primer DM eterno","Descubrir que los dos éramos nocturnos"]},
+    {"mes":2,"titulo":"Llamadas hasta el amanecer","cancion_dedicada":"Song 2 – Artist","momentos":["5 horas hablando sin parar","Primera vez que dijiste \"te extraño\""]},
+    {"mes":3,"titulo":"Dúos legendarios","cancion_dedicada":"Song 3 – Artist","momentos":["Nuestra primera win en Valorant","Construimos una casa con corazón en Minecraft"]},
+    {"mes":4,"titulo":"Secretos y risas 24/7","cancion_dedicada":"Song 4 – Artist","momentos":["Memes solo nuestros","Compartir playlists a las 3 a.m."]},
+    {"mes":5,"titulo":"Caos y amor en Roblox","cancion_dedicada":"Song 5 – Artist","momentos":["Adopt Me hasta las 5 am","Avatares a juego"]},
+    {"mes":6,"titulo":"Sobreviviendo monstruos y sentimientos","cancion_dedicada":"Song 6 – Artist","momentos":["The Forest y gritos de miedo","Apoyo mutuo en días difíciles"]},
+    {"mes":7,"titulo":"7 meses y un amor que no necesita distancia","cancion_dedicada":"Song 7 – Artist","momentos":["Planeando el primer meet real","Te quiero en todos los idiomas y píxeles"]}
   ],
   "juegos_top": [
-    {"nombre": "Minecraft", "portada": "img/minecraft.jpg", "stats": "Horas jugadas: 50, Mundos creados: 3"},
-    {"nombre": "Valorant", "portada": "img/valorant.jpg", "stats": "Partidas ganadas: 40, Kills totales: 500"},
-    {"nombre": "The Forest", "portada": "img/forest.jpg", "stats": "Supervivencias: 10 noches, Monstruos derrotados: 100"},
-    {"nombre": "Party Games", "portada": "img/party.jpg", "stats": "Rondas locas: 30, Risas: infinitas"},
-    {"nombre": "Roblox", "portada": "img/roblox.jpg", "stats": "Aventuras: 20 mundos, Amigos virtuales: nosotros"}
+    {"nombre":"Minecraft","portada":"img/minecraft.jpg","stats":"3 mundos, 1 corazón gigante y muchas granjas automáticas"},
+    {"nombre":"Valorant","portada":"img/valorant.jpg","stats":"+40 wins juntos, 1 clutch histórico"},
+    {"nombre":"The Forest","portada":"img/forest.jpg","stats":"10 noches sobrevividas (y muchos screams)"},
+    {"nombre":"Party Games","portada":"img/party.jpg","stats":"Risas hasta llorar garantizadas"},
+    {"nombre":"Roblox","portada":"img/roblox.jpg","stats":"20 mundos visitados, 1 solo nuestro"}
   ],
   "top_momentos": [
-    "Esa noche en que construimos un corazón gigante en Minecraft",
-    "Ganar un clutch en Valorant y celebrarlo con voz",
-    "Sobrevivir a un boss en The Forest abrazados virtualmente",
-    "Reír hasta las lágrimas en Party Games",
-    "Explorar Roblox disfrazados de avatares locos",
-    "Compartir la primera canción dedicada",
-    "Nuestro aniversario virtual con fireworks en juego"
+    "Construir un corazón gigante de obsidiana en Minecraft",
+    "Clutch 1v4 en Valorant y gritarnos de emoción",
+    "Sobrevivir la noche 100 en The Forest abrazados por voz",
+    "Reír hasta llorar en Fall Guys / Among Us",
+    "Nuestra primera foto de perfil a juego",
+    "Cuando me dedicaste la canción 7 y lloré como bobo",
+    "Todas las noches diciendo \"una última partida\" y eran 5 más"
   ]
 }
