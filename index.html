@@ -7,15 +7,42 @@
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
+    <!-- Canvas para estrellas -->
     <canvas id="stars-canvas"></canvas>
     
-    <audio id="background-music" loop autoplay volume="0.2">
+    <!-- Audio de fondo (On Melancholy Hill) -->
+    <audio id="background-music" loop>
         <source src="on-melancholy-hill.mp3" type="audio/mpeg">
     </audio>
     
+    <!-- Reproductor de música -->
+    <div id="music-player" style="display: none;">
+        <div class="player-content">
+            <div class="player-info">
+                <div class="album-art">🎵</div>
+                <div class="song-info">
+                    <div class="song-title">On Melancholy Hill</div>
+                    <div class="song-artist">Gorillaz</div>
+                </div>
+            </div>
+            <div class="player-controls">
+                <button id="play-pause-btn" class="control-btn" onclick="togglePlay()">
+                    <span id="play-icon">⏸️</span>
+                </button>
+                <div class="volume-control">
+                    <span class="volume-icon">🔊</span>
+                    <input type="range" id="volume-slider" min="0" max="100" value="20" oninput="changeVolume(this.value)">
+                    <span id="volume-text">20%</span>
+                </div>
+            </div>
+        </div>
+    </div>
+    
     <div id="app">
+        <!-- Pantalla de inicio -->
         <div id="start-screen" class="screen active">
             <div class="content-center-full">
+                <!-- Carta en el suelo -->
                 <div class="letter-on-floor" id="letter-floor" onclick="pickUpLetter()">
                     <div class="letter-envelope">
                         <div class="envelope-stamp">💕</div>
@@ -24,6 +51,7 @@
                     <div class="click-hint">Click para abrir 👆</div>
                 </div>
 
+                <!-- Carta abierta con contenido -->
                 <div class="opened-letter" id="opened-letter" style="display: none;">
                     <div class="letter-paper">
                         <div class="letter-header">Mi amor 💕</div>
@@ -41,20 +69,116 @@
             </div>
         </div>
 
+        <!-- Slide 1: Días juntos -->
         <div id="slide-1" class="screen">
             <div class="content-center">
                 <h2 class="slide-title">Llevamos juntos...</h2>
                 <div class="big-stat">
-                    <div class="big-number" id="days-counter">214</div> <div class="big-label">Días de amor</div>
+                    <div class="big-number" id="days-counter">214</div>
+                    <div class="big-label">Días de amor</div>
                 </div>
+                <div class="date-info">
+                    <p>Desde el 11 de Mayo de 2024</p>
+                    <p class="small-text">Cada día cuenta una historia 💕</p>
                 </div>
+            </div>
         </div>
-        
+
+        <!-- Slide 2: Mensajes -->
+        <div id="slide-2" class="screen">
+            <div class="content-center">
+                <h2 class="slide-title">Hemos compartido...</h2>
+                <div class="message-stats">
+                    <div class="big-stat-card small-card">
+                        <div class="stat-icon-large">💬</div>
+                        <div class="stat-number-huge">~21,400</div>
+                        <div class="stat-label-big">Mensajes</div>
+                        <div class="stat-breakdown">
+                            <div class="breakdown-item">
+                                <span>📅 Promedio diario:</span>
+                                <span class="breakdown-value">100 mensajes</span>
+                            </div>
+                            <div class="breakdown-item">
+                                <span>🔥 Días épicos:</span>
+                                <span class="breakdown-value">300-400 mensajes</span>
+                            </div>
+                            <div class="breakdown-item">
+                                <span>💕 "Te amo":</span>
+                                <span class="breakdown-value">∞ veces</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 3: Estadísticas -->
+        <div id="slide-3" class="screen">
+            <div class="content-center">
+                <h2 class="slide-title">Nuestros números</h2>
+                <div class="stats-grid">
+                    <div class="stat-card">
+                        <div class="stat-icon">💋</div>
+                        <div class="stat-number">1,000+</div>
+                        <div class="stat-label">Besos</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-icon">📸</div>
+                        <div class="stat-number">500+</div>
+                        <div class="stat-label">Fotos juntos</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-icon">🎬</div>
+                        <div class="stat-number">50+</div>
+                        <div class="stat-label">Películas/Series</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-icon">🍕</div>
+                        <div class="stat-number">100+</div>
+                        <div class="stat-label">Comidas juntos</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 4: Juegos -->
         <div id="slide-4" class="screen">
             <div class="content-center">
                 <h2 class="slide-title">Top Juegos</h2>
                 <div class="games-list">
-                    <div class="game-item" id="game-item-5">
+                    <div class="game-item">
+                        <span class="game-rank">1</span>
+                        <span class="game-icon">🎮</span>
+                        <div class="game-info">
+                            <div class="game-name">Minecraft</div>
+                            <div class="game-hours">50+ horas juntos</div>
+                        </div>
+                    </div>
+                    <div class="game-item">
+                        <span class="game-rank">2</span>
+                        <span class="game-icon">🎯</span>
+                        <div class="game-info">
+                            <div class="game-name">Valorant</div>
+                            <div class="game-hours">30+ horas de diversión</div>
+                        </div>
+                    </div>
+                    <div class="game-item">
+                        <span class="game-rank">3</span>
+                        <span class="game-icon">🎲</span>
+                        <div class="game-info">
+                            <div class="game-name">Among Us</div>
+                            <div class="game-hours">Risas infinitas</div>
+                        </div>
+                    </div>
+                    <div class="game-item">
+                        <span class="game-rank">4</span>
+                        <span class="game-icon">🏃</span>
+                        <div class="game-info">
+                            <div class="game-name">Roblox</div>
+                            <div class="game-hours">Aventuras épicas</div>
+                        </div>
+                    </div>
+                    <div class="game-item">
                         <span class="game-rank">5</span>
                         <span class="game-icon">👾</span>
                         <div class="game-info">
@@ -66,8 +190,134 @@
             </div>
         </div>
 
+        <!-- Slide 5: Top Momentos -->
+        <div id="slide-5" class="screen">
+            <div class="content-center">
+                <h2 class="slide-title">Top Momentos</h2>
+                <div class="moments-list">
+                    <div class="moment-item">
+                        <span class="moment-rank">1</span>
+                        <span class="moment-emoji">🌹</span>
+                        <span class="moment-text">Primera cita</span>
+                    </div>
+                    <div class="moment-item">
+                        <span class="moment-rank">2</span>
+                        <span class="moment-emoji">💋</span>
+                        <span class="moment-text">Nuestro primer beso</span>
+                    </div>
+                    <div class="moment-item">
+                        <span class="moment-rank">3</span>
+                        <span class="moment-emoji">💕</span>
+                        <span class="moment-text">Primera vez que dijimos "te amo"</span>
+                    </div>
+                    <div class="moment-item">
+                        <span class="moment-rank">4</span>
+                        <span class="moment-emoji">✨</span>
+                        <span class="moment-text">Nuestra primera aventura juntos</span>
+                    </div>
+                    <div class="moment-item">
+                        <span class="moment-rank">5</span>
+                        <span class="moment-emoji">🥰</span>
+                        <span class="moment-text">Cada día a tu lado</span>
+                    </div>
+                </div>
+            </div>
         </div>
 
+        <!-- Slide 6: Género Favorito -->
+        <div id="slide-6" class="screen">
+            <div class="content-center">
+                <h2 class="slide-title">Tu género favorito</h2>
+                <div class="genre-card">
+                    <div class="genre-icon">🎵</div>
+                    <div class="genre-name">Romance</div>
+                    <div class="genre-subtitle">con toques de aventura y comedia</div>
+                </div>
+                <p class="genre-description">
+                    Has reproducido esta combinación perfecta 24/7 durante 7 meses seguidos
+                </p>
+            </div>
+        </div>
+
+        <!-- Slide 7: Artista #1 -->
+        <div id="slide-7" class="screen">
+            <div class="content-center">
+                <h2 class="slide-title">Tu artista #1</h2>
+                <div class="artist-circle">
+                    <div class="heart-icon">❤️</div>
+                </div>
+                <div class="artist-name">[Tu nombre]</div>
+                <p class="artist-subtitle">Tu soundtrack favorito todos los días</p>
+                <div class="song-card">
+                    <div class="song-label">Canción más reproducida:</div>
+                    <div class="song-name">"Buenos días mi amor" ft. "Buenas noches mi vida"</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 8: Tu Vibe -->
+        <div id="slide-8" class="screen">
+            <div class="content-center">
+                <h2 class="slide-title">Tu Vibe en esta relación</h2>
+                <div class="vibe-list">
+                    <div class="vibe-item">
+                        <div class="vibe-label">
+                            <span>Cariñosa</span>
+                            <span>💯%</span>
+                        </div>
+                        <div class="vibe-bar">
+                            <div class="vibe-fill" style="width: 100%; background: linear-gradient(90deg, #f9a8d4, #ec4899);"></div>
+                        </div>
+                    </div>
+                    <div class="vibe-item">
+                        <div class="vibe-label">
+                            <span>Hermosa</span>
+                            <span>💯%</span>
+                        </div>
+                        <div class="vibe-bar">
+                            <div class="vibe-fill" style="width: 100%; background: linear-gradient(90deg, #c084fc, #a855f7);"></div>
+                        </div>
+                    </div>
+                    <div class="vibe-item">
+                        <div class="vibe-label">
+                            <span>Perfecta</span>
+                            <span>💯%</span>
+                        </div>
+                        <div class="vibe-bar">
+                            <div class="vibe-fill" style="width: 100%; background: linear-gradient(90deg, #fb7185, #f43f5e);"></div>
+                        </div>
+                    </div>
+                    <div class="vibe-item">
+                        <div class="vibe-label">
+                            <span>Mi todo</span>
+                            <span>∞%</span>
+                        </div>
+                        <div class="vibe-bar">
+                            <div class="vibe-fill" style="width: 100%; background: linear-gradient(90deg, #fcd34d, #fb923c);"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 9: Final -->
+        <div id="slide-9" class="screen">
+            <div class="content-center">
+                <div class="final-heart">💕</div>
+                <h2 class="slide-title">Gracias por estos 7 meses</h2>
+                <p class="final-text">
+                    Cada día contigo es mi canción favorita. Eres mi playlist perfecta, mi artista número uno, y la mejor parte de mi vida.
+                </p>
+                <div class="final-card">
+                    <p class="final-love">Te amo infinito 💕</p>
+                    <p class="final-forever">Y lo seguiré haciendo por siempre</p>
+                </div>
+                <p class="final-date">Feliz 7 meses, mi amor ❤️</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Navegación -->
     <div id="navigation" style="display: none;">
         <button class="nav-btn" id="prev-btn" onclick="prevSlide()">Anterior</button>
         <div class="dots" id="dots-container"></div>
