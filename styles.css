@@ -7,39 +7,21 @@
 body {
     font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
     overflow: hidden;
-    background: radial-gradient(ellipse at bottom, #1B2735 0%, #090a0f 100%);
+    background: #0a0118;
     color: white;
     min-height: 100vh;
+    position: relative;
 }
 
-/* Animación de estrellas */
-.stars, .stars2, .stars3 {
+/* Canvas de estrellas */
+#stars-canvas {
     position: fixed;
     top: 0;
     left: 0;
     width: 100%;
     height: 100%;
     pointer-events: none;
-}
-
-.stars {
-    background: transparent url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMiIgaGVpZ2h0PSIyIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciPjxjaXJjbGUgY3g9IjEiIGN5PSIxIiByPSIxIiBmaWxsPSJ3aGl0ZSIvPjwvc3ZnPg==') repeat;
-    animation: animateStars 50s linear infinite;
-}
-
-.stars2 {
-    background: transparent url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMyIgaGVpZ2h0PSIzIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciPjxjaXJjbGUgY3g9IjEuNSIgY3k9IjEuNSIgcj0iMS41IiBmaWxsPSIjYzI5ZGZmIi8+PC9zdmc+') repeat;
-    animation: animateStars 100s linear infinite;
-}
-
-.stars3 {
-    background: transparent url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNCIgaGVpZ2h0PSI0IiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciPjxjaXJjbGUgY3g9IjIiIGN5PSIyIiByPSIyIiBmaWxsPSIjZjBhYmZjIi8+PC9zdmc+') repeat;
-    animation: animateStars 150s linear infinite;
-}
-
-@keyframes animateStars {
-    from { transform: translateY(0px); }
-    to { transform: translateY(-2000px); }
+    z-index: 0;
 }
 
 /* Contenedor principal */
@@ -50,6 +32,7 @@ body {
     display: flex;
     align-items: center;
     justify-content: center;
+    z-index: 1;
 }
 
 /* Pantallas */
@@ -92,7 +75,7 @@ body {
     font-size: 5rem;
     font-weight: 900;
     margin-bottom: 1rem;
-    background: linear-gradient(135deg, #667eea 0%, #764ba2 50%, #f093fb 100%);
+    background: linear-gradient(135deg, #a78bfa 0%, #ec4899 50%, #f472b6 100%);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     background-clip: text;
@@ -112,7 +95,7 @@ body {
 }
 
 .start-btn {
-    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    background: linear-gradient(135deg, #a78bfa 0%, #ec4899 100%);
     color: white;
     border: none;
     padding: 1.5rem 3rem;
@@ -121,12 +104,12 @@ body {
     border-radius: 50px;
     cursor: pointer;
     transition: all 0.3s ease;
-    box-shadow: 0 10px 40px rgba(102, 126, 234, 0.4);
+    box-shadow: 0 10px 40px rgba(167, 139, 250, 0.4);
 }
 
 .start-btn:hover {
     transform: scale(1.05);
-    box-shadow: 0 15px 50px rgba(102, 126, 234, 0.6);
+    box-shadow: 0 15px 50px rgba(167, 139, 250, 0.6);
 }
 
 /* Títulos de slides */
@@ -134,10 +117,103 @@ body {
     font-size: 3.5rem;
     font-weight: 900;
     margin-bottom: 3rem;
-    background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+    background: linear-gradient(135deg, #f0abfc 0%, #ec4899 100%);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     background-clip: text;
+}
+
+/* Contador de días grande */
+.big-stat {
+    margin: 3rem 0;
+}
+
+.big-number {
+    font-size: 8rem;
+    font-weight: 900;
+    background: linear-gradient(135deg, #a78bfa 0%, #ec4899 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    line-height: 1;
+    margin-bottom: 1rem;
+}
+
+.big-label {
+    font-size: 2rem;
+    opacity: 0.9;
+    font-weight: 600;
+}
+
+.date-info {
+    margin-top: 2rem;
+}
+
+.date-info p {
+    font-size: 1.3rem;
+    margin: 0.5rem 0;
+    opacity: 0.8;
+}
+
+.small-text {
+    font-size: 1.1rem !important;
+    opacity: 0.7 !important;
+}
+
+/* Estadísticas de mensajes */
+.message-stats {
+    display: flex;
+    justify-content: center;
+}
+
+.big-stat-card {
+    background: rgba(167, 139, 250, 0.1);
+    backdrop-filter: blur(20px);
+    border: 2px solid rgba(167, 139, 250, 0.3);
+    border-radius: 30px;
+    padding: 3rem;
+    max-width: 600px;
+    box-shadow: 0 20px 60px rgba(167, 139, 250, 0.2);
+}
+
+.stat-icon-large {
+    font-size: 5rem;
+    margin-bottom: 1rem;
+}
+
+.stat-number-huge {
+    font-size: 5rem;
+    font-weight: 900;
+    margin-bottom: 1rem;
+    color: #f0abfc;
+}
+
+.stat-label-big {
+    font-size: 2rem;
+    margin-bottom: 2rem;
+    opacity: 0.9;
+}
+
+.stat-breakdown {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    margin-top: 2rem;
+}
+
+.breakdown-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1rem;
+    background: rgba(255, 255, 255, 0.05);
+    border-radius: 15px;
+    font-size: 1.1rem;
+}
+
+.breakdown-value {
+    font-weight: 700;
+    color: #f0abfc;
 }
 
 /* Estadísticas */
@@ -149,17 +225,19 @@ body {
 }
 
 .stat-card {
-    background: rgba(255, 255, 255, 0.1);
-    backdrop-filter: blur(10px);
-    border: 1px solid rgba(255, 255, 255, 0.2);
+    background: rgba(167, 139, 250, 0.1);
+    backdrop-filter: blur(20px);
+    border: 2px solid rgba(167, 139, 250, 0.2);
     border-radius: 25px;
     padding: 2rem;
     transition: all 0.3s ease;
+    cursor: pointer;
 }
 
 .stat-card:hover {
     transform: translateY(-10px);
-    background: rgba(255, 255, 255, 0.15);
+    background: rgba(167, 139, 250, 0.2);
+    border-color: rgba(240, 171, 252, 0.5);
     box-shadow: 0 20px 40px rgba(240, 171, 252, 0.3);
 }
 
@@ -179,29 +257,93 @@ body {
     opacity: 0.8;
 }
 
-/* Momentos */
-.moments-list {
+/* Lista de juegos */
+.games-list {
     display: flex;
     flex-direction: column;
     gap: 1rem;
     margin-top: 2rem;
+    max-width: 700px;
+    margin-left: auto;
+    margin-right: auto;
 }
 
-.moment-item {
-    background: rgba(255, 255, 255, 0.1);
-    backdrop-filter: blur(10px);
-    border: 1px solid rgba(255, 255, 255, 0.2);
+.game-item {
+    background: rgba(167, 139, 250, 0.1);
+    backdrop-filter: blur(20px);
+    border: 2px solid rgba(167, 139, 250, 0.2);
     border-radius: 20px;
     padding: 1.5rem;
     display: flex;
     align-items: center;
     gap: 1.5rem;
     transition: all 0.3s ease;
+    cursor: pointer;
+}
+
+.game-item:hover {
+    background: rgba(167, 139, 250, 0.2);
+    border-color: rgba(240, 171, 252, 0.5);
+    transform: translateX(10px);
+    box-shadow: 0 10px 30px rgba(240, 171, 252, 0.3);
+}
+
+.game-rank {
+    font-size: 2rem;
+    font-weight: 900;
+    opacity: 0.5;
+    min-width: 3rem;
+}
+
+.game-icon {
+    font-size: 2.5rem;
+}
+
+.game-info {
+    flex: 1;
+    text-align: left;
+}
+
+.game-name {
+    font-size: 1.4rem;
+    font-weight: 700;
+    margin-bottom: 0.3rem;
+}
+
+.game-hours {
+    font-size: 1rem;
+    opacity: 0.7;
+}
+
+/* Momentos */
+.moments-list {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    margin-top: 2rem;
+    max-width: 700px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.moment-item {
+    background: rgba(167, 139, 250, 0.1);
+    backdrop-filter: blur(20px);
+    border: 2px solid rgba(167, 139, 250, 0.2);
+    border-radius: 20px;
+    padding: 1.5rem;
+    display: flex;
+    align-items: center;
+    gap: 1.5rem;
+    transition: all 0.3s ease;
+    cursor: pointer;
 }
 
 .moment-item:hover {
-    background: rgba(255, 255, 255, 0.15);
+    background: rgba(167, 139, 250, 0.2);
+    border-color: rgba(240, 171, 252, 0.5);
     transform: translateX(10px);
+    box-shadow: 0 10px 30px rgba(240, 171, 252, 0.3);
 }
 
 .moment-rank {
@@ -224,13 +366,14 @@ body {
 
 /* Género */
 .genre-card {
-    background: rgba(255, 255, 255, 0.1);
-    backdrop-filter: blur(10px);
-    border: 1px solid rgba(255, 255, 255, 0.2);
+    background: rgba(167, 139, 250, 0.1);
+    backdrop-filter: blur(20px);
+    border: 2px solid rgba(167, 139, 250, 0.3);
     border-radius: 30px;
     padding: 3rem;
     margin: 2rem auto;
     max-width: 600px;
+    box-shadow: 0 20px 60px rgba(167, 139, 250, 0.2);
 }
 
 .genre-icon {
@@ -254,16 +397,16 @@ body {
     opacity: 0.9;
     line-height: 1.6;
     max-width: 600px;
-    margin: 0 auto;
+    margin: 2rem auto 0;
 }
 
 /* Artista */
 .artist-circle {
     width: 200px;
     height: 200px;
-    background: rgba(255, 255, 255, 0.1);
-    backdrop-filter: blur(10px);
-    border: 1px solid rgba(255, 255, 255, 0.2);
+    background: rgba(167, 139, 250, 0.1);
+    backdrop-filter: blur(20px);
+    border: 2px solid rgba(167, 139, 250, 0.3);
     border-radius: 50%;
     display: flex;
     align-items: center;
@@ -294,9 +437,9 @@ body {
 }
 
 .song-card {
-    background: rgba(255, 255, 255, 0.1);
-    backdrop-filter: blur(10px);
-    border: 1px solid rgba(255, 255, 255, 0.2);
+    background: rgba(167, 139, 250, 0.1);
+    backdrop-filter: blur(20px);
+    border: 2px solid rgba(167, 139, 250, 0.2);
     border-radius: 20px;
     padding: 1.5rem;
     max-width: 600px;
@@ -324,9 +467,9 @@ body {
 }
 
 .vibe-item {
-    background: rgba(255, 255, 255, 0.1);
-    backdrop-filter: blur(10px);
-    border: 1px solid rgba(255, 255, 255, 0.2);
+    background: rgba(167, 139, 250, 0.1);
+    backdrop-filter: blur(20px);
+    border: 2px solid rgba(167, 139, 250, 0.2);
     border-radius: 20px;
     padding: 1.5rem;
 }
@@ -342,7 +485,7 @@ body {
 .vibe-bar {
     width: 100%;
     height: 12px;
-    background: rgba(255, 255, 255, 0.2);
+    background: rgba(255, 255, 255, 0.1);
     border-radius: 10px;
     overflow: hidden;
 }
@@ -371,13 +514,14 @@ body {
 }
 
 .final-card {
-    background: rgba(255, 255, 255, 0.1);
-    backdrop-filter: blur(10px);
-    border: 1px solid rgba(255, 255, 255, 0.2);
+    background: rgba(167, 139, 250, 0.1);
+    backdrop-filter: blur(20px);
+    border: 2px solid rgba(167, 139, 250, 0.3);
     border-radius: 30px;
     padding: 2.5rem;
     max-width: 600px;
     margin: 2rem auto;
+    box-shadow: 0 20px 60px rgba(167, 139, 250, 0.2);
 }
 
 .final-love {
@@ -411,9 +555,9 @@ body {
 }
 
 .nav-btn {
-    background: rgba(255, 255, 255, 0.2);
+    background: rgba(167, 139, 250, 0.2);
     backdrop-filter: blur(10px);
-    border: 1px solid rgba(255, 255, 255, 0.3);
+    border: 2px solid rgba(167, 139, 250, 0.3);
     color: white;
     padding: 1rem 2rem;
     border-radius: 50px;
@@ -424,7 +568,8 @@ body {
 }
 
 .nav-btn:hover:not(:disabled) {
-    background: rgba(255, 255, 255, 0.3);
+    background: rgba(167, 139, 250, 0.3);
+    border-color: rgba(240, 171, 252, 0.5);
     transform: scale(1.05);
 }
 
@@ -442,14 +587,14 @@ body {
     width: 10px;
     height: 10px;
     border-radius: 50%;
-    background: rgba(255, 255, 255, 0.4);
+    background: rgba(255, 255, 255, 0.3);
     transition: all 0.3s ease;
 }
 
 .dot.active {
     width: 30px;
     border-radius: 5px;
-    background: white;
+    background: #f0abfc;
 }
 
 /* Responsive */
@@ -461,6 +606,14 @@ body {
     .slide-title {
         font-size: 2.5rem;
         margin-bottom: 2rem;
+    }
+
+    .big-number {
+        font-size: 5rem;
+    }
+
+    .stat-number-huge {
+        font-size: 3.5rem;
     }
 
     .stat-number {
@@ -475,8 +628,8 @@ body {
         grid-template-columns: repeat(2, 1fr);
     }
 
-    .moment-text {
-        font-size: 1rem;
+    .moment-text, .game-name {
+        font-size: 1.1rem;
     }
 
     .final-text {
@@ -490,5 +643,9 @@ body {
     .nav-btn {
         padding: 0.75rem 1.5rem;
         font-size: 0.9rem;
+    }
+
+    .big-stat-card {
+        padding: 2rem;
     }
 }
