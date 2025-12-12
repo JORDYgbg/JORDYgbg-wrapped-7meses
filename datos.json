@@ -11,7 +11,7 @@
     {"mes":7,"titulo":"7 meses y un amor sin distancia","cancion_dedicada":"Song 7 – Artist","momentos":["Planeando el primer meet real","Te quiero en todos los píxeles"],"foto":"img/valorant.jpg"}
   ],
   "juegos_top": [
-    {"nombre":"Minecraft","portada":"img/minecraft.jpg","stats":"3 mundos, 1 corazón gigante y muchas granjas automáticas"},
+    {"nombre":"Minecraft","portada":"img/minecraft.png","stats":"3 mundos, 1 corazón gigante y muchas granjas automáticas"},
     {"nombre":"Valorant","portada":"img/valorant.jpg","stats":"+40 wins juntos, 1 clutch histórico"},
     {"nombre":"The Forest","portada":"img/forest.jpg","stats":"10 noches sobrevividas (y muchos screams)"},
     {"nombre":"Party Games","portada":"img/party.jpg","stats":"Risas hasta llorar garantizadas"},
