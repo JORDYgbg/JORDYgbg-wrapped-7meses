@@ -1,148 +1,93 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>JORDY & Tú • Checkpoint 7 Meses 2025</title>
-  <link rel="stylesheet" href="style.css">
-  <script src="https://cdn.jsdelivr.net/npm/particles.js@2.0.0/particles.min.js"></script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Wrapped 2025: Acceso de Data (CONFIDENCIAL)</title>
+    <link href="https://fonts.googleapis.com/css2?family=Lora:wght@700&family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
-  <div id="particles-js"></div>
+    <main id="wrapped-container">
 
-  <div class="nav">
-    <button class="nav-btn" id="prev">←</button>
-    <button class="nav-btn" id="next">→</button>
-  </div>
+        <button id="prev-btn" class="nav-btn" aria-label="Anterior">
+            <span class="arrow-icon">&lt;</span>
+        </button>
 
-  <div class="container">
-    <!-- Portada -->
-    <section id="cover" class="page active">
-      <div class="card">
-        <h1 class="title">CHECKPOINT 2025</h1>
-        <h2 class="subtitle">7 meses juntos</h2>
-        <p class="big-text" id="dias-juntos">cargando…</p>
-        <p class="big-text">Novios virtuales que se quieren en 8K ❤️</p>
-        <button class="start-btn" onclick="nextPage()">Empezar</button>
-      </div>
-    </section>
-
-    <!-- Meses dinámicos -->
-    <div id="meses-container"></div>
-
-    <!-- Juegos -->
-    <section id="juegos" class="page">
-      <div class="card">
-        <h1 class="title">Top 5 juegos donde fuimos leyenda</h1>
-        <div id="juegos-grid"></div>
-      </div>
-    </section>
-
-    <!-- Final -->
-    <section id="final" class="page">
-      <div class="card">
-        <h1 class="title">Canción que más me sonó a ti</h1>
-        <p class="song" id="cancion-principal"></p>
-        <h1 class="title">Momentos que nunca olvidaremos</h1>
-        <div id="momentos-grid"></div>
-      </div>
-    </section>
-  </div>
-
-  <script>
-    let current = 0;
-    const pages = [];
-
-    function nextPage() {
-      if (current >= pages.length - 1) return;
-      pages[current].classList.remove('active');
-      current++;
-      pages[current].classList.add('active');
-      updateNav();
-    }
-    function prevPage() {
-      if (current <= 0) return;
-      pages[current].classList.remove('active');
-      current--;
-      pages[current].classList.add('active');
-      updateNav();
-    }
-    function updateNav() {
-      document.getElementById('prev').disabled = current === 0;
-      document.getElementById('next').disabled = current === pages.length - 1;
-    }
-
-    document.getElementById('next').onclick = nextPage;
-    document.getElementById('prev').onclick = prevPage;
-
-    fetch('datos.json')
-      .then(r => r.json())
-      .then(data => {
-        const inicio = new Date(data.fecha_inicio);
-        const hoy = new Date();
-        const dias = Math.floor((hoy - inicio) / 86400000);
-        document.getElementById('dias-juntos').innerText = `${dias} días juntos y contando… ❤️`;
-
-        document.getElementById('cancion-principal').innerText = data.cancion_principal;
-
-        pages.push(document.getElementById('cover'));
-
-        const container = document.getElementById('meses-container');
-        data.meses.forEach((mes, i) => {
-          const page = document.createElement('section');
-          page.className = 'page';
-          page.innerHTML = `
-            <div class="card scrollable">
-              <h1 class="title">Mes ${mes.mes}</h1>
-              <h2 class="subtitle">${mes.titulo}</h2>
-              <div class="text-block">
-                <h3>Canción dedicada</h3>
-                <p class="song-name">${mes.cancion_dedicada}</p>
-                <div class="moments-list">
-                  ${mes.momentos.map(m => `<p class="moment">• ${m}</p>`).join('')}
+        <button id="next-btn" class="nav-btn" aria-label="Siguiente">
+            <span class="arrow-icon">&gt;</span>
+        </button>
+        
+        <section class="slide active-slide" data-index="0">
+            <div class="checkpoint-box">
+                <p class="section-tag">[TITULAR]</p>
+                <h1 class="slide-title">Acceso a la Data. Sistema Operativo: Corazón</h1>
+                <h2 class="subtitle">Mi & Tu Wrapped 2025</h2>
+                <div class="profile-info">
+                    <p>Usuario 1: [Tu Nombre]</p>
+                    <p>Usuario 2: [Nombre de tu Novia]</p>
                 </div>
-              </div>
+                <p class="note">Pulse la flecha derecha para iniciar la descompilación de datos.</p>
             </div>
-          `;
-          container.appendChild(page);
-          pages.push(page);
-        });
+        </section>
 
-        const juegosGrid = document.getElementById('juegos-grid');
-        data.juegos_top.forEach(j => {
-          juegosGrid.innerHTML += `
-            <div class="game-card">
-              <img src="${j.portada}" alt="${j.nombre}">
-              <h3>${j.nombre}</h3>
-              <p>${j.stats}</p>
+        <section class="slide" data-index="1">
+            <div class="checkpoint-box">
+                <p class="section-tag">[ESTADÍSTICA] Métrica Clave</p>
+                <h2 class="slide-title">El Recuento del Tiempo Compartido</h2>
+                <div class="data-block">
+                    <p class="data-label">Días en Línea (Conexión Estable):</p>
+                    <p class="data-value">487 DÍAS</p>
+                </div>
+                <div class="data-block">
+                    <p class="data-label">Mensajes Intercambiados (Registro Estimado):</p>
+                    <p class="data-value">12.8K</p>
+                </div>
+                <p class="caption">El tiempo no es lineal cuando se comparte contigo.</p>
             </div>
-          `;
-        });
-        pages.push(document.getElementById('juegos'));
+        </section>
 
-        const momentosGrid = document.getElementById('momentos-grid');
-        data.top_momentos.forEach((m, i) => {
-          momentosGrid.innerHTML += `<p class="moment big">#${i+1} ${m}</p>`;
-        });
-        pages.push(document.getElementById('final'));
+        <section class="slide" data-index="2">
+            <div class="checkpoint-box">
+                <p class="section-tag">[MOMENTOS] Puntos de Control (Checkpoints) Destacados</p>
+                <h2 class="slide-title">Top 3 Checkpoints de 2025</h2>
+                <ul class="moment-list">
+                    <li><span class="moment-date">03/05/2025:</span> Activación del Módulo "Viaje a [Lugar]".</li>
+                    <li><span class="moment-date">14/08/2025:</span> Logro Desbloqueado: "Superar [Algo que Superaron Juntos]".</li>
+                    <li><span class="moment-date">24/12/2025:</span> Noche de Configuración: "Pizza, Películas y [Juego/Actividad]".</li>
+                </ul>
+                <p class="caption">Cada momento ha sido guardado y optimizado.</p>
+            </div>
+        </section>
 
-        updateNav();
-      });
+        <section class="slide" data-index="3">
+            <div class="checkpoint-box music-slide">
+                <p class="section-tag">[ANÁLISIS] El Audio del Año</p>
+                <h2 class="slide-title">Archivo Encontrado: on-melancholy-hill.mp3</h2>
+                <p class="artist">Gorillaz</p>
+                <p class="music-note">Esta canción define la vibra de nuestros momentos inesperados.</p>
+                <audio controls src="on-melancholy-hill.mp3" class="wrapped-audio">
+                    Tu navegador no soporta el elemento de audio.
+                </audio>
+                <p class="caption">La banda sonora de nuestra conexión es inmejorable.</p>
+            </div>
+        </section>
 
-    // Partículas ligeras estilo Discord (cuadraditos)
-    particlesJS('particles-js', {
-      particles: {
-        number: { value: 40 },
-        color: { value: ['#9580ff', '#8be9fd', '#ff79c6'] },
-        shape: { type: 'square' },
-        opacity: { value: 0.5 },
-        size: { value: 4 },
-        move: { enable: true, speed: 1 }
-      },
-      interactivity: { events: { onhover: { enable: true, mode: 'repulse' } } },
-      retina_detect: true
-    });
-  </script>
+        <section class="slide" data-index="4">
+            <div class="checkpoint-box">
+                <p class="section-tag">[RESUMEN] Manifiesto Final</p>
+                <h2 class="slide-title error-title">Error 404 - Fin de la Data</h2>
+                <blockquote class="manifesto-quote">
+                    "La data ha concluido, pero la historia está en curso. Gracias por ser el mejor código fuente. Te amo, y nuestra conexión es el proyecto más importante de mi vida."
+                </blockquote>
+                <p class="signature">- [Tu Nombre]</p>
+                <p class="note">Fin de la Transmisión. Desconexión segura.</p>
+            </div>
+        </section>
+
+    </main>
+
+    <script src="script.js"></script>
 </body>
 </html>
