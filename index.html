@@ -11,36 +11,42 @@
 
   <div id="particles-js"></div>
 
+  <!-- Música de fondo -->
+  <audio id="bg-music" loop autoplay volume="0.3">
+    <source src="on-melancholy-hill.mp3" type="audio/mpeg">
+  </audio>
+  <button id="mute-btn" class="mute-btn">🔊</button>
+
+  <!-- Navegación -->
   <div class="nav">
-    <button class="nav-btn" id="prev">←</button>
-    <button class="nav-btn" id="next">→</button>
+    <button class="nav-btn" id="prev-btn">←</button>
+    <button class="nav-btn" id="next-btn">→</button>
   </div>
 
-  <div class="container">
+  <div class="pages-container">
     <!-- Portada -->
-    <section id="cover" class="page active">
+    <section class="page active">
       <div class="card">
         <h1 class="title">CHECKPOINT 2025</h1>
         <h2 class="subtitle">7 meses juntos</h2>
         <p class="big-text" id="dias-juntos">cargando…</p>
         <p class="big-text">Novios virtuales que se quieren en 8K ❤️</p>
-        <button class="start-btn" onclick="nextPage()">Empezar</button>
+        <button class="start-btn">Empezar el recorrido</button>
       </div>
     </section>
 
-    <!-- Meses dinámicos -->
     <div id="meses-container"></div>
 
     <!-- Juegos -->
-    <section id="juegos" class="page">
+    <section class="page">
       <div class="card">
         <h1 class="title">Top 5 juegos donde fuimos leyenda</h1>
-        <div id="juegos-grid"></div>
+        <div class="game-grid" id="juegos-grid"></div>
       </div>
     </section>
 
     <!-- Final -->
-    <section id="final" class="page">
+    <section class="page">
       <div class="card">
         <h1 class="title">Canción que más me sonó a ti</h1>
         <p class="song" id="cancion-principal"></p>
@@ -50,99 +56,8 @@
     </section>
   </div>
 
-  <script>
-    let current = 0;
-    const pages = [];
+  <div class="progress-bar" id="progress"></div>
 
-    function nextPage() {
-      if (current >= pages.length - 1) return;
-      pages[current].classList.remove('active');
-      current++;
-      pages[current].classList.add('active');
-      updateNav();
-    }
-    function prevPage() {
-      if (current <= 0) return;
-      pages[current].classList.remove('active');
-      current--;
-      pages[current].classList.add('active');
-      updateNav();
-    }
-    function updateNav() {
-      document.getElementById('prev').disabled = current === 0;
-      document.getElementById('next').disabled = current === pages.length - 1;
-    }
-
-    document.getElementById('next').onclick = nextPage;
-    document.getElementById('prev').onclick = prevPage;
-
-    fetch('datos.json')
-      .then(r => r.json())
-      .then(data => {
-        const inicio = new Date(data.fecha_inicio);
-        const hoy = new Date();
-        const dias = Math.floor((hoy - inicio) / 86400000);
-        document.getElementById('dias-juntos').innerText = `${dias} días juntos y contando… ❤️`;
-
-        document.getElementById('cancion-principal').innerText = data.cancion_principal;
-
-        pages.push(document.getElementById('cover'));
-
-        const container = document.getElementById('meses-container');
-        data.meses.forEach((mes, i) => {
-          const page = document.createElement('section');
-          page.className = 'page';
-          page.innerHTML = `
-            <div class="card scrollable">
-              <h1 class="title">Mes ${mes.mes}</h1>
-              <h2 class="subtitle">${mes.titulo}</h2>
-              <div class="text-block">
-                <h3>Canción dedicada</h3>
-                <p class="song-name">${mes.cancion_dedicada}</p>
-                <div class="moments-list">
-                  ${mes.momentos.map(m => `<p class="moment">• ${m}</p>`).join('')}
-                </div>
-              </div>
-            </div>
-          `;
-          container.appendChild(page);
-          pages.push(page);
-        });
-
-        const juegosGrid = document.getElementById('juegos-grid');
-        data.juegos_top.forEach(j => {
-          juegosGrid.innerHTML += `
-            <div class="game-card">
-              <img src="${j.portada}" alt="${j.nombre}">
-              <h3>${j.nombre}</h3>
-              <p>${j.stats}</p>
-            </div>
-          `;
-        });
-        pages.push(document.getElementById('juegos'));
-
-        const momentosGrid = document.getElementById('momentos-grid');
-        data.top_momentos.forEach((m, i) => {
-          momentosGrid.innerHTML += `<p class="moment big">#${i+1} ${m}</p>`;
-        });
-        pages.push(document.getElementById('final'));
-
-        updateNav();
-      });
-
-    // Partículas ligeras estilo Discord (cuadraditos)
-    particlesJS('particles-js', {
-      particles: {
-        number: { value: 40 },
-        color: { value: ['#9580ff', '#8be9fd', '#ff79c6'] },
-        shape: { type: 'square' },
-        opacity: { value: 0.5 },
-        size: { value: 4 },
-        move: { enable: true, speed: 1 }
-      },
-      interactivity: { events: { onhover: { enable: true, mode: 'repulse' } } },
-      retina_detect: true
-    });
-  </script>
+  <script src="script.js"></script>
 </body>
 </html>
