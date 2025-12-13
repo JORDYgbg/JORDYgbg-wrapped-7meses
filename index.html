@@ -1,165 +1,148 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Wrapped 2025: Data Project X.X (CONFIDENCIAL)</title>
-    <link href="https://fonts.googleapis.com/css2?family=Lora:wght@700&family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="style.css">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>JORDY & Tú • Checkpoint 7 Meses 2025</title>
+  <link rel="stylesheet" href="style.css">
+  <script src="https://cdn.jsdelivr.net/npm/particles.js@2.0.0/particles.min.js"></script>
 </head>
 <body>
 
-    <div id="audio-player-fixed" class="music-controller">
-        <span id="audio-title">on-melancholy-hill.mp3</span>
-        <audio id="wrapped-audio-player" controls loop src="on-melancholy-hill.mp3"></audio>
-    </div>
+  <div id="particles-js"></div>
 
-    <main id="wrapped-container">
+  <div class="nav">
+    <button class="nav-btn" id="prev">←</button>
+    <button class="nav-btn" id="next">→</button>
+  </div>
 
-        <div class="nav-controls-top">
-            <button id="prev-btn" class="nav-btn" aria-label="Anterior">
-                <span class="arrow-icon">&lt;</span>
-            </button>
-            <button id="next-btn" class="nav-btn" aria-label="Siguiente">
-                <span class="arrow-icon">&gt;</span>
-            </button>
-        </div>
-        
-        <section class="slide active-slide" data-index="0">
-            <div class="checkpoint-box full-size">
-                <p class="section-tag">[ACCESS LEVEL: OMEGA]</p>
-                <h1 class="slide-title">Proyecto: Conexión Bilateral (Wrapped 2025)</h1>
-                <h2 class="subtitle">Descompilación de Data Afectiva</h2>
-                <div class="profile-info">
-                    <p>Estado de la Relación: Óptimo</p>
-                    <p>Inicio de Sesión: [Fecha de Aniversario/Inicio]</p>
+  <div class="container">
+    <!-- Portada -->
+    <section id="cover" class="page active">
+      <div class="card">
+        <h1 class="title">CHECKPOINT 2025</h1>
+        <h2 class="subtitle">7 meses juntos</h2>
+        <p class="big-text" id="dias-juntos">cargando…</p>
+        <p class="big-text">Novios virtuales que se quieren en 8K ❤️</p>
+        <button class="start-btn" onclick="nextPage()">Empezar</button>
+      </div>
+    </section>
+
+    <!-- Meses dinámicos -->
+    <div id="meses-container"></div>
+
+    <!-- Juegos -->
+    <section id="juegos" class="page">
+      <div class="card">
+        <h1 class="title">Top 5 juegos donde fuimos leyenda</h1>
+        <div id="juegos-grid"></div>
+      </div>
+    </section>
+
+    <!-- Final -->
+    <section id="final" class="page">
+      <div class="card">
+        <h1 class="title">Canción que más me sonó a ti</h1>
+        <p class="song" id="cancion-principal"></p>
+        <h1 class="title">Momentos que nunca olvidaremos</h1>
+        <div id="momentos-grid"></div>
+      </div>
+    </section>
+  </div>
+
+  <script>
+    let current = 0;
+    const pages = [];
+
+    function nextPage() {
+      if (current >= pages.length - 1) return;
+      pages[current].classList.remove('active');
+      current++;
+      pages[current].classList.add('active');
+      updateNav();
+    }
+    function prevPage() {
+      if (current <= 0) return;
+      pages[current].classList.remove('active');
+      current--;
+      pages[current].classList.add('active');
+      updateNav();
+    }
+    function updateNav() {
+      document.getElementById('prev').disabled = current === 0;
+      document.getElementById('next').disabled = current === pages.length - 1;
+    }
+
+    document.getElementById('next').onclick = nextPage;
+    document.getElementById('prev').onclick = prevPage;
+
+    fetch('datos.json')
+      .then(r => r.json())
+      .then(data => {
+        const inicio = new Date(data.fecha_inicio);
+        const hoy = new Date();
+        const dias = Math.floor((hoy - inicio) / 86400000);
+        document.getElementById('dias-juntos').innerText = `${dias} días juntos y contando… ❤️`;
+
+        document.getElementById('cancion-principal').innerText = data.cancion_principal;
+
+        pages.push(document.getElementById('cover'));
+
+        const container = document.getElementById('meses-container');
+        data.meses.forEach((mes, i) => {
+          const page = document.createElement('section');
+          page.className = 'page';
+          page.innerHTML = `
+            <div class="card scrollable">
+              <h1 class="title">Mes ${mes.mes}</h1>
+              <h2 class="subtitle">${mes.titulo}</h2>
+              <div class="text-block">
+                <h3>Canción dedicada</h3>
+                <p class="song-name">${mes.cancion_dedicada}</p>
+                <div class="moments-list">
+                  ${mes.momentos.map(m => `<p class="moment">• ${m}</p>`).join('')}
                 </div>
-                <p class="note">Pulse Siguiente para iniciar el análisis profundo.</p>
+              </div>
             </div>
-        </section>
+          `;
+          container.appendChild(page);
+          pages.push(page);
+        });
 
-        <section class="slide" data-index="1">
-            <div class="checkpoint-box wide-box">
-                <p class="section-tag">[ESTADÍSTICA] Métrica Clave</p>
-                <h2 class="slide-title">El Recuento del Tiempo Compartido</h2>
-                <div class="data-block">
-                    <p class="data-label">Tiempo de Sincronización (Horas):</p>
-                    <p class="data-value">11,688</p>
-                </div>
-                <div class="data-block">
-                    <p class="data-label">Ratio de Risas/Minuto (Pico):</p>
-                    <p class="data-value">0.85 RPM</p>
-                </div>
-                <p class="caption">La eficiencia de nuestra felicidad es del 99.9%.</p>
+        const juegosGrid = document.getElementById('juegos-grid');
+        data.juegos_top.forEach(j => {
+          juegosGrid.innerHTML += `
+            <div class="game-card">
+              <img src="${j.portada}" alt="${j.nombre}">
+              <h3>${j.nombre}</h3>
+              <p>${j.stats}</p>
             </div>
-        </section>
+          `;
+        });
+        pages.push(document.getElementById('juegos'));
 
-        <section class="slide" data-index="2">
-            <div class="checkpoint-box wide-box">
-                <p class="section-tag">[ANÁLISIS] Unidades de Software de Ocio</p>
-                <h2 class="slide-title">Los Programas Más Ejecutados Juntos</h2>
-                <div class="games-grid">
-                    <div class="game-item">
-                        <img src="img/minecraft.png" alt="Minecraft" class="game-img">
-                        <p class="game-name">MINECRAFT</p>
-                        <p class="game-stats">Modo: Cooperativo</p>
-                    </div>
-                    <div class="game-item">
-                        <img src="img/roblox.jpg" alt="Roblox" class="game-img">
-                        <p class="game-name">ROBLOX</p>
-                        <p class="game-stats">Sesiones: Más de 50</p>
-                    </div>
-                    <div class="game-item">
-                        <img src="img/valorant.jpg" alt="Valorant" class="game-img">
-                        <p class="game-name">VALORANT</p>
-                        <p class="game-stats">Misiones de Alto Impacto</p>
-                    </div>
-                    </div>
-            </div>
-        </section>
+        const momentosGrid = document.getElementById('momentos-grid');
+        data.top_momentos.forEach((m, i) => {
+          momentosGrid.innerHTML += `<p class="moment big">#${i+1} ${m}</p>`;
+        });
+        pages.push(document.getElementById('final'));
 
-        <section class="slide" data-index="3">
-            <div class="checkpoint-box wide-box music-slide">
-                <p class="section-tag">[AUDIO DATA] Archivo más Reproducido</p>
-                <h2 class="slide-title">Soundtrack del 2025: on-melancholy-hill.mp3</h2>
-                <p class="artist">Gorillaz</p>
-                <p class="music-note">La canción que define nuestros viajes y el *vibe* perfecto.</p>
-                <p class="caption">¡Busca el reproductor fijo arriba a la derecha! Sigue la melodía...</p>
-            </div>
-        </section>
+        updateNav();
+      });
 
-        <section class="slide month-slide" data-index="4">
-            <div class="checkpoint-box wide-box">
-                <p class="section-tag">[HISTORIAL DE EVENTOS] Módulo: Enero - Marzo</p>
-                <h2 class="slide-title">Inicio de Ciclo: Calibrando el Sistema</h2>
-                <ul class="month-list">
-                    <li>**Enero:** Configuración inicial del "Proyecto Maratón de Series".</li>
-                    <li>**Febrero:** Error de Sistema: "San Valentín" (Corregido con Cena Óptima).</li>
-                    <li>**Marzo:** Despliegue de la Misión "Visita Familiar".</li>
-                </ul>
-            </div>
-        </section>
-
-        <section class="slide month-slide" data-index="5">
-            <div class="checkpoint-box wide-box">
-                <p class="section-tag">[HISTORIAL DE EVENTOS] Módulo: Abril - Junio</p>
-                <h2 class="slide-title">Mid-Point: Máxima Velocidad de Conexión</h2>
-                <ul class="month-list">
-                    <li>**Abril:** Logro: Celebración de Cumpleaños Nivel Legendario.</li>
-                    <li>**Mayo:** Descubrimiento de Nueva *Comfort Food*: [Plato Específico].</li>
-                    <li>**Junio:** Pruebas de Estrés: Sobrevivir a [Evento Complicado] Juntos.</li>
-                </ul>
-            </div>
-        </section>
-        
-        <section class="slide month-slide" data-index="6">
-            <div class="checkpoint-box wide-box">
-                <p class="section-tag">[HISTORIAL DE EVENTOS] Módulo: Julio - Septiembre</p>
-                <h2 class="slide-title">Verano: Operaciones Especiales Fuera de Casa</h2>
-                <ul class="month-list">
-                    <li>**Julio:** Inmersión Total: Viaje de [X] días a la playa/montaña.</li>
-                    <li>**Agosto:** Debugging de Relaciones: Conversaciones profundas.</li>
-                    <li>**Septiembre:** Transición: Vuelta a la rutina con más fuerza.</li>
-                </ul>
-            </div>
-        </section>
-        
-        <section class="slide month-slide" data-index="7">
-            <div class="checkpoint-box wide-box">
-                <p class="section-tag">[HISTORIAL DE EVENTOS] Módulo: Octubre - Diciembre</p>
-                <h2 class="slide-title">Cierre de Ciclo: Acumulando Logros</h2>
-                <ul class="month-list">
-                    <li>**Octubre:** Misión Secreta: Celebración de Halloween.</li>
-                    <li>**Noviembre:** Consolidación: Primer/Segundo Aniversario de [Algo Importante].</li>
-                    <li>**Diciembre:** Recolección de Datos: Preparando el próximo Wrapped.</li>
-                </ul>
-            </div>
-        </section>
-
-
-        <section class="slide" data-index="8">
-            <div class="checkpoint-box wide-box">
-                <p class="section-tag">[GEOLOCALIZACIÓN] Coordenada X-Y Más Visitada</p>
-                <h2 class="slide-title">Ubicación Clave: Nuestro Pequeño Universo</h2>
-                <p class="data-value large-text">El Sofá, Nivel 3</p>
-                <p class="caption">El mejor lugar para las siestas, las discusiones tontas y las reconciliaciones necesarias.</p>
-                <p class="note">Mencionar una ubicación real que sea clave para ustedes.</p>
-            </div>
-        </section>
-        
-        <section class="slide" data-index="9">
-            <div class="checkpoint-box full-size">
-                <p class="section-tag">[CONCLUSIÓN] Manifiesto Final</p>
-                <h2 class="slide-title error-title">Data Finalizada. Conexión 100% Estable.</h2>
-                <blockquote class="manifesto-quote">
-                    "Gracias por ser mi mejor *bug* y mi solución más elegante. No hay algoritmo que pueda replicar la perfección de nuestra conexión. Este es el fin del informe, pero el inicio de un nuevo año de datos. Te amo."
-                </blockquote>
-                <p class="signature">- Usuario: [Tu Nombre] (El mejor desarrollador)</p>
-                <p class="note">Final de la Transmisión. Desconexión segura.</p>
-            </div>
-        </section>
-    </main>
-
-    <script src="script.js"></script>
+    // Partículas ligeras estilo Discord (cuadraditos)
+    particlesJS('particles-js', {
+      particles: {
+        number: { value: 40 },
+        color: { value: ['#9580ff', '#8be9fd', '#ff79c6'] },
+        shape: { type: 'square' },
+        opacity: { value: 0.5 },
+        size: { value: 4 },
+        move: { enable: true, speed: 1 }
+      },
+      interactivity: { events: { onhover: { enable: true, mode: 'repulse' } } },
+      retina_detect: true
+    });
+  </script>
 </body>
 </html>
