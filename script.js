@@ -4,45 +4,54 @@ document.addEventListener('DOMContentLoaded', () => {
     const nextBtn = document.getElementById('next-btn');
     let currentSlideIndex = 0;
     const totalSlides = slides.length;
+    
+    // Función para manejar el audio
+    function handleAudio(newIndex, oldIndex) {
+        const oldAudio = slides[oldIndex]?.querySelector('.wrapped-audio');
+        const newAudio = slides[newIndex]?.querySelector('.wrapped-audio');
+
+        if (oldAudio) {
+            oldAudio.pause();
+            oldAudio.currentTime = 0; // Reiniciar
+        }
+
+        // Si la diapositiva es la de música (índice 3), reproducir automáticamente
+        if (newIndex === 3 && newAudio) {
+            newAudio.play().catch(error => {
+                console.warn("Autoplay falló (navegador lo bloqueó). El usuario debe interactuar.", error);
+            });
+        }
+    }
 
     /**
-     * Actualiza la visibilidad de las diapositivas y el estado de los botones.
+     * Actualiza la visibilidad de las diapositivas con animación.
      * @param {number} newIndex - El índice de la diapositiva a mostrar.
      * @param {string} direction - 'next' o 'prev' para la animación.
      */
     function updateSlide(newIndex, direction) {
-        // 1. Desactivar el slide actual y aplicar la clase de salida
         const oldSlide = slides[currentSlideIndex];
+        const newSlide = slides[newIndex];
+        const oldIndex = currentSlideIndex;
+
+        handleAudio(newIndex, oldIndex);
+
+        // 1. Aplica la animación de SALIDA al slide actual
         oldSlide.classList.remove('active-slide');
-        oldSlide.classList.add(direction === 'next' ? 'prev-slide' : 'next-slide'); // Usamos 'next-slide' temporalmente para la animación inversa.
-        
-        // 2. Actualizar el índice
-        currentSlideIndex = newIndex;
+        oldSlide.classList.add(direction === 'next' ? 'leaving-prev' : 'leaving-next');
 
-        // 3. Activar el nuevo slide y remover clases de animación
-        const newSlide = slides[currentSlideIndex];
+        // 2. Prepara la animación de ENTRADA al nuevo slide
+        newSlide.classList.add(direction === 'next' ? 'leaving-next' : 'entering-prev');
         
-        // Timeout para permitir que el CSS registre la clase de salida antes de resetear
+        // 3. Permite que el CSS termine la animación de salida/preparación
         setTimeout(() => {
-            slides.forEach(slide => {
-                slide.classList.remove('prev-slide', 'next-slide'); 
-            });
-            // La nueva diapositiva tiene que empezar desde la dirección opuesta
-            newSlide.classList.add(direction === 'next' ? 'next-slide' : 'prev-slide');
-            
-            // Forzar reflow/repaint para que la transición funcione
-            void newSlide.offsetWidth; 
+            // Limpia todas las clases de transición de todos los slides
+            slides.forEach(s => s.classList.remove('leaving-prev', 'leaving-next', 'entering-prev'));
 
-            newSlide.classList.remove('prev-slide', 'next-slide'); // Remover clase de inicio
+            // Establece el nuevo slide como activo
             newSlide.classList.add('active-slide');
-
+            currentSlideIndex = newIndex;
             updateButtonStates();
-        }, 50); // Pequeño retraso para asegurar la animación
-
-        // Manejar el audio para la diapositiva de música (si existe)
-        if (oldSlide.querySelector('.wrapped-audio')) {
-            oldSlide.querySelector('.wrapped-audio').pause();
-        }
+        }, 50); // Pequeño delay para asegurar la ejecución del CSS
     }
 
     /**
@@ -53,7 +62,7 @@ document.addEventListener('DOMContentLoaded', () => {
         nextBtn.disabled = currentSlideIndex === totalSlides - 1;
     }
 
-    // Inicializar la primera diapositiva
+    // Inicializar: asegurarse de que solo el primero sea visible
     slides.forEach((slide, index) => {
         if (index !== 0) {
             slide.classList.remove('active-slide');
