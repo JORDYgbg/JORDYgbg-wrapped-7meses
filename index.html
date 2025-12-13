@@ -11,43 +11,44 @@
 
   <div id="particles-js"></div>
 
-  <!-- Flechas navegación -->
   <div class="nav">
     <button class="nav-btn" id="prev">←</button>
     <button class="nav-btn" id="next">→</button>
   </div>
 
-  <!-- Portada -->
-  <section id="cover" class="page active">
-    <div class="card">
-      <h1 class="title">CHECKPOINT 2025</h1>
-      <h2 class="subtitle">7 meses juntos</h2>
-      <p class="big-text" id="dias-juntos">cargando…</p>
-      <p class="big-text">Novios virtuales que se quieren en 8K ❤️</p>
-      <button class="start-btn" onclick="nextPage()">Empezar</button>
-    </div>
-  </section>
+  <div class="container">
+    <!-- Portada -->
+    <section id="cover" class="page active">
+      <div class="card">
+        <h1 class="title">CHECKPOINT 2025</h1>
+        <h2 class="subtitle">7 meses juntos</h2>
+        <p class="big-text" id="dias-juntos">cargando…</p>
+        <p class="big-text">Novios virtuales que se quieren en 8K ❤️</p>
+        <button class="start-btn" onclick="nextPage()">Empezar</button>
+      </div>
+    </section>
 
-  <!-- Meses dinámicos -->
-  <div id="meses-container"></div>
+    <!-- Meses dinámicos -->
+    <div id="meses-container"></div>
 
-  <!-- Juegos -->
-  <section id="juegos" class="page">
-    <div class="card">
-      <h1 class="title">Top 5 juegos donde fuimos leyenda</h1>
-      <div id="juegos-grid"></div>
-    </div>
-  </section>
+    <!-- Juegos -->
+    <section id="juegos" class="page">
+      <div class="card">
+        <h1 class="title">Top 5 juegos donde fuimos leyenda</h1>
+        <div id="juegos-grid"></div>
+      </div>
+    </section>
 
-  <!-- Final -->
-  <section id="final" class="page">
-    <div class="card">
-      <h1 class="title">Canción que más me sonó a ti</h1>
-      <p class="song" id="cancion-principal"></p>
-      <h1 class="title mt-5">Momentos que nunca olvidaremos</h1>
-      <div id="momentos-grid"></div>
-    </div>
-  </section>
+    <!-- Final -->
+    <section id="final" class="page">
+      <div class="card">
+        <h1 class="title">Canción que más me sonó a ti</h1>
+        <p class="song" id="cancion-principal"></p>
+        <h1 class="title">Momentos que nunca olvidaremos</h1>
+        <div id="momentos-grid"></div>
+      </div>
+    </section>
+  </div>
 
   <script>
     let current = 0;
@@ -85,22 +86,22 @@
 
         document.getElementById('cancion-principal').innerText = data.cancion_principal;
 
-        // Portada
         pages.push(document.getElementById('cover'));
 
-        // Cada mes = una página completa
         const container = document.getElementById('meses-container');
         data.meses.forEach((mes, i) => {
           const page = document.createElement('section');
           page.className = 'page';
           page.innerHTML = `
-            <div class="card">
+            <div class="card scrollable">
               <h1 class="title">Mes ${mes.mes}</h1>
               <h2 class="subtitle">${mes.titulo}</h2>
               <div class="text-block">
-                <h3>Canción dedicada:</h3>
+                <h3>Canción dedicada</h3>
                 <p class="song-name">${mes.cancion_dedicada}</p>
-                ${mes.momentos.map(m => `<p class="moment">• ${m}</p>`).join('')}
+                <div class="moments-list">
+                  ${mes.momentos.map(m => `<p class="moment">• ${m}</p>`).join('')}
+                </div>
               </div>
             </div>
           `;
@@ -108,7 +109,6 @@
           pages.push(page);
         });
 
-        // Juegos
         const juegosGrid = document.getElementById('juegos-grid');
         data.juegos_top.forEach(j => {
           juegosGrid.innerHTML += `
@@ -121,7 +121,6 @@
         });
         pages.push(document.getElementById('juegos'));
 
-        // Final
         const momentosGrid = document.getElementById('momentos-grid');
         data.top_momentos.forEach((m, i) => {
           momentosGrid.innerHTML += `<p class="moment big">#${i+1} ${m}</p>`;
@@ -131,15 +130,15 @@
         updateNav();
       });
 
-    // Partículas estilo Discord Checkpoint (cuadraditos pixel)
+    // Partículas ligeras estilo Discord (cuadraditos)
     particlesJS('particles-js', {
       particles: {
-        number: { value: 60 },
+        number: { value: 40 },
         color: { value: ['#9580ff', '#8be9fd', '#ff79c6'] },
         shape: { type: 'square' },
-        opacity: { value: 0.6, random: true },
-        size: { value: 5, random: true },
-        move: { enable: true, speed: 1.5, direction: 'none', random: true }
+        opacity: { value: 0.5 },
+        size: { value: 4 },
+        move: { enable: true, speed: 1 }
       },
       interactivity: { events: { onhover: { enable: true, mode: 'repulse' } } },
       retina_detect: true
