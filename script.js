@@ -2,23 +2,21 @@ document.addEventListener('DOMContentLoaded', () => {
     const slides = document.querySelectorAll('.slide');
     const prevBtn = document.getElementById('prev-btn');
     const nextBtn = document.getElementById('next-btn');
-    const audioPlayer = document.getElementById('wrapped-audio-player'); // Nuevo
+    const audioPlayer = document.getElementById('wrapped-audio-player'); 
     let currentSlideIndex = 0;
     const totalSlides = slides.length;
 
-    // INICIAR MÚSICA AL CARGAR
-    function startMusic() {
-        audioPlayer.volume = 0.5; // Volumen medio para no ser molesto
-        audioPlayer.play().catch(error => {
-            console.warn("Autoplay falló. Por favor, inicia la música manualmente desde el reproductor superior derecho.");
-            // Podrías mostrar un mensaje temporal en la pantalla si lo deseas
-        });
-    }
+    // Intenta reproducir inmediatamente (puede fallar en algunos navegadores)
+    audioPlayer.volume = 0.5;
+    audioPlayer.play().catch(error => {
+        // Mensaje silencioso, ya que el usuario puede usar el control
+        console.info("Autoplay bloqueado. Por favor, usa el reproductor fijo para iniciar la música.");
+    });
 
-    // Ya no necesitamos manejar audio por diapositiva, solo iniciarlo una vez.
-    
+    /**
+     * Actualiza la visibilidad de las diapositivas con animación.
+     */
     function updateSlide(newIndex, direction) {
-        // ... (misma lógica de animación de la V2.0) ...
         const oldSlide = slides[currentSlideIndex];
         const newSlide = slides[newIndex];
         
@@ -26,11 +24,19 @@ document.addEventListener('DOMContentLoaded', () => {
         oldSlide.classList.remove('active-slide');
         oldSlide.classList.add(direction === 'next' ? 'leaving-prev' : 'leaving-next');
 
-        // 2. Prepara la animación de ENTRADA al nuevo slide
+        // 2. Prepara la animación de ENTRADA al nuevo slide y la hace visible
         newSlide.classList.add(direction === 'next' ? 'leaving-next' : 'entering-prev');
+        newSlide.style.visibility = 'visible'; // Aseguramos la visibilidad antes de la transición
         
         setTimeout(() => {
-            slides.forEach(s => s.classList.remove('leaving-prev', 'leaving-next', 'entering-prev'));
+            slides.forEach(s => {
+                s.classList.remove('leaving-prev', 'leaving-next', 'entering-prev');
+                // Oculta completamente los slides que no están activos
+                if (s !== newSlide) {
+                     s.style.visibility = 'hidden'; 
+                }
+            });
+            
             newSlide.classList.add('active-slide');
             currentSlideIndex = newIndex;
             updateButtonStates();
@@ -42,15 +48,17 @@ document.addEventListener('DOMContentLoaded', () => {
         nextBtn.disabled = currentSlideIndex === totalSlides - 1;
     }
 
-    // Inicializar
+    // Inicializar: Solo la primera es activa/visible
     slides.forEach((slide, index) => {
         if (index !== 0) {
             slide.classList.remove('active-slide');
+            slide.style.visibility = 'hidden';
+        } else {
+            slide.style.visibility = 'visible';
         }
     });
 
     updateButtonStates();
-    startMusic(); // Intento de autoplay
 
     // Event Listeners
     nextBtn.addEventListener('click', () => {
