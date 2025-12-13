@@ -9,6 +9,11 @@
 </head>
 <body>
 
+    <div id="audio-player-fixed" class="music-controller">
+        <span id="audio-title">on-melancholy-hill.mp3</span>
+        <audio id="wrapped-audio-player" controls loop src="on-melancholy-hill.mp3"></audio>
+    </div>
+
     <main id="wrapped-container">
 
         <div class="nav-controls-top">
@@ -34,7 +39,7 @@
         </section>
 
         <section class="slide" data-index="1">
-            <div class="checkpoint-box">
+            <div class="checkpoint-box wide-box">
                 <p class="section-tag">[ESTADÍSTICA] Métrica Clave</p>
                 <h2 class="slide-title">El Recuento del Tiempo Compartido</h2>
                 <div class="data-block">
@@ -50,40 +55,41 @@
         </section>
 
         <section class="slide" data-index="2">
-            <div class="checkpoint-box">
+            <div class="checkpoint-box wide-box">
                 <p class="section-tag">[ANÁLISIS] Unidades de Software de Ocio</p>
                 <h2 class="slide-title">Los Programas Más Ejecutados Juntos</h2>
                 <div class="games-grid">
                     <div class="game-item">
                         <img src="img/minecraft.png" alt="Minecraft" class="game-img">
-                        <p>MINECRAFT: Modo Construcción Creativa</p>
+                        <p class="game-name">MINECRAFT</p>
+                        <p class="game-stats">Modo: Cooperativo</p>
                     </div>
                     <div class="game-item">
                         <img src="img/roblox.jpg" alt="Roblox" class="game-img">
-                        <p>ROBLOX: Sesiones Multiplataforma</p>
+                        <p class="game-name">ROBLOX</p>
+                        <p class="game-stats">Sesiones: Más de 50</p>
                     </div>
                     <div class="game-item">
                         <img src="img/valorant.jpg" alt="Valorant" class="game-img">
-                        <p>VALORANT: Misiones de Alto Impacto</p>
+                        <p class="game-name">VALORANT</p>
+                        <p class="game-stats">Misiones de Alto Impacto</p>
                     </div>
-                </div>
+                    </div>
             </div>
         </section>
 
         <section class="slide" data-index="3">
-            <div class="checkpoint-box music-slide">
+            <div class="checkpoint-box wide-box music-slide">
                 <p class="section-tag">[AUDIO DATA] Archivo más Reproducido</p>
                 <h2 class="slide-title">Soundtrack del 2025: on-melancholy-hill.mp3</h2>
                 <p class="artist">Gorillaz</p>
                 <p class="music-note">La canción que define nuestros viajes y el *vibe* perfecto.</p>
-                <audio controls autoplay loop src="on-melancholy-hill.mp3" class="wrapped-audio">
-                    Tu navegador no soporta el elemento de audio.
-                </audio>
+                <p class="caption">¡Busca el reproductor fijo arriba a la derecha! Sigue la melodía...</p>
             </div>
         </section>
 
         <section class="slide month-slide" data-index="4">
-            <div class="checkpoint-box">
+            <div class="checkpoint-box wide-box">
                 <p class="section-tag">[HISTORIAL DE EVENTOS] Módulo: Enero - Marzo</p>
                 <h2 class="slide-title">Inicio de Ciclo: Calibrando el Sistema</h2>
                 <ul class="month-list">
@@ -95,7 +101,7 @@
         </section>
 
         <section class="slide month-slide" data-index="5">
-            <div class="checkpoint-box">
+            <div class="checkpoint-box wide-box">
                 <p class="section-tag">[HISTORIAL DE EVENTOS] Módulo: Abril - Junio</p>
                 <h2 class="slide-title">Mid-Point: Máxima Velocidad de Conexión</h2>
                 <ul class="month-list">
@@ -107,7 +113,7 @@
         </section>
         
         <section class="slide month-slide" data-index="6">
-            <div class="checkpoint-box">
+            <div class="checkpoint-box wide-box">
                 <p class="section-tag">[HISTORIAL DE EVENTOS] Módulo: Julio - Septiembre</p>
                 <h2 class="slide-title">Verano: Operaciones Especiales Fuera de Casa</h2>
                 <ul class="month-list">
@@ -119,7 +125,7 @@
         </section>
         
         <section class="slide month-slide" data-index="7">
-            <div class="checkpoint-box">
+            <div class="checkpoint-box wide-box">
                 <p class="section-tag">[HISTORIAL DE EVENTOS] Módulo: Octubre - Diciembre</p>
                 <h2 class="slide-title">Cierre de Ciclo: Acumulando Logros</h2>
                 <ul class="month-list">
@@ -132,7 +138,7 @@
 
 
         <section class="slide" data-index="8">
-            <div class="checkpoint-box">
+            <div class="checkpoint-box wide-box">
                 <p class="section-tag">[GEOLOCALIZACIÓN] Coordenada X-Y Más Visitada</p>
                 <h2 class="slide-title">Ubicación Clave: Nuestro Pequeño Universo</h2>
                 <p class="data-value large-text">El Sofá, Nivel 3</p>
@@ -152,7 +158,6 @@
                 <p class="note">Final de la Transmisión. Desconexión segura.</p>
             </div>
         </section>
-
     </main>
 
     <script src="script.js"></script>
