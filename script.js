@@ -1,6 +1,7 @@
 let current = 0;
 const pages = [];
 
+// Navegación
 function nextPage() {
   if (current >= pages.length - 1) return;
   pages[current].classList.remove('active');
@@ -8,7 +9,6 @@ function nextPage() {
   pages[current].classList.add('active');
   updateNav();
 }
-
 function prevPage() {
   if (current <= 0) return;
   pages[current].classList.remove('active');
@@ -16,32 +16,37 @@ function prevPage() {
   pages[current].classList.add('active');
   updateNav();
 }
-
 function updateNav() {
   document.getElementById('prev-btn').disabled = current === 0;
   document.getElementById('next-btn').disabled = current === pages.length - 1;
+  document.getElementById('progress').style.width = (current / (pages.length - 1) * 100) + '%';
 }
 
 document.getElementById('next-btn').addEventListener('click', nextPage);
 document.getElementById('prev-btn').addEventListener('click', prevPage);
 document.querySelector('.start-btn').addEventListener('click', nextPage);
 
+// Mute/Unmute música
+const music = document.getElementById('bg-music');
+const muteBtn = document.getElementById('mute-btn');
+muteBtn.addEventListener('click', () => {
+  music.muted = !music.muted;
+  muteBtn.textContent = music.muted ? '🔇' : '🔊';
+});
+
+// Carga datos
 fetch('datos.json')
-  .then(response => response.json())
+  .then(r => r.json())
   .then(data => {
-    // Días juntos
     const inicio = new Date(data.fecha_inicio);
     const hoy = new Date();
     const dias = Math.floor((hoy - inicio) / (1000 * 60 * 60 * 24));
     document.getElementById('dias-juntos').innerText = `${dias} días juntos y contando… ❤️`;
 
-    // Canción principal
     document.getElementById('cancion-principal').innerText = data.cancion_principal;
 
-    // Guardar portada
     pages.push(document.querySelector('.page.active'));
 
-    // Generar meses
     const mesesContainer = document.getElementById('meses-container');
     data.meses.forEach(mes => {
       const page = document.createElement('section');
@@ -63,12 +68,11 @@ fetch('datos.json')
       pages.push(page);
     });
 
-    // Juegos
     const juegosGrid = document.getElementById('juegos-grid');
     data.juegos_top.forEach(juego => {
       juegosGrid.innerHTML += `
         <div class="game-card">
-          <img src="${juego.portada}" alt="${juego.nombre}">
+          <img src="img/${juego.portada.split('/').pop()}" alt="${juego.nombre}">
           <h3>${juego.nombre}</h3>
           <p>${juego.stats}</p>
         </div>
@@ -76,7 +80,6 @@ fetch('datos.json')
     });
     pages.push(document.querySelector('#juegos'));
 
-    // Momentos finales
     const momentosGrid = document.getElementById('momentos-grid');
     data.top_momentos.forEach((m, i) => {
       momentosGrid.innerHTML += `<p class="moment big">#${i+1} ${m}</p>`;
@@ -86,15 +89,15 @@ fetch('datos.json')
     updateNav();
   });
 
-// Partículas optimizadas (cuadraditos ligeros)
+// Partículas optimizadas
 particlesJS('particles-js', {
   particles: {
-    number: { value: 40, density: { enable: true, value_area: 800 } },
+    number: { value: 45 },
     color: { value: ['#c792ea', '#8be9fd', '#ff79c6'] },
     shape: { type: 'square' },
-    opacity: { value: 0.5, random: true },
-    size: { value: 4, random: true },
-    move: { enable: true, speed: 1, direction: 'none', random: true, out_mode: 'out' }
+    opacity: { value: 0.5 },
+    size: { value: 4 },
+    move: { enable: true, speed: 1.2 }
   },
   interactivity: { events: { onhover: { enable: true, mode: 'repulse' } } },
   retina_detect: true
