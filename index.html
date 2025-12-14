@@ -5,6 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>JORDY & Tú • Checkpoint 7 Meses 2025</title>
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700;900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
@@ -17,9 +18,20 @@
     <source src="on-melancholy-hill.mp3" type="audio/mpeg">
   </audio>
 
-  <!-- Reproductor de música elegante -->
-  <div class="music-player" id="music-player">
-    <div class="player-container">
+  <!-- Sonidos -->
+  <audio id="click-sound" preload="auto">
+    <source src="https://assets.mixkit.co/active_storage/sfx/2568/2568-preview.mp3" type="audio/mpeg">
+  </audio>
+  <audio id="transition-sound" preload="auto">
+    <source src="https://assets.mixkit.co/active_storage/sfx/2869/2869-preview.mp3" type="audio/mpeg">
+  </audio>
+
+  <!-- Reproductor de música colapsable -->
+  <div class="music-player collapsed" id="music-player">
+    <button class="player-toggle" id="player-toggle" onclick="togglePlayer()">
+      <i class="fas fa-music"></i>
+    </button>
+    <div class="player-container" id="player-container">
       <div class="album-cover">
         <div class="vinyl"></div>
       </div>
@@ -29,10 +41,10 @@
       </div>
       <div class="player-controls">
         <button class="play-btn" id="play-btn" onclick="togglePlay()">
-          <span id="play-icon">▶</span>
+          <i class="fas fa-play" id="play-icon"></i>
         </button>
         <div class="volume-container">
-          <span class="volume-icon">🔊</span>
+          <i class="fas fa-volume-up volume-icon"></i>
           <input type="range" class="volume-slider" id="volume-slider" min="0" max="100" value="20" oninput="changeVolume(this.value)">
           <span class="volume-value" id="volume-value">20%</span>
         </div>
@@ -42,9 +54,18 @@
 
   <!-- Navegación -->
   <div class="nav">
-    <button class="nav-btn" id="prev-btn">←</button>
-    <button class="nav-btn" id="next-btn">→</button>
+    <button class="nav-btn" id="prev-btn">
+      <i class="fas fa-chevron-left"></i>
+    </button>
+    <button class="nav-btn" id="next-btn">
+      <i class="fas fa-chevron-right"></i>
+    </button>
   </div>
+
+  <!-- Botón siguiente flotante -->
+  <button class="next-float-btn" id="next-float-btn" onclick="nextPage()">
+    Siguiente <i class="fas fa-arrow-right"></i>
+  </button>
 
   <div class="pages-container">
     <!-- Portada -->
@@ -64,7 +85,9 @@
         </div>
         <h1 class="title">CHECKPOINT 2025</h1>
         <h2 class="subtitle">7 meses juntos</h2>
+        <p class="intro-text">Ya que en todo lado hay un wrapped, es hora del nuestro <i class="fas fa-heart heart-icon"></i></p>
         <p class="dias" id="dias-juntos">Cargando...</p>
+        <p class="ready-text">¿Estás lista?</p>
         <button class="start-btn" onclick="startCheckpoint()">Comenzar</button>
       </div>
     </section>
@@ -75,10 +98,19 @@
     <!-- Juegos -->
     <section class="page" id="juegos-page">
       <div class="page-header">
-        <h1 class="title">Top Juegos</h1>
-        <p class="description">Donde fuimos leyenda</p>
+        <h1 class="title">Juegos que más jugamos</h1>
+        <p class="description">Aura.</p>
       </div>
       <div class="game-grid" id="juegos-grid"></div>
+    </section>
+
+    <!-- Momentos -->
+    <section class="page" id="momentos-page">
+      <div class="page-header">
+        <h1 class="title">Nuestros Mejores Momentos</h1>
+        <p class="description">Los que nunca olvidaré</p>
+      </div>
+      <div class="moments-container" id="momentos-grid"></div>
     </section>
 
     <!-- Final -->
@@ -86,19 +118,14 @@
       <div class="page-header">
         <h1 class="title">Nuestra Canción</h1>
         <div class="song-card">
-          <div class="song-icon">🎵</div>
+          <div class="song-icon"><i class="fas fa-music"></i></div>
           <p class="song-name" id="cancion-principal">Cargando...</p>
         </div>
       </div>
       
-      <div class="page-header">
-        <h1 class="title">Momentos Inolvidables</h1>
-      </div>
-      <div class="moments-container" id="momentos-grid"></div>
-      
       <div class="final-message">
-        <h2>Gracias por estos 7 meses increíbles 💕</h2>
-        <p>Cada partida, cada risa, cada momento contigo ha sido especial</p>
+        <h2>Gracias por estos 7 meses increíbles <i class="fas fa-heart"></i></h2>
+        <p>Cada noche jugando, cada llamada, cada mensaje, solo reafirma lo mucho que te amo mi niña, gracias por estos 7 meses, aura.</p>
       </div>
     </section>
   </div>
