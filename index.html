@@ -4,15 +4,41 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>JORDY & Tú • Checkpoint 7 Meses 2025</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700;900&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
+  <!-- Canvas de estrellas -->
+  <canvas id="stars-canvas"></canvas>
+
   <!-- Música de fondo -->
-  <audio id="bg-music" loop autoplay>
+  <audio id="bg-music" loop>
     <source src="on-melancholy-hill.mp3" type="audio/mpeg">
   </audio>
-  <button id="mute-btn" class="mute-btn">🔊</button>
+
+  <!-- Reproductor de música elegante -->
+  <div class="music-player" id="music-player">
+    <div class="player-container">
+      <div class="album-cover">
+        <div class="vinyl"></div>
+      </div>
+      <div class="player-info">
+        <div class="song-title">On Melancholy Hill</div>
+        <div class="artist-name">Gorillaz</div>
+      </div>
+      <div class="player-controls">
+        <button class="play-btn" id="play-btn" onclick="togglePlay()">
+          <span id="play-icon">▶</span>
+        </button>
+        <div class="volume-container">
+          <span class="volume-icon">🔊</span>
+          <input type="range" class="volume-slider" id="volume-slider" min="0" max="100" value="20" oninput="changeVolume(this.value)">
+          <span class="volume-value" id="volume-value">20%</span>
+        </div>
+      </div>
+    </div>
+  </div>
 
   <!-- Navegación -->
   <div class="nav">
@@ -21,35 +47,66 @@
   </div>
 
   <div class="pages-container">
-    <!-- Portada limpia -->
+    <!-- Portada -->
     <section class="page active">
       <div class="cover-content">
+        <div class="checkpoint-badge">
+          <svg width="80" height="80" viewBox="0 0 24 24" fill="none">
+            <path d="M12 2L15.09 8.26L22 9.27L17 14.14L18.18 21.02L12 17.77L5.82 21.02L7 14.14L2 9.27L8.91 8.26L12 2Z" fill="url(#gradient1)"/>
+            <defs>
+              <linearGradient id="gradient1" x1="2" y1="2" x2="22" y2="21">
+                <stop offset="0%" stop-color="#a78bfa"/>
+                <stop offset="50%" stop-color="#ec4899"/>
+                <stop offset="100%" stop-color="#8b5cf6"/>
+              </linearGradient>
+            </defs>
+          </svg>
+        </div>
         <h1 class="title">CHECKPOINT 2025</h1>
         <h2 class="subtitle">7 meses juntos</h2>
-        <p class="dias" id="dias-juntos">cargando…</p>
-        <button class="start-btn">Empezar</button>
+        <p class="dias" id="dias-juntos">Cargando...</p>
+        <button class="start-btn" onclick="startCheckpoint()">Comenzar</button>
       </div>
     </section>
 
-    <!-- Meses -->
+    <!-- Meses container -->
     <div id="meses-container"></div>
 
     <!-- Juegos -->
-    <section class="page">
-      <h1 class="title">Top 5 juegos donde fuimos leyenda</h1>
+    <section class="page" id="juegos-page">
+      <div class="page-header">
+        <h1 class="title">Top Juegos</h1>
+        <p class="description">Donde fuimos leyenda</p>
+      </div>
       <div class="game-grid" id="juegos-grid"></div>
     </section>
 
     <!-- Final -->
-    <section class="page">
-      <h1 class="title">Canción que más me sonó a ti</h1>
-      <p class="song" id="cancion-principal"></p>
-      <h1 class="title">Momentos que nunca olvidaremos</h1>
-      <div class="moments-grid" id="momentos-grid"></div>
+    <section class="page" id="final-page">
+      <div class="page-header">
+        <h1 class="title">Nuestra Canción</h1>
+        <div class="song-card">
+          <div class="song-icon">🎵</div>
+          <p class="song-name" id="cancion-principal">Cargando...</p>
+        </div>
+      </div>
+      
+      <div class="page-header">
+        <h1 class="title">Momentos Inolvidables</h1>
+      </div>
+      <div class="moments-container" id="momentos-grid"></div>
+      
+      <div class="final-message">
+        <h2>Gracias por estos 7 meses increíbles 💕</h2>
+        <p>Cada partida, cada risa, cada momento contigo ha sido especial</p>
+      </div>
     </section>
   </div>
 
-  <div class="progress" id="progress"></div>
+  <!-- Barra de progreso -->
+  <div class="progress-bar">
+    <div class="progress-fill" id="progress"></div>
+  </div>
 
   <script src="script.js"></script>
 </body>
