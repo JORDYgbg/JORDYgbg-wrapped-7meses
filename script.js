@@ -237,11 +237,24 @@ function changeVolume(value) {
 function startCheckpoint() {
   const music = document.getElementById('bg-music');
   music.volume = 0.2;
-  music.play().then(() => {
-    document.getElementById('play-icon').className = 'fas fa-pause';
-  }).catch(() => {
-    document.getElementById('play-icon').className = 'fas fa-play';
-  });
+  
+  // Forzar reproducción con interacción del usuario
+  const playPromise = music.play();
+  
+  if (playPromise !== undefined) {
+    playPromise.then(() => {
+      document.getElementById('play-icon').className = 'fas fa-pause';
+      console.log('Música iniciada');
+    }).catch(error => {
+      console.log('Error al reproducir:', error);
+      document.getElementById('play-icon').className = 'fas fa-play';
+      // Mostrar mensaje para que active la música
+      setTimeout(() => {
+        alert('🎵 Por favor, haz click en el ícono de música arriba a la derecha para escuchar la canción');
+      }, 500);
+    });
+  }
+  
   playClickSound();
   setTimeout(() => {
     nextPage();
