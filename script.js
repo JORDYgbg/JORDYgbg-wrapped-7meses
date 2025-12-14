@@ -102,12 +102,12 @@ const momentosTop = [
   "Cuando hiciste un ace y en mi mente dije DIOS MIO CASEMONOS"
 ];
 
-// Inicializar - CORREGIDO (todo dentro del load correctamente)
+// Inicializar
 window.addEventListener('load', () => {
   initStars();
   loadContent();
 
-  // Forzamos volumen inicial al 20% y actualizamos slider
+  // Volumen inicial al 20% y slider actualizado
   const music = document.getElementById('bg-music');
   const volumeSlider = document.getElementById('volume-slider');
   const volumeValue = document.getElementById('volume-value');
@@ -117,7 +117,7 @@ window.addEventListener('load', () => {
   if (volumeValue) volumeValue.textContent = '20%';
 });
 
-// Crear fondo de galaxia
+// Fondo de estrellas
 function initStars() {
   const canvas = document.getElementById('stars-canvas');
   const ctx = canvas.getContext('2d');
@@ -248,31 +248,30 @@ function changeVolume(value) {
   if (volumeValue) volumeValue.textContent = value + '%';
 }
 
-// Iniciar checkpoint - FUNCIONANDO EN TODOS LOS NAVEGADORES
+// Iniciar checkpoint - VERSIÓN QUE FUNCIONA EN TODOS LOS NAVEGADORES
 function startCheckpoint() {
   const music = document.getElementById('bg-music');
   const playIcon = document.getElementById('play-icon');
   
   if (music) {
-    music.volume = 0.2;
+    music.volume = 0.2; // Volumen al 20%
 
     music.play()
       .then(() => {
         if (playIcon) playIcon.className = 'fas fa-pause';
+        console.log('Música iniciada automáticamente');
       })
       .catch(error => {
-        console.log('Autoplay bloqueado o error:', error);
+        console.error('Error al reproducir la música:', error);
         if (playIcon) playIcon.className = 'fas fa-play';
-        setTimeout(() => {
-          alert('🎵 Si no escuchas la música, haz click en el ícono de nota musical arriba a la derecha');
-        }, 1000);
+        alert('🎵 Si no escuchas la música, haz click en el ícono de nota musical arriba a la derecha');
       });
   }
 
   playClickSound();
-  setTimeout(() => {
-    nextPage();
-  }, 300);
+
+  // Cambio de página inmediato (sin setTimeout para no romper el user gesture)
+  nextPage();
 }
 
 // Navegación
