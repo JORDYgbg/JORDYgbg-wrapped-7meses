@@ -102,17 +102,17 @@ const momentosTop = [
   "Cuando hiciste un ace y en mi mente dije DIOS MIO CASEMONOS"
 ];
 
-// Inicializar
+// Inicializar - CORREGIDO (todo dentro del load correctamente)
 window.addEventListener('load', () => {
   initStars();
   loadContent();
 
-  // Forzamos volumen inicial al 20% y actualizamos el slider
+  // Forzamos volumen inicial al 20% y actualizamos slider
   const music = document.getElementById('bg-music');
   const volumeSlider = document.getElementById('volume-slider');
   const volumeValue = document.getElementById('volume-value');
 
-  music.volume = 0.2;
+  if (music) music.volume = 0.2;
   if (volumeSlider) volumeSlider.value = 20;
   if (volumeValue) volumeValue.textContent = '20%';
 });
@@ -201,22 +201,26 @@ function initStars() {
 // Sonidos
 function playClickSound() {
   const clickSound = document.getElementById('click-sound');
-  clickSound.currentTime = 0;
-  clickSound.volume = 0.3;
-  clickSound.play().catch(() => {});
+  if (clickSound) {
+    clickSound.currentTime = 0;
+    clickSound.volume = 0.3;
+    clickSound.play().catch(() => {});
+  }
 }
 
 function playTransitionSound() {
   const transitionSound = document.getElementById('transition-sound');
-  transitionSound.currentTime = 0;
-  transitionSound.volume = 0.2;
-  transitionSound.play().catch(() => {});
+  if (transitionSound) {
+    transitionSound.currentTime = 0;
+    transitionSound.volume = 0.2;
+    transitionSound.play().catch(() => {});
+  }
 }
 
 // Reproductor
 function togglePlayer() {
   const player = document.getElementById('music-player');
-  player.classList.toggle('collapsed');
+  if (player) player.classList.toggle('collapsed');
   playClickSound();
 }
 
@@ -224,12 +228,14 @@ function togglePlay() {
   const music = document.getElementById('bg-music');
   const playIcon = document.getElementById('play-icon');
   
-  if (music.paused) {
-    music.play();
-    playIcon.className = 'fas fa-pause';
-  } else {
-    music.pause();
-    playIcon.className = 'fas fa-play';
+  if (music && playIcon) {
+    if (music.paused) {
+      music.play();
+      playIcon.className = 'fas fa-pause';
+    } else {
+      music.pause();
+      playIcon.className = 'fas fa-play';
+    }
   }
   playClickSound();
 }
@@ -238,31 +244,30 @@ function changeVolume(value) {
   const music = document.getElementById('bg-music');
   const volumeValue = document.getElementById('volume-value');
   
-  music.volume = value / 100;
-  volumeValue.textContent = value + '%';
+  if (music) music.volume = value / 100;
+  if (volumeValue) volumeValue.textContent = value + '%';
 }
 
-// Iniciar checkpoint - VERSIÓN CORREGIDA
+// Iniciar checkpoint - FUNCIONANDO EN TODOS LOS NAVEGADORES
 function startCheckpoint() {
   const music = document.getElementById('bg-music');
   const playIcon = document.getElementById('play-icon');
   
-  // Aseguramos volumen al 20%
-  music.volume = 0.2;
+  if (music) {
+    music.volume = 0.2;
 
-  // Intentamos reproducir automáticamente tras la interacción del usuario
-  music.play()
-    .then(() => {
-      playIcon.className = 'fas fa-pause';
-      console.log('Música iniciada automáticamente');
-    })
-    .catch(error => {
-      console.log('Error al reproducir automáticamente:', error);
-      playIcon.className = 'fas fa-play';
-      setTimeout(() => {
-        alert('🎵 Si no escuchas la música, haz click en el ícono de nota musical arriba a la derecha para activarla');
-      }, 1000);
-    });
+    music.play()
+      .then(() => {
+        if (playIcon) playIcon.className = 'fas fa-pause';
+      })
+      .catch(error => {
+        console.log('Autoplay bloqueado o error:', error);
+        if (playIcon) playIcon.className = 'fas fa-play';
+        setTimeout(() => {
+          alert('🎵 Si no escuchas la música, haz click en el ícono de nota musical arriba a la derecha');
+        }, 1000);
+      });
+  }
 
   playClickSound();
   setTimeout(() => {
@@ -292,20 +297,26 @@ function prevPage() {
 }
 
 function updateNav() {
-  document.getElementById('prev-btn').disabled = current === 0;
-  document.getElementById('next-btn').disabled = current === pages.length - 1;
-  document.getElementById('progress').style.width = (current / (pages.length - 1) * 100) + '%';
+  const prevBtn = document.getElementById('prev-btn');
+  const nextBtn = document.getElementById('next-btn');
+  const progress = document.getElementById('progress');
+  const nextFloatBtn = document.getElementById('next-float-btn');
+
+  if (prevBtn) prevBtn.disabled = current === 0;
+  if (nextBtn) nextBtn.disabled = current === pages.length - 1;
+  if (progress) progress.style.width = (current / (pages.length - 1) * 100) + '%';
   
-  const nextBtn = document.getElementById('next-float-btn');
-  if (current > 0 && current < pages.length - 1) {
-    nextBtn.classList.add('show');
-  } else {
-    nextBtn.classList.remove('show');
+  if (nextFloatBtn) {
+    if (current > 0 && current < pages.length - 1) {
+      nextFloatBtn.classList.add('show');
+    } else {
+      nextFloatBtn.classList.remove('show');
+    }
   }
 }
 
-document.getElementById('next-btn').onclick = nextPage;
-document.getElementById('prev-btn').onclick = prevPage;
+document.getElementById('next-btn') && (document.getElementById('next-btn').onclick = nextPage);
+document.getElementById('prev-btn') && (document.getElementById('prev-btn').onclick = prevPage);
 
 document.addEventListener('keydown', (e) => {
   if (e.key === 'ArrowRight') nextPage();
@@ -317,57 +328,68 @@ function loadContent() {
   const inicio = new Date('2024-05-11');
   const hoy = new Date();
   const dias = Math.floor((hoy - inicio) / (1000 * 60 * 60 * 24));
-  document.getElementById('dias-juntos').innerHTML = `${dias} días juntos y contando... <i class="fas fa-heart"></i>`;
+  const diasElement = document.getElementById('dias-juntos');
+  if (diasElement) diasElement.innerHTML = `${dias} días juntos y contando... <i class="fas fa-heart"></i>`;
 
-  document.getElementById('cancion-principal').innerText = "Virtual Insanity – Jamiroquai (la versión lo-fi que siempre me ponías a las 4 a.m.)";
+  const cancionPrincipal = document.getElementById('cancion-principal');
+  if (cancionPrincipal) cancionPrincipal.innerText = "Virtual Insanity – Jamiroquai (la versión lo-fi que siempre me ponías a las 4 a.m.)";
 
   pages.push(document.querySelector('.page.active'));
 
   const mesesContainer = document.getElementById('meses-container');
-  mesesData.forEach(mes => {
-    const page = document.createElement('section');
-    page.className = 'page';
-    page.innerHTML = `
-      <div class="card">
-        <h1 class="title">${mes.mes}</h1>
-        <h2 class="subtitle">${mes.titulo}</h2>
-        <p class="moment">${mes.descripcion || ''}</p>
-        <div class="text-card">
-          <h3><i class="fas fa-music"></i> Canción que me suena a ${mes.mes}</h3>
-          <p class="song-name">${mes.cancion}</p>
-          <div style="margin-top: 2rem;">
-            ${mes.momentos.map(m => `<p class="moment">• ${m}</p>`).join('')}
+  if (mesesContainer) {
+    mesesData.forEach(mes => {
+      const page = document.createElement('section');
+      page.className = 'page';
+      page.innerHTML = `
+        <div class="card">
+          <h1 class="title">${mes.mes}</h1>
+          <h2 class="subtitle">${mes.titulo}</h2>
+          <p class="moment">${mes.descripcion || ''}</p>
+          <div class="text-card">
+            <h3><i class="fas fa-music"></i> Canción que me suena a ${mes.mes}</h3>
+            <p class="song-name">${mes.cancion}</p>
+            <div style="margin-top: 2rem;">
+              ${mes.momentos.map(m => `<p class="moment">• ${m}</p>`).join('')}
+            </div>
           </div>
         </div>
-      </div>
-    `;
-    mesesContainer.appendChild(page);
-    pages.push(page);
-  });
+      `;
+      mesesContainer.appendChild(page);
+      pages.push(page);
+    });
+  }
 
   const juegosGrid = document.getElementById('juegos-grid');
-  juegosData.forEach(juego => {
-    const div = document.createElement('div');
-    div.className = 'game-card';
-    div.innerHTML = `
-      <img src="img/${juego.imagen}" alt="${juego.nombre}">
-      <h3>${juego.nombre}</h3>
-      <p>${juego.descripcion}</p>
-    `;
-    juegosGrid.appendChild(div);
-  });
-  pages.push(document.getElementById('juegos-page'));
+  if (juegosGrid) {
+    juegosData.forEach(juego => {
+      const div = document.createElement('div');
+      div.className = 'game-card';
+      div.innerHTML = `
+        <img src="img/${juego.imagen}" alt="${juego.nombre}">
+        <h3>${juego.nombre}</h3>
+        <p>${juego.descripcion}</p>
+      `;
+      juegosGrid.appendChild(div);
+    });
+  }
+  const juegosPage = document.getElementById('juegos-page');
+  if (juegosPage) pages.push(juegosPage);
 
   const momentosGrid = document.getElementById('momentos-grid');
-  momentosTop.forEach((m, i) => {
-    const p = document.createElement('p');
-    p.className = 'moment';
-    p.textContent = `#${i + 1} ${m}`;
-    momentosGrid.appendChild(p);
-  });
-  pages.push(document.getElementById('momentos-page'));
+  if (momentosGrid) {
+    momentosTop.forEach((m, i) => {
+      const p = document.createElement('p');
+      p.className = 'moment';
+      p.textContent = `#${i + 1} ${m}`;
+      momentosGrid.appendChild(p);
+    });
+  }
+  const momentosPage = document.getElementById('momentos-page');
+  if (momentosPage) pages.push(momentosPage);
   
-  pages.push(document.getElementById('final-page'));
+  const finalPage = document.getElementById('final-page');
+  if (finalPage) pages.push(finalPage);
 
   updateNav();
 }
