@@ -1,12 +1,114 @@
 let current = 0;
 const pages = [];
 
-// Inicializar estrellas
+// Meses personalizados
+const mesesData = [
+  {
+    mes: "Mayo",
+    numero: 1,
+    titulo: "El principio de todo",
+    descripcion: "Aquí es donde todo comenzó, y gracias a Dios comenzó.",
+    cancion: "Es por ti de Juanes",
+    momentos: [
+      "Aquí nos dimos cuenta que éramos nocturnos.",
+      "Aquí nos dimos cuenta que éramos compatibles."
+    ]
+  },
+  {
+    mes: "Junio",
+    numero: 2,
+    titulo: "Felicidad",
+    cancion: "Nuestros Horarios de Ferraz",
+    momentos: [
+      "Empezó la etapa del enamoramiento como mejor podía empezar.",
+      "Eres perfecta."
+    ]
+  },
+  {
+    mes: "Julio",
+    numero: 3,
+    titulo: "¿Perfección?",
+    cancion: "Pensé en ti de Jaze",
+    momentos: [
+      "No tienes cosas malas dios mío.",
+      "La madurez que muestras no es digna de alguien que aparentemente es imperfecto."
+    ]
+  },
+  {
+    mes: "Agosto",
+    numero: 4,
+    titulo: "¿Sobrevivimos?",
+    cancion: "La Serenata de Dani Ribba",
+    momentos: [
+      "Supuestamente aquí terminaba la etapa del enamoramiento, y yo estoy más enamorado que nunca.",
+      "Pese a los pequeños conflictos, gracias por quedarte mi amorcito."
+    ]
+  },
+  {
+    mes: "Septiembre",
+    numero: 5,
+    titulo: "Tranquilidad",
+    cancion: "September de Earth, Wind & Fire",
+    momentos: [
+      "La tranquilidad que tengo desde septiembre es hasta rara.",
+      "Me das paz, confío en ti."
+    ]
+  },
+  {
+    mes: "Octubre",
+    numero: 6,
+    titulo: "Felicidad",
+    cancion: "How Deep is Your Love de Bee Gees",
+    momentos: [
+      "Soy muy feliz a tu lado.",
+      "Gracias por ser mi viewer más fiel."
+    ]
+  },
+  {
+    mes: "Noviembre",
+    numero: 7,
+    titulo: "Amor",
+    cancion: "Esto es Amor de Mon Laferte",
+    momentos: [
+      "Por ti conocí canciones más chills, para poder dedicarte o recomendarte algo que te guste muuuucho.",
+      "Te amo."
+    ]
+  },
+  {
+    mes: "Diciembre",
+    numero: 8,
+    titulo: "Eternidad",
+    cancion: "Cama y Mesa de Roberto Carlos",
+    momentos: [
+      "\"Eternidad\" no es porque sí, es porque quiero que duremos juntos eso sabes.",
+      "\"Mariana\". Que lindo nombre dios mío."
+    ]
+  }
+];
+
+const juegosData = [
+  { nombre: "Minecraft", imagen: "minecraft.png", descripcion: "Aquí nos enamoramos realmente" },
+  { nombre: "Valorant", imagen: "valorant.jpg", descripcion: "Aquí nos conocimos y gustamos" },
+  { nombre: "The Forest", imagen: "forest.jpg", descripcion: "Aquí ya somos esposos JASIDJIASDJAI" },
+  { nombre: "Party Club", imagen: "party.jpg", descripcion: "Aquí me enamoré demasiado de ti mi amorcito preciosito muchito amito" },
+  { nombre: "Roblox", imagen: "roblox.jpg", descripcion: "Aquí me enseñaste a ser rata" }
+];
+
+const momentosTop = [
+  "Cuando hiciste una J y una M con florecitas en el Minecraft",
+  "Cuando me declaré en Rave, qué noche",
+  "Cuando hablábamos en tu refrigerador en el Minecraft ISJDIAJDIA",
+  "Cuando te di un besito en el camino en Minecraft",
+  "Cuando hiciste un ace y en mi mente dije DIOS MIO CASEMONOS"
+];
+
+// Inicializar
 window.addEventListener('load', () => {
   initStars();
+  loadContent();
 });
 
-// Crear fondo de galaxia con estrellas
+// Crear fondo de galaxia
 function initStars() {
   const canvas = document.getElementById('stars-canvas');
   const ctx = canvas.getContext('2d');
@@ -17,7 +119,6 @@ function initStars() {
   const stars = [];
   const starCount = 150;
   
-  // Crear estrellas
   for (let i = 0; i < starCount; i++) {
     stars.push({
       x: Math.random() * canvas.width,
@@ -38,7 +139,6 @@ function initStars() {
   ];
   
   function animate() {
-    // Fondo gradiente
     const gradient = ctx.createRadialGradient(
       canvas.width / 2, canvas.height / 2, 0,
       canvas.width / 2, canvas.height / 2, canvas.width
@@ -50,7 +150,6 @@ function initStars() {
     ctx.fillStyle = gradient;
     ctx.fillRect(0, 0, canvas.width, canvas.height);
     
-    // Dibujar estrellas
     stars.forEach(star => {
       star.opacity += star.twinkleSpeed;
       if (star.opacity > 1 || star.opacity < 0.3) {
@@ -90,18 +189,40 @@ function initStars() {
   });
 }
 
-// Funciones del reproductor
+// Sonidos
+function playClickSound() {
+  const clickSound = document.getElementById('click-sound');
+  clickSound.currentTime = 0;
+  clickSound.volume = 0.3;
+  clickSound.play().catch(() => {});
+}
+
+function playTransitionSound() {
+  const transitionSound = document.getElementById('transition-sound');
+  transitionSound.currentTime = 0;
+  transitionSound.volume = 0.2;
+  transitionSound.play().catch(() => {});
+}
+
+// Reproductor
+function togglePlayer() {
+  const player = document.getElementById('music-player');
+  player.classList.toggle('collapsed');
+  playClickSound();
+}
+
 function togglePlay() {
   const music = document.getElementById('bg-music');
   const playIcon = document.getElementById('play-icon');
   
   if (music.paused) {
     music.play();
-    playIcon.textContent = '⏸';
+    playIcon.className = 'fas fa-pause';
   } else {
     music.pause();
-    playIcon.textContent = '▶';
+    playIcon.className = 'fas fa-play';
   }
+  playClickSound();
 }
 
 function changeVolume(value) {
@@ -116,15 +237,22 @@ function changeVolume(value) {
 function startCheckpoint() {
   const music = document.getElementById('bg-music');
   music.volume = 0.2;
-  music.play().catch(() => {
-    document.getElementById('play-icon').textContent = '▶';
+  music.play().then(() => {
+    document.getElementById('play-icon').className = 'fas fa-pause';
+  }).catch(() => {
+    document.getElementById('play-icon').className = 'fas fa-play';
   });
-  nextPage();
+  playClickSound();
+  setTimeout(() => {
+    nextPage();
+  }, 300);
 }
 
 // Navegación
 function nextPage() {
   if (current >= pages.length - 1) return;
+  
+  playTransitionSound();
   pages[current].classList.remove('active');
   current++;
   pages[current].classList.add('active');
@@ -133,6 +261,8 @@ function nextPage() {
 
 function prevPage() {
   if (current <= 0) return;
+  
+  playTransitionSound();
   pages[current].classList.remove('active');
   current--;
   pages[current].classList.add('active');
@@ -143,81 +273,79 @@ function updateNav() {
   document.getElementById('prev-btn').disabled = current === 0;
   document.getElementById('next-btn').disabled = current === pages.length - 1;
   document.getElementById('progress').style.width = (current / (pages.length - 1) * 100) + '%';
+  
+  const nextBtn = document.getElementById('next-float-btn');
+  if (current > 0 && current < pages.length - 1) {
+    nextBtn.classList.add('show');
+  } else {
+    nextBtn.classList.remove('show');
+  }
 }
 
 document.getElementById('next-btn').onclick = nextPage;
 document.getElementById('prev-btn').onclick = prevPage;
 
-// Navegación con teclado
 document.addEventListener('keydown', (e) => {
   if (e.key === 'ArrowRight') nextPage();
   if (e.key === 'ArrowLeft') prevPage();
 });
 
-// Cargar datos
-fetch('datos.json')
-  .then(r => r.json())
-  .then(data => {
-    // Calcular días juntos
-    const inicio = new Date(data.fecha_inicio);
-    const hoy = new Date();
-    const dias = Math.floor((hoy - inicio) / (1000 * 60 * 60 * 24));
-    document.getElementById('dias-juntos').innerText = `${dias} días juntos y contando... ❤️`;
+// Cargar contenido
+function loadContent() {
+  const inicio = new Date('2024-05-11');
+  const hoy = new Date();
+  const dias = Math.floor((hoy - inicio) / (1000 * 60 * 60 * 24));
+  document.getElementById('dias-juntos').innerHTML = `${dias} días juntos y contando... <i class="fas fa-heart"></i>`;
 
-    // Canción principal
-    document.getElementById('cancion-principal').innerText = data.cancion_principal;
+  document.getElementById('cancion-principal').innerText = "Virtual Insanity – Jamiroquai (la versión lo-fi que siempre me ponías a las 4 a.m.)";
 
-    // Agregar página inicial
-    pages.push(document.querySelector('.page.active'));
+  pages.push(document.querySelector('.page.active'));
 
-    // Crear páginas de meses
-    const mesesContainer = document.getElementById('meses-container');
-    data.meses.forEach(mes => {
-      const page = document.createElement('section');
-      page.className = 'page';
-      page.innerHTML = `
-        <div class="card">
-          <h1 class="title">Mes ${mes.mes}</h1>
-          <h2 class="subtitle">${mes.titulo}</h2>
-          <div class="text-card">
-            <h3>🎵 Canción dedicada</h3>
-            <p class="song-name">${mes.cancion_dedicada}</p>
-            <div style="margin-top: 2rem;">
-              ${mes.momentos.map(m => `<p class="moment">• ${m}</p>`).join('')}
-            </div>
+  const mesesContainer = document.getElementById('meses-container');
+  mesesData.forEach(mes => {
+    const page = document.createElement('section');
+    page.className = 'page';
+    page.innerHTML = `
+      <div class="card">
+        <h1 class="title">${mes.mes}</h1>
+        <h2 class="subtitle">${mes.titulo}</h2>
+        <p class="moment">${mes.descripcion || ''}</p>
+        <div class="text-card">
+          <h3><i class="fas fa-music"></i> Canción que me suena a ${mes.mes}</h3>
+          <p class="song-name">${mes.cancion}</p>
+          <div style="margin-top: 2rem;">
+            ${mes.momentos.map(m => `<p class="moment">• ${m}</p>`).join('')}
           </div>
         </div>
-      `;
-      mesesContainer.appendChild(page);
-      pages.push(page);
-    });
-
-    // Crear grid de juegos
-    const juegosGrid = document.getElementById('juegos-grid');
-    data.juegos_top.forEach(juego => {
-      const div = document.createElement('div');
-      div.className = 'game-card';
-      div.innerHTML = `
-        <img src="img/${juego.portada.split('/').pop()}" alt="${juego.nombre}">
-        <h3>${juego.nombre}</h3>
-        <p>${juego.stats}</p>
-      `;
-      juegosGrid.appendChild(div);
-    });
-    pages.push(document.getElementById('juegos-page'));
-
-    // Crear lista de momentos
-    const momentosGrid = document.getElementById('momentos-grid');
-    data.top_momentos.forEach((m, i) => {
-      const p = document.createElement('p');
-      p.className = 'moment';
-      p.textContent = `#${i + 1} ${m}`;
-      momentosGrid.appendChild(p);
-    });
-    pages.push(document.getElementById('final-page'));
-
-    updateNav();
-  })
-  .catch(err => {
-    console.error('Error cargando datos:', err);
+      </div>
+    `;
+    mesesContainer.appendChild(page);
+    pages.push(page);
   });
+
+  const juegosGrid = document.getElementById('juegos-grid');
+  juegosData.forEach(juego => {
+    const div = document.createElement('div');
+    div.className = 'game-card';
+    div.innerHTML = `
+      <img src="img/${juego.imagen}" alt="${juego.nombre}">
+      <h3>${juego.nombre}</h3>
+      <p>${juego.descripcion}</p>
+    `;
+    juegosGrid.appendChild(div);
+  });
+  pages.push(document.getElementById('juegos-page'));
+
+  const momentosGrid = document.getElementById('momentos-grid');
+  momentosTop.forEach((m, i) => {
+    const p = document.createElement('p');
+    p.className = 'moment';
+    p.textContent = `#${i + 1} ${m}`;
+    momentosGrid.appendChild(p);
+  });
+  pages.push(document.getElementById('momentos-page'));
+  
+  pages.push(document.getElementById('final-page'));
+
+  updateNav();
+}
