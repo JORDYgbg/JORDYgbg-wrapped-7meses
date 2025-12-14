@@ -31,6 +31,7 @@ body {
   z-index: 100;
   display: flex;
   align-items: center;
+  flex-direction: row-reverse;
   gap: 1rem;
   transition: all 0.4s cubic-bezier(0.68, -0.55, 0.265, 1.55);
 }
@@ -50,6 +51,7 @@ body {
   justify-content: center;
   transition: all 0.3s ease;
   box-shadow: 0 5px 20px rgba(167, 139, 250, 0.3);
+  flex-shrink: 0;
 }
 
 .player-toggle:hover {
@@ -99,6 +101,13 @@ body {
   flex-shrink: 0;
 }
 
+.album-cover img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 12px;
+}
+
 .vinyl {
   width: 40px;
   height: 40px;
@@ -106,6 +115,7 @@ body {
   border-radius: 50%;
   border: 2px solid rgba(255, 255, 255, 0.2);
   animation: spin 3s linear infinite;
+  position: absolute;
 }
 
 @keyframes spin {
@@ -313,6 +323,10 @@ body {
   max-width: 800px;
 }
 
+.cover-content .title {
+  font-size: 5rem;
+}
+
 .checkpoint-badge {
   margin-bottom: 2rem;
   animation: float 3s ease-in-out infinite;
@@ -324,7 +338,7 @@ body {
 }
 
 .title {
-  font-size: 5rem;
+  font-size: 4rem;
   font-weight: 900;
   margin-bottom: 1rem;
   font-family: 'Poppins', sans-serif;
@@ -335,6 +349,7 @@ body {
   background-clip: text;
   animation: gradientShift 5s ease infinite;
   letter-spacing: -1px;
+  line-height: 1.1;
 }
 
 @keyframes gradientShift {
@@ -611,8 +626,12 @@ body {
 
 /* Responsive */
 @media (max-width: 768px) {
-  .title {
+  .cover-content .title {
     font-size: 3rem;
+  }
+
+  .title {
+    font-size: 2.5rem;
   }
 
   .subtitle {
@@ -639,6 +658,7 @@ body {
   .music-player {
     top: 10px;
     right: 10px;
+    flex-direction: column;
   }
 
   .player-toggle {
@@ -649,6 +669,11 @@ body {
   .player-container {
     flex-direction: column;
     padding: 1rem;
+    transform: translateY(20px);
+  }
+
+  .music-player:not(.collapsed) .player-container {
+    transform: translateY(0);
   }
 
   .player-info {
@@ -690,5 +715,9 @@ body {
 
   .card {
     padding: 2rem;
+  }
+  
+  .card .title {
+    font-size: 2.5rem;
   }
 }
