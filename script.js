@@ -106,6 +106,15 @@ const momentosTop = [
 window.addEventListener('load', () => {
   initStars();
   loadContent();
+
+  // Forzamos volumen inicial al 20% y actualizamos el slider
+  const music = document.getElementById('bg-music');
+  const volumeSlider = document.getElementById('volume-slider');
+  const volumeValue = document.getElementById('volume-value');
+
+  music.volume = 0.2;
+  if (volumeSlider) volumeSlider.value = 20;
+  if (volumeValue) volumeValue.textContent = '20%';
 });
 
 // Crear fondo de galaxia
@@ -233,28 +242,28 @@ function changeVolume(value) {
   volumeValue.textContent = value + '%';
 }
 
-// Iniciar checkpoint
+// Iniciar checkpoint - VERSIÓN CORREGIDA
 function startCheckpoint() {
   const music = document.getElementById('bg-music');
+  const playIcon = document.getElementById('play-icon');
+  
+  // Aseguramos volumen al 20%
   music.volume = 0.2;
-  
-  // Forzar reproducción con interacción del usuario
-  const playPromise = music.play();
-  
-  if (playPromise !== undefined) {
-    playPromise.then(() => {
-      document.getElementById('play-icon').className = 'fas fa-pause';
-      console.log('Música iniciada');
-    }).catch(error => {
-      console.log('Error al reproducir:', error);
-      document.getElementById('play-icon').className = 'fas fa-play';
-      // Mostrar mensaje para que active la música
+
+  // Intentamos reproducir automáticamente tras la interacción del usuario
+  music.play()
+    .then(() => {
+      playIcon.className = 'fas fa-pause';
+      console.log('Música iniciada automáticamente');
+    })
+    .catch(error => {
+      console.log('Error al reproducir automáticamente:', error);
+      playIcon.className = 'fas fa-play';
       setTimeout(() => {
-        alert('🎵 Por favor, haz click en el ícono de música arriba a la derecha para escuchar la canción');
-      }, 500);
+        alert('🎵 Si no escuchas la música, haz click en el ícono de nota musical arriba a la derecha para activarla');
+      }, 1000);
     });
-  }
-  
+
   playClickSound();
   setTimeout(() => {
     nextPage();
