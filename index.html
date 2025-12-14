@@ -5,14 +5,11 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>JORDY & Tú • Checkpoint 7 Meses 2025</title>
   <link rel="stylesheet" href="style.css">
-  <script src="https://cdn.jsdelivr.net/npm/particles.js@2.0.0/particles.min.js"></script>
 </head>
 <body>
 
-  <div id="particles-js"></div>
-
   <!-- Música de fondo -->
-  <audio id="bg-music" loop autoplay volume="0.3">
+  <audio id="bg-music" loop autoplay>
     <source src="on-melancholy-hill.mp3" type="audio/mpeg">
   </audio>
   <button id="mute-btn" class="mute-btn">🔊</button>
@@ -24,39 +21,35 @@
   </div>
 
   <div class="pages-container">
-    <!-- Portada -->
+    <!-- Portada limpia -->
     <section class="page active">
-      <div class="card">
+      <div class="cover-content">
         <h1 class="title">CHECKPOINT 2025</h1>
         <h2 class="subtitle">7 meses juntos</h2>
-        <p class="big-text" id="dias-juntos">cargando…</p>
-        <p class="big-text">Novios virtuales que se quieren en 8K ❤️</p>
-        <button class="start-btn">Empezar el recorrido</button>
+        <p class="dias" id="dias-juntos">cargando…</p>
+        <button class="start-btn">Empezar</button>
       </div>
     </section>
 
+    <!-- Meses -->
     <div id="meses-container"></div>
 
     <!-- Juegos -->
     <section class="page">
-      <div class="card">
-        <h1 class="title">Top 5 juegos donde fuimos leyenda</h1>
-        <div class="game-grid" id="juegos-grid"></div>
-      </div>
+      <h1 class="title">Top 5 juegos donde fuimos leyenda</h1>
+      <div class="game-grid" id="juegos-grid"></div>
     </section>
 
     <!-- Final -->
     <section class="page">
-      <div class="card">
-        <h1 class="title">Canción que más me sonó a ti</h1>
-        <p class="song" id="cancion-principal"></p>
-        <h1 class="title">Momentos que nunca olvidaremos</h1>
-        <div id="momentos-grid"></div>
-      </div>
+      <h1 class="title">Canción que más me sonó a ti</h1>
+      <p class="song" id="cancion-principal"></p>
+      <h1 class="title">Momentos que nunca olvidaremos</h1>
+      <div class="moments-grid" id="momentos-grid"></div>
     </section>
   </div>
 
-  <div class="progress-bar" id="progress"></div>
+  <div class="progress" id="progress"></div>
 
   <script src="script.js"></script>
 </body>
