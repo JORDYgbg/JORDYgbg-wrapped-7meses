@@ -106,18 +106,9 @@ const momentosTop = [
 window.addEventListener('load', () => {
   initStars();
   loadContent();
-
-  // Volumen inicial al 20% y slider actualizado
-  const music = document.getElementById('bg-music');
-  const volumeSlider = document.getElementById('volume-slider');
-  const volumeValue = document.getElementById('volume-value');
-
-  if (music) music.volume = 0.2;
-  if (volumeSlider) volumeSlider.value = 20;
-  if (volumeValue) volumeValue.textContent = '20%';
 });
 
-// Fondo de estrellas
+// Crear fondo de galaxia
 function initStars() {
   const canvas = document.getElementById('stars-canvas');
   const ctx = canvas.getContext('2d');
@@ -201,26 +192,22 @@ function initStars() {
 // Sonidos
 function playClickSound() {
   const clickSound = document.getElementById('click-sound');
-  if (clickSound) {
-    clickSound.currentTime = 0;
-    clickSound.volume = 0.3;
-    clickSound.play().catch(() => {});
-  }
+  clickSound.currentTime = 0;
+  clickSound.volume = 0.3;
+  clickSound.play().catch(() => {});
 }
 
 function playTransitionSound() {
   const transitionSound = document.getElementById('transition-sound');
-  if (transitionSound) {
-    transitionSound.currentTime = 0;
-    transitionSound.volume = 0.2;
-    transitionSound.play().catch(() => {});
-  }
+  transitionSound.currentTime = 0;
+  transitionSound.volume = 0.2;
+  transitionSound.play().catch(() => {});
 }
 
 // Reproductor
 function togglePlayer() {
   const player = document.getElementById('music-player');
-  if (player) player.classList.toggle('collapsed');
+  player.classList.toggle('collapsed');
   playClickSound();
 }
 
@@ -228,14 +215,12 @@ function togglePlay() {
   const music = document.getElementById('bg-music');
   const playIcon = document.getElementById('play-icon');
   
-  if (music && playIcon) {
-    if (music.paused) {
-      music.play();
-      playIcon.className = 'fas fa-pause';
-    } else {
-      music.pause();
-      playIcon.className = 'fas fa-play';
-    }
+  if (music.paused) {
+    music.play();
+    playIcon.className = 'fas fa-pause';
+  } else {
+    music.pause();
+    playIcon.className = 'fas fa-play';
   }
   playClickSound();
 }
@@ -244,34 +229,36 @@ function changeVolume(value) {
   const music = document.getElementById('bg-music');
   const volumeValue = document.getElementById('volume-value');
   
-  if (music) music.volume = value / 100;
-  if (volumeValue) volumeValue.textContent = value + '%';
+  music.volume = value / 100;
+  volumeValue.textContent = value + '%';
 }
 
-// Iniciar checkpoint - VERSIÓN QUE FUNCIONA EN TODOS LOS NAVEGADORES
+// Iniciar checkpoint
 function startCheckpoint() {
   const music = document.getElementById('bg-music');
-  const playIcon = document.getElementById('play-icon');
+  music.volume = 0.2;
   
-  if (music) {
-    music.volume = 0.2; // Volumen al 20%
-
-    music.play()
-      .then(() => {
-        if (playIcon) playIcon.className = 'fas fa-pause';
-        console.log('Música iniciada automáticamente');
-      })
-      .catch(error => {
-        console.error('Error al reproducir la música:', error);
-        if (playIcon) playIcon.className = 'fas fa-play';
-        alert('🎵 Si no escuchas la música, haz click en el ícono de nota musical arriba a la derecha');
-      });
+  // Forzar reproducción con interacción del usuario
+  const playPromise = music.play();
+  
+  if (playPromise !== undefined) {
+    playPromise.then(() => {
+      document.getElementById('play-icon').className = 'fas fa-pause';
+      console.log('Música iniciada');
+    }).catch(error => {
+      console.log('Error al reproducir:', error);
+      document.getElementById('play-icon').className = 'fas fa-play';
+      // Mostrar mensaje para que active la música
+      setTimeout(() => {
+        alert('🎵 Por favor, haz click en el ícono de música arriba a la derecha para escuchar la canción');
+      }, 500);
+    });
   }
-
+  
   playClickSound();
-
-  // Cambio de página inmediato (sin setTimeout para no romper el user gesture)
-  nextPage();
+  setTimeout(() => {
+    nextPage();
+  }, 300);
 }
 
 // Navegación
@@ -296,26 +283,20 @@ function prevPage() {
 }
 
 function updateNav() {
-  const prevBtn = document.getElementById('prev-btn');
-  const nextBtn = document.getElementById('next-btn');
-  const progress = document.getElementById('progress');
-  const nextFloatBtn = document.getElementById('next-float-btn');
-
-  if (prevBtn) prevBtn.disabled = current === 0;
-  if (nextBtn) nextBtn.disabled = current === pages.length - 1;
-  if (progress) progress.style.width = (current / (pages.length - 1) * 100) + '%';
+  document.getElementById('prev-btn').disabled = current === 0;
+  document.getElementById('next-btn').disabled = current === pages.length - 1;
+  document.getElementById('progress').style.width = (current / (pages.length - 1) * 100) + '%';
   
-  if (nextFloatBtn) {
-    if (current > 0 && current < pages.length - 1) {
-      nextFloatBtn.classList.add('show');
-    } else {
-      nextFloatBtn.classList.remove('show');
-    }
+  const nextBtn = document.getElementById('next-float-btn');
+  if (current > 0 && current < pages.length - 1) {
+    nextBtn.classList.add('show');
+  } else {
+    nextBtn.classList.remove('show');
   }
 }
 
-document.getElementById('next-btn') && (document.getElementById('next-btn').onclick = nextPage);
-document.getElementById('prev-btn') && (document.getElementById('prev-btn').onclick = prevPage);
+document.getElementById('next-btn').onclick = nextPage;
+document.getElementById('prev-btn').onclick = prevPage;
 
 document.addEventListener('keydown', (e) => {
   if (e.key === 'ArrowRight') nextPage();
@@ -327,68 +308,57 @@ function loadContent() {
   const inicio = new Date('2024-05-11');
   const hoy = new Date();
   const dias = Math.floor((hoy - inicio) / (1000 * 60 * 60 * 24));
-  const diasElement = document.getElementById('dias-juntos');
-  if (diasElement) diasElement.innerHTML = `${dias} días juntos y contando... <i class="fas fa-heart"></i>`;
+  document.getElementById('dias-juntos').innerHTML = `${dias} días juntos y contando... <i class="fas fa-heart"></i>`;
 
-  const cancionPrincipal = document.getElementById('cancion-principal');
-  if (cancionPrincipal) cancionPrincipal.innerText = "Virtual Insanity – Jamiroquai (la versión lo-fi que siempre me ponías a las 4 a.m.)";
+  document.getElementById('cancion-principal').innerText = "Virtual Insanity – Jamiroquai (la versión lo-fi que siempre me ponías a las 4 a.m.)";
 
   pages.push(document.querySelector('.page.active'));
 
   const mesesContainer = document.getElementById('meses-container');
-  if (mesesContainer) {
-    mesesData.forEach(mes => {
-      const page = document.createElement('section');
-      page.className = 'page';
-      page.innerHTML = `
-        <div class="card">
-          <h1 class="title">${mes.mes}</h1>
-          <h2 class="subtitle">${mes.titulo}</h2>
-          <p class="moment">${mes.descripcion || ''}</p>
-          <div class="text-card">
-            <h3><i class="fas fa-music"></i> Canción que me suena a ${mes.mes}</h3>
-            <p class="song-name">${mes.cancion}</p>
-            <div style="margin-top: 2rem;">
-              ${mes.momentos.map(m => `<p class="moment">• ${m}</p>`).join('')}
-            </div>
+  mesesData.forEach(mes => {
+    const page = document.createElement('section');
+    page.className = 'page';
+    page.innerHTML = `
+      <div class="card">
+        <h1 class="title">${mes.mes}</h1>
+        <h2 class="subtitle">${mes.titulo}</h2>
+        <p class="moment">${mes.descripcion || ''}</p>
+        <div class="text-card">
+          <h3><i class="fas fa-music"></i> Canción que me suena a ${mes.mes}</h3>
+          <p class="song-name">${mes.cancion}</p>
+          <div style="margin-top: 2rem;">
+            ${mes.momentos.map(m => `<p class="moment">• ${m}</p>`).join('')}
           </div>
         </div>
-      `;
-      mesesContainer.appendChild(page);
-      pages.push(page);
-    });
-  }
+      </div>
+    `;
+    mesesContainer.appendChild(page);
+    pages.push(page);
+  });
 
   const juegosGrid = document.getElementById('juegos-grid');
-  if (juegosGrid) {
-    juegosData.forEach(juego => {
-      const div = document.createElement('div');
-      div.className = 'game-card';
-      div.innerHTML = `
-        <img src="img/${juego.imagen}" alt="${juego.nombre}">
-        <h3>${juego.nombre}</h3>
-        <p>${juego.descripcion}</p>
-      `;
-      juegosGrid.appendChild(div);
-    });
-  }
-  const juegosPage = document.getElementById('juegos-page');
-  if (juegosPage) pages.push(juegosPage);
+  juegosData.forEach(juego => {
+    const div = document.createElement('div');
+    div.className = 'game-card';
+    div.innerHTML = `
+      <img src="img/${juego.imagen}" alt="${juego.nombre}">
+      <h3>${juego.nombre}</h3>
+      <p>${juego.descripcion}</p>
+    `;
+    juegosGrid.appendChild(div);
+  });
+  pages.push(document.getElementById('juegos-page'));
 
   const momentosGrid = document.getElementById('momentos-grid');
-  if (momentosGrid) {
-    momentosTop.forEach((m, i) => {
-      const p = document.createElement('p');
-      p.className = 'moment';
-      p.textContent = `#${i + 1} ${m}`;
-      momentosGrid.appendChild(p);
-    });
-  }
-  const momentosPage = document.getElementById('momentos-page');
-  if (momentosPage) pages.push(momentosPage);
+  momentosTop.forEach((m, i) => {
+    const p = document.createElement('p');
+    p.className = 'moment';
+    p.textContent = `#${i + 1} ${m}`;
+    momentosGrid.appendChild(p);
+  });
+  pages.push(document.getElementById('momentos-page'));
   
-  const finalPage = document.getElementById('final-page');
-  if (finalPage) pages.push(finalPage);
+  pages.push(document.getElementById('final-page'));
 
   updateNav();
 }
