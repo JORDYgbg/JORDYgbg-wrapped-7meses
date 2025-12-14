@@ -236,30 +236,24 @@ function changeVolume(value) {
 // Iniciar checkpoint
 function startCheckpoint() {
   const music = document.getElementById('bg-music');
-  
-  // Aseguramos el volumen al 20% desde el principio
   music.volume = 0.2;
-
-  // Intentamos reproducir con la interacción del usuario (el click en "Comenzar")
-  music.play()
-    .then(() => {
-      // Si se reproduce bien
+  
+  // Forzar reproducción con interacción del usuario
+  const playPromise = music.play();
+  
+  if (playPromise !== undefined) {
+    playPromise.then(() => {
       document.getElementById('play-icon').className = 'fas fa-pause';
-      console.log('Música iniciada automáticamente');
-    })
-    .catch(error => {
-      // Si falla (raro, porque hay interacción), mostramos alerta suave
-      console.log('No se pudo reproducir automáticamente:', error);
+      console.log('Música iniciada');
+    }).catch(error => {
+      console.log('Error al reproducir:', error);
+      document.getElementById('play-icon').className = 'fas fa-play';
+      // Mostrar mensaje para que active la música
       setTimeout(() => {
-        alert('🎵 Si no escuchas la música, haz click en el ícono de nota musical arriba a la derecha');
+        alert('🎵 Por favor, haz click en el ícono de música arriba a la derecha para escuchar la canción');
       }, 500);
     });
-
-  playClickSound();
-  setTimeout(() => {
-    nextPage();
-  }, 300);
-}
+  }
   
   playClickSound();
   setTimeout(() => {
@@ -367,17 +361,4 @@ function loadContent() {
   pages.push(document.getElementById('final-page'));
 
   updateNav();
-  // Aseguramos que el volumen inicial sea 20% al cargar la página
-window.addEventListener('load', () => {
-  const music = document.getElementById('bg-music');
-  music.volume = 0.2;
-  
-  // También actualizamos el slider visual del reproductor
-  const volumeSlider = document.getElementById('volume-slider');
-  const volumeValue = document.getElementById('volume-value');
-  if (volumeSlider) volumeSlider.value = 20;
-  if (volumeValue) volumeValue.textContent = '20%';
-  
-  // ... el resto de tu código initStars(), loadContent(), etc.
-});
 }
