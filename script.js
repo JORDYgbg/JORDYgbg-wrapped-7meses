@@ -1,5 +1,8 @@
+// Variables globales
 let current = 0;
 const pages = [];
+const audio = document.getElementById('bg-music');
+let isPlaying = false;
 
 // Meses personalizados
 const mesesData = [
@@ -221,59 +224,52 @@ function togglePlayer() {
 }
 
 function togglePlay() {
-  const music = document.getElementById('bg-music');
   const playIcon = document.getElementById('play-icon');
   
-  if (music.paused) {
-    // Intentar reproducir
-    const playPromise = music.play();
-    
-    if (playPromise !== undefined) {
-      playPromise.then(() => {
-        playIcon.className = 'fas fa-pause';
-        console.log('Música reproduciendo');
-      }).catch(error => {
-        console.error('Error al reproducir:', error);
-        playIcon.className = 'fas fa-play';
-      });
-    }
-  } else {
-    music.pause();
+  if (isPlaying) {
+    audio.pause();
     playIcon.className = 'fas fa-play';
+    isPlaying = false;
+  } else {
+    audio.play().then(() => {
+      playIcon.className = 'fas fa-pause';
+      isPlaying = true;
+    }).catch(error => {
+      console.error('Error al reproducir:', error);
+      playIcon.className = 'fas fa-play';
+    });
   }
   playClickSound();
 }
 
 function changeVolume(value) {
-  const music = document.getElementById('bg-music');
   const volumeValue = document.getElementById('volume-value');
-  
-  music.volume = value / 100;
+  audio.volume = value / 100;
   volumeValue.textContent = value + '%';
 }
 
 // Iniciar checkpoint
 function startCheckpoint() {
-  const music = document.getElementById('bg-music');
-  music.volume = 0.2;
+  // Configurar audio
+  audio.src = 'on-melancholy-hill.mp3';
+  audio.volume = 0.2;
+  audio.loop = true;
   
   playClickSound();
   
-  // Esperar un momento y luego intentar reproducir
+  // Intentar reproducir con el método que funciona
   setTimeout(() => {
-    const playPromise = music.play();
-    
-    if (playPromise !== undefined) {
-      playPromise.then(() => {
-        document.getElementById('play-icon').className = 'fas fa-pause';
-        console.log('Música iniciada correctamente');
-      }).catch(error => {
-        console.error('Autoplay bloqueado:', error);
-        document.getElementById('play-icon').className = 'fas fa-play';
-        // Mostrar el reproductor automáticamente
-        document.getElementById('music-player').classList.remove('collapsed');
-      });
-    }
+    audio.play().then(() => {
+      isPlaying = true;
+      document.getElementById('play-icon').className = 'fas fa-pause';
+      console.log('✅ Música reproduciendo');
+    }).catch(error => {
+      console.error('❌ Autoplay bloqueado:', error);
+      isPlaying = false;
+      document.getElementById('play-icon').className = 'fas fa-play';
+      // Abrir reproductor automáticamente
+      document.getElementById('music-player').classList.remove('collapsed');
+    });
     
     nextPage();
   }, 300);
@@ -326,9 +322,7 @@ function loadContent() {
   const inicio = new Date('2024-05-11');
   const hoy = new Date();
   const dias = Math.floor((hoy - inicio) / (1000 * 60 * 60 * 24));
-  document.getElementById('dias-juntos').innerHTML = `${dias} días juntos y contando... <i class="fas fa-heart"></i>`;
-
-  document.getElementById('cancion-principal').innerText = "Virtual Insanity – Jamiroquai (la versión lo-fi que siempre me ponías a las 4 a.m.)";
+  document.getElementById('dias-juntos').innerHTML = `214 días juntos y contando... <i class="fas fa-heart"></i>`;
 
   pages.push(document.querySelector('.page.active'));
 
