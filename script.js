@@ -106,6 +106,15 @@ const momentosTop = [
 window.addEventListener('load', () => {
   initStars();
   loadContent();
+  
+  // Sonido de bienvenida
+  setTimeout(() => {
+    const welcomeSound = document.getElementById('welcome-sound');
+    welcomeSound.volume = 0.4;
+    welcomeSound.play().catch(() => {
+      console.log('Sonido de bienvenida bloqueado');
+    });
+  }, 500);
 });
 
 // Crear fondo de galaxia
@@ -216,8 +225,18 @@ function togglePlay() {
   const playIcon = document.getElementById('play-icon');
   
   if (music.paused) {
-    music.play();
-    playIcon.className = 'fas fa-pause';
+    // Intentar reproducir
+    const playPromise = music.play();
+    
+    if (playPromise !== undefined) {
+      playPromise.then(() => {
+        playIcon.className = 'fas fa-pause';
+        console.log('Música reproduciendo');
+      }).catch(error => {
+        console.error('Error al reproducir:', error);
+        playIcon.className = 'fas fa-play';
+      });
+    }
   } else {
     music.pause();
     playIcon.className = 'fas fa-play';
@@ -238,25 +257,24 @@ function startCheckpoint() {
   const music = document.getElementById('bg-music');
   music.volume = 0.2;
   
-  // Forzar reproducción con interacción del usuario
-  const playPromise = music.play();
-  
-  if (playPromise !== undefined) {
-    playPromise.then(() => {
-      document.getElementById('play-icon').className = 'fas fa-pause';
-      console.log('Música iniciada');
-    }).catch(error => {
-      console.log('Error al reproducir:', error);
-      document.getElementById('play-icon').className = 'fas fa-play';
-      // Mostrar mensaje para que active la música
-      setTimeout(() => {
-        alert('🎵 Por favor, haz click en el ícono de música arriba a la derecha para escuchar la canción');
-      }, 500);
-    });
-  }
-  
   playClickSound();
+  
+  // Esperar un momento y luego intentar reproducir
   setTimeout(() => {
+    const playPromise = music.play();
+    
+    if (playPromise !== undefined) {
+      playPromise.then(() => {
+        document.getElementById('play-icon').className = 'fas fa-pause';
+        console.log('Música iniciada correctamente');
+      }).catch(error => {
+        console.error('Autoplay bloqueado:', error);
+        document.getElementById('play-icon').className = 'fas fa-play';
+        // Mostrar el reproductor automáticamente
+        document.getElementById('music-player').classList.remove('collapsed');
+      });
+    }
+    
     nextPage();
   }, 300);
 }
