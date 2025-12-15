@@ -3,10 +3,22 @@ let current = 0;
 const pages = [];
 let isPlaying = false;
 
-// Crear el objeto de audio
-const audio = new Audio('on-melancholy-hill.mp3');
+// Crear el objeto de audio - RUTA CORRECTA
+const audio = new Audio();
+audio.src = './on-melancholy-hill.mp3';
 audio.loop = true;
 audio.volume = 0.2;
+audio.preload = 'auto';
+
+// Log para debugging
+audio.addEventListener('loadeddata', () => {
+  console.log('✅ Audio cargado correctamente');
+});
+
+audio.addEventListener('error', (e) => {
+  console.error('❌ Error cargando audio:', e);
+  alert('Error: No se pudo cargar on-melancholy-hill.mp3. Verifica que el archivo exista.');
+});
 
 // Meses personalizados
 const mesesData = [
