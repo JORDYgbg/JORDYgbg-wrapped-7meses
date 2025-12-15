@@ -1,8 +1,12 @@
 // Variables globales
 let current = 0;
 const pages = [];
-const audio = document.getElementById('bg-music');
 let isPlaying = false;
+
+// Crear el objeto de audio
+const audio = new Audio('on-melancholy-hill.mp3');
+audio.loop = true;
+audio.volume = 0.2;
 
 // Meses personalizados
 const mesesData = [
@@ -226,18 +230,19 @@ function togglePlayer() {
 function togglePlay() {
   const playIcon = document.getElementById('play-icon');
   
-  if (isPlaying) {
-    audio.pause();
-    playIcon.className = 'fas fa-play';
-    isPlaying = false;
-  } else {
+  if (audio.paused) {
     audio.play().then(() => {
       playIcon.className = 'fas fa-pause';
       isPlaying = true;
+      console.log('✅ AUDIO REPRODUCIENDO');
     }).catch(error => {
-      console.error('Error al reproducir:', error);
-      playIcon.className = 'fas fa-play';
+      console.error('❌ ERROR:', error);
+      alert('Error al reproducir. Verifica que el archivo on-melancholy-hill.mp3 exista en la raíz del proyecto.');
     });
+  } else {
+    audio.pause();
+    playIcon.className = 'fas fa-play';
+    isPlaying = false;
   }
   playClickSound();
 }
@@ -250,29 +255,26 @@ function changeVolume(value) {
 
 // Iniciar checkpoint
 function startCheckpoint() {
-  // Configurar audio
-  audio.src = 'on-melancholy-hill.mp3';
-  audio.volume = 0.2;
-  audio.loop = true;
-  
   playClickSound();
   
-  // Intentar reproducir con el método que funciona
+  // Esperar un momento para que el click cuente como interacción
   setTimeout(() => {
+    // Intentar reproducir
     audio.play().then(() => {
       isPlaying = true;
       document.getElementById('play-icon').className = 'fas fa-pause';
-      console.log('✅ Música reproduciendo');
+      console.log('✅ MÚSICA INICIADA AUTOMÁTICAMENTE');
     }).catch(error => {
       console.error('❌ Autoplay bloqueado:', error);
       isPlaying = false;
       document.getElementById('play-icon').className = 'fas fa-play';
-      // Abrir reproductor automáticamente
+      // Abrir reproductor para que haga click manual
       document.getElementById('music-player').classList.remove('collapsed');
+      alert('🎵 Haz click en el botón de play en el reproductor arriba a la derecha');
     });
     
     nextPage();
-  }, 300);
+  }, 200);
 }
 
 // Navegación
