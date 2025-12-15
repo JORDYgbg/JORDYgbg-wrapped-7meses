@@ -340,7 +340,7 @@ body {
 .title {
   font-size: 4rem;
   font-weight: 900;
-  margin-bottom: 1rem;
+  margin-bottom: 1.5rem;
   font-family: 'Poppins', sans-serif;
   background: linear-gradient(90deg, #a78bfa 0%, #ec4899 50%, #8b5cf6 100%);
   background-size: 200% 100%;
@@ -349,7 +349,8 @@ body {
   background-clip: text;
   animation: gradientShift 5s ease infinite;
   letter-spacing: -1px;
-  line-height: 1.1;
+  line-height: 1.2;
+  padding: 0.2rem 0;
 }
 
 @keyframes gradientShift {
@@ -478,8 +479,10 @@ body {
 /* Juegos */
 .page-header {
   text-align: center;
-  margin-bottom: 3rem;
+  margin-bottom: 2.5rem;
+  margin-top: 0;
   width: 100%;
+  padding-top: 1rem;
 }
 
 .description {
@@ -539,17 +542,24 @@ body {
   backdrop-filter: blur(20px);
   border: 2px solid rgba(167, 139, 250, 0.3);
   border-radius: 25px;
-  padding: 2.5rem;
-  max-width: 700px;
-  margin: 2rem auto;
+  padding: 2rem 2.5rem;
+  max-width: 800px;
+  margin: 1.5rem auto;
   display: flex;
   align-items: center;
   gap: 1.5rem;
 }
 
 .song-icon {
-  font-size: 4rem;
+  font-size: 3.5rem;
   color: #a78bfa;
+  flex-shrink: 0;
+}
+
+.song-card .song-name {
+  font-size: 1.2rem;
+  line-height: 1.5;
+  text-align: left;
 }
 
 .moments-container {
